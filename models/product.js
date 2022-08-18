@@ -11,7 +11,7 @@ const productSchema = new mongo.Schema({
 		default: [],
 	},
 	seller_id: {
-		type: Number,
+		type: String,
 		required: true,
 	},
 	tags: {
