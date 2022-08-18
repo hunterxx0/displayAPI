@@ -5,9 +5,10 @@ const productSchema = new mongo.Schema({
 		type: String,
 		required: true,
 	},
-	status: {
-		type: Boolean,
-		required: true,
+	pics_url: {
+		type: Array,
+		required: false,
+		default: [],
 	},
 	seller_id: {
 		type: Number,
@@ -16,12 +17,17 @@ const productSchema = new mongo.Schema({
 	tags: {
 		type: Array,
 		required: false,
-		default: []
+		default: [],
 	},
 	requests: {
 		type: Array,
 		required: false,
-		default: []
+		default: [],
+	},
+	Characteristics: {
+		type: Object,
+		required: false,
+		default: {},
 	},
 	created_at: {
 		type: Date,
