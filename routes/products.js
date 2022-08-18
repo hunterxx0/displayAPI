@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
 //get one product
 router.get('/:id', getProduct, (req, res) => {
-	res.json(res.products);
+	res.json(res.product);
 })
 
 //create one product
