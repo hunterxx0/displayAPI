@@ -24,5 +24,6 @@ app.use('/users', usersRouter);
 const sellersRouter = require('./routes/sellers');
 app.use('/sellers', sellersRouter);
 
-
-app.listen(3000, () => console.log('running'));
+// port
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log('running' + PORT));
