@@ -74,7 +74,7 @@ router.patch('/:id/tags', getProduct, async (req, res) => {
 //delete one tag
 router.delete('/:id/tags/:tag', getProduct, async (req, res) => {
 	if (req.params.tag != null) {
-		arrRem(res.product.tags, req.params.tag)
+		res.product.tags = arrRem(res.product.tags, req.params.tag)
 		try {
 			const upProduct = await res.product.save();
 			res.json(upProduct);
