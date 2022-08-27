@@ -15,19 +15,16 @@ db.on('error', (err) => console.log(err));
 db.on('open', () => console.log('connected'));
 
 
-// routes
-
+// routes:
 // user route
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
 //seller routes
-
 const sellersRouter = require('./routes/sellers');
 app.use('/sellers', sellersRouter);
 
 //product routes
-
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
 

@@ -58,17 +58,32 @@ router.patch('/:id', getUser, async (req, res) => {
 })
 
 //add favorites
-router.post('/:id/favorites', getUser, (req, res) => {
-
+router.patch('/:id/favorites', getUser, (req, res) => {
+	let arr = req.body.favorites;
+	for( let i = 0; i < arr.length; i++){ 
+		res.user.favorites.push(arr[i]);
+    }
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
 })
 
 //delete favorites
-router.delete('/:id/favorites', getUser, (req, res) => {
-
+router.delete('/:id/favorites/:favorite', getUser, (req, res) => {
+	res.user.favorites = arrRem(res.user.favorites, req.params.favorite)
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
 })
 
 
-//delete one
+//delete one user
 router.delete('/:id', getUser, async (req, res) => {
 	try {
 		await res.user.remove()
@@ -79,6 +94,9 @@ router.delete('/:id', getUser, async (req, res) => {
 	
 })
 
+// utilities:
+
+// get User by id function
 async function getUser(req, res, next){
 	let user
 	try {
@@ -91,6 +109,13 @@ async function getUser(req, res, next){
 	}
 	res.user = user;
 	next(); 
+}
+
+// remove a value from an array
+function arrRem(arr, value) {
+	return arr.filter(function(ele){ 
+        return ele != value; 
+    });
 }
 
 module.exports = router;

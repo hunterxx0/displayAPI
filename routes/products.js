@@ -18,12 +18,35 @@ router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
 })
 
+//get seller's products
+router.get('/seller/:sellerID', async (req, res) => {
+	
+	try {
+		const products = await Product.find({ seller_id: req.params.sellerID });
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+//get products by category
+router.get('/category/:category', async (req, res) => {
+	
+	try {
+		const products = await Product.find({ category: req.params.category });
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
 //create one product
 router.post('/', async (req, res) => {
 	const product = new Product({
 		title: req.body.title,
 		pics_url: req.body.pics_url,
 		seller_id: req.body.seller_id,
+		category: req.body.category,
 		tags: req.body.tags,
 		requests: req.body.requests,
 		Characteristics: req.body.Characteristics,
@@ -46,6 +69,9 @@ router.patch('/:id', getProduct, async (req, res) => {
 	}
 	if (req.body.seller_id != null) {
 		res.product.seller_id = req.body.seller_id
+	}
+	if (req.body.category != null) {
+		res.product.category = req.body.category
 	}
 	try {
 		const upProduct = await res.product.save();
@@ -73,14 +99,12 @@ router.patch('/:id/tags', getProduct, async (req, res) => {
 
 //delete one tag
 router.delete('/:id/tags/:tag', getProduct, async (req, res) => {
-	if (req.params.tag != null) {
-		res.product.tags = arrRem(res.product.tags, req.params.tag)
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
+	res.product.tags = arrRem(res.product.tags, req.params.tag)
+	try {
+		const upProduct = await res.product.save();
+		res.json(upProduct);
+	} catch (err) {
+		res.status(400).send({message: err.message})
 	}
 })
 
