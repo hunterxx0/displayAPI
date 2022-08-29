@@ -13,6 +13,19 @@ router.get('/', async (req, res) => {
 	}
 })
 
+// get products by page
+router.get('/page/:number', async (req, res) => {
+    const page = parseInt(req.params.number, 10) || 0;
+	try {
+		const products = await Product.find()
+		.skip(page * 20)
+		.limit(20);
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
 //get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
