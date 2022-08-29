@@ -8,7 +8,6 @@ app.use(express.json());
 const username = encodeURIComponent(process.env.USERNAME);
 const password = encodeURIComponent(process.env.PASSWORD);
 const url = `mongodb+srv://${username}:${password}@${process.env.DATAURL}`;
-console.log(url);
 mongo.connect(url)
 const db = mongo.connection;
 db.on('error', (err) => console.log(err));
