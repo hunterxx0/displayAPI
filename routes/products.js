@@ -26,6 +26,18 @@ router.get('/page/:number', async (req, res) => {
 	}
 })
 
+// get products by title
+router.get('/title/:title', async (req, res) => {
+	try {
+		const products = await Product.find( {
+			"title" : { $regex: '^' + req.params.title, $options: 'i'}
+		} )
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
 //get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
@@ -94,6 +106,35 @@ router.patch('/:id', getProduct, async (req, res) => {
 	}
 })
 
+
+//add urls
+router.patch('/:id/pic', getProduct, async (req, res) => {
+	let arr = req.body.tags;
+	if (arr != null) {
+		for( let i = 0; i < arr.length; i++){ 
+			res.product.tags.push(arr[i]);
+	    }
+		try {
+			const upProduct = await res.product.save();
+			res.json(upProduct);
+		} catch (err) {
+			res.status(400).send({message: err.message})
+		}
+	}
+})
+
+//delete one url
+router.delete('/:id/pic', getProduct, async (req, res) => {
+	res.product.tags = arrRem(res.product.tags, req.params.tag)
+	try {
+		const upProduct = await res.product.save();
+		res.json(upProduct);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+})
+
+
 //add tags
 router.patch('/:id/tags', getProduct, async (req, res) => {
 	let arr = req.body.tags;
@@ -123,8 +164,10 @@ router.delete('/:id/tags/:tag', getProduct, async (req, res) => {
 
 //add one request
 router.patch('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID) {
-		res.product.tags.push(req.params.requestID);
+	if (req.params.requestID && req.body) {
+		let obj = {};
+		obj[req.params.requestID] = req.body;
+		res.product.requests.push(obj);
 		try {
 			const upProduct = await res.product.save();
 			res.json(upProduct);
@@ -138,7 +181,7 @@ router.patch('/:id/requests/:requestID', getProduct, async (req, res) => {
 //delete one request
 router.delete('/:id/requests/:requestID', getProduct, async (req, res) => {
 	if (req.params.requestID != null) {
-		arrRem(res.product.requests, req.params.requestID)
+		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
 		try {
 			const upProduct = await res.product.save();
 			res.json(upProduct);
