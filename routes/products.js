@@ -30,7 +30,7 @@ router.get('/page/:number', async (req, res) => {
 router.get('/title/:title', async (req, res) => {
 	try {
 		const products = await Product.find( {
-			"title" : { $regex: '^' + req.params.title, $options: 'i'}
+			"title" : { $regex: req.params.title, $options: 'i'}
 		} )
 		res.json(products);
 	} catch (err) {
