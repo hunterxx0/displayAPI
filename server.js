@@ -1,7 +1,11 @@
 const mongo = require("mongoose");
 const express = require('express');
 const app = express();
+const cors = cors()
+// port
+const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 //db connection
@@ -11,8 +15,9 @@ const url = `mongodb+srv://${username}:${password}@${process.env.DATAURL}`;
 mongo.connect(url)
 const db = mongo.connection;
 db.on('error', (err) => console.log(err));
-db.on('open', () => console.log('connected'));
-
+db.on('open', () => {
+  app.listen(PORT, () => console.log('running' + PORT));
+});
 
 // routes:
 // user route
@@ -26,8 +31,3 @@ app.use('/sellers', sellersRouter);
 //product routes
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
-
-
-// port
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('running' + PORT));
