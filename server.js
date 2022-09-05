@@ -16,7 +16,7 @@ mongo.connect(url)
 const db = mongo.connection;
 db.on('error', (err) => console.log(err));
 db.on('open', () => {
-  app.listen(PORT, () => console.log('running' + PORT));
+  app.listen(PORT, () => console.log('running ' + PORT));
 });
 
 // routes:
