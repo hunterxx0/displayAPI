@@ -43,24 +43,16 @@ router.get('/title/:title', async (req, res) => {
 // get products by title and category
 router.get('/title/:title/category/:category', async (req, res) => {
 	try {
-		let products;
-		const page = parseInt(req.query.page, 10) || 0;
-		if (req.params.category == 'all' ) {
-			products = await Product.find( {
-				"title" : { $regex: req.params.title, $options: 'i'},
-			} )
-			.skip(page * 10)
-			.limit(10)
-			.sort(req.query.sort || 'title');
-		} else {
-			products = await Product.find( {
+		const query = (req.params.category == 'all' ) ? {
+			"title" : { $regex: req.params.title, $options: 'i'}} :  {
 				"title" : { $regex: req.params.title, $options: 'i'},
 				"category": req.params.category
-			} )
-			.skip(page * 10)
-			.limit(10)
-			.sort(req.query.sort || 'title');
-		}
+			};
+		const page = parseInt(req.query.page, 10) || 0;
+		const products = await Product.find( query )
+		.skip(page * 10)
+		.limit(10)
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
