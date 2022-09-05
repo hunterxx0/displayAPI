@@ -39,6 +39,48 @@ router.get('/title/:title', async (req, res) => {
 	}
 })
 
+
+// get products by title and category
+router.get('/title/:title/category/:category', async (req, res) => {
+	try {
+		let products;
+		const page = parseInt(req.params.number, 10) || 0;
+		if (req.params.category == 'all' ) {
+			if (req.query.page) {
+				products = await Product.find( {
+					"title" : { $regex: req.params.title, $options: 'i'},
+				} )
+				.skip(page * 10)
+				.limit(10)
+				.sort(req.query.sort || 'title');
+			} else {
+				products = await Product.find( {
+					"title" : { $regex: req.params.title, $options: 'i'},
+				} ).sort(req.query.sort || 'title');
+			}
+		} else {
+			if (req.query.page) {
+				products = await Product.find( {
+					"title" : { $regex: req.params.title, $options: 'i'},
+					"category": req.params.category
+				} )
+				.skip(page * 10)
+				.limit(10)
+				.sort(req.query.sort || 'title');
+			} else {
+				products = await Product.find( {
+					"title" : { $regex: req.params.title, $options: 'i'},
+					"category": req.params.category
+				} ).sort(req.query.sort || 'title');
+			}
+		}
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+
 //get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);

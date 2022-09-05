@@ -33,7 +33,7 @@ const productSchema = new mongo.Schema({
 		required: false,
 		default: [],
 	},
-	Characteristics: {
+	characteristics: {
 		type: Object,
 		required: false,
 		default: {},
