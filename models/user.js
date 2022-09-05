@@ -29,6 +29,17 @@ const userSchema = new mongo.Schema({
 	favorites: {
 		type: Array,
 		required: false,
+		default: []
+	},
+	requests: {
+		type: Array,
+		required: false,
+		default: []
+	},
+	recently_searched: {
+		type: Array,
+		required: false,
+		default: []
 	},
 })
 

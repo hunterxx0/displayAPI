@@ -18,6 +18,11 @@ const productSchema = new mongo.Schema({
 		type: String,
 		required: true,
 	},
+	descriptions: {
+		type: String,
+		required: true,
+		default: 'Describe your product'
+	},
 	tags: {
 		type: Array,
 		required: false,
@@ -38,6 +43,16 @@ const productSchema = new mongo.Schema({
 		required: true,
 		default: Date.now
 	},
+	views: {
+		type: Number,
+		required: true,
+		default: 0
+	},
+	favorited: {
+		type: Number,
+		required: true,
+		default: 0
+	},	
 })
 
 module.exports = mongo.model('product', productSchema);

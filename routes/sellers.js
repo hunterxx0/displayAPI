@@ -6,7 +6,7 @@ const router = express.Router();
 // get all
 router.get('/', async (req, res) => {
 	try {
-		const sellers = await Seller.find();
+		const sellers = await Seller.find().sort(req.query.sort || 'name');
 		res.json(sellers);
 	} catch (err) {
 		res.status(500).json({message: err.message});

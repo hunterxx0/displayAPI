@@ -6,7 +6,7 @@ const router = express.Router();
 // get all products
 router.get('/', async (req, res) => {
 	try {
-		const products = await Product.find();
+		const products = await Product.find().sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -19,7 +19,8 @@ router.get('/page/:number', async (req, res) => {
 	try {
 		const products = await Product.find()
 		.skip(page * 20)
-		.limit(20);
+		.limit(20)
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -31,7 +32,7 @@ router.get('/title/:title', async (req, res) => {
 	try {
 		const products = await Product.find( {
 			"title" : { $regex: req.params.title, $options: 'i'}
-		} )
+		} ).sort(req.query.sort || 'title')
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -47,7 +48,8 @@ router.get('/:id', getProduct, (req, res) => {
 router.get('/seller/:sellerID', async (req, res) => {
 	
 	try {
-		const products = await Product.find({ seller_id: req.params.sellerID });
+		const products = await Product.find({ seller_id: req.params.sellerID })
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -58,7 +60,8 @@ router.get('/seller/:sellerID', async (req, res) => {
 router.get('/category/:category', async (req, res) => {
 	
 	try {
-		const products = await Product.find({ category: req.params.category });
+		const products = await Product.find({ category: req.params.category })
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -72,6 +75,7 @@ router.post('/', async (req, res) => {
 		pics_url: req.body.pics_url,
 		seller_id: req.body.seller_id,
 		category: req.body.category,
+		descriptions: req.body.descriptions,
 		tags: req.body.tags,
 		requests: req.body.requests,
 		Characteristics: req.body.Characteristics,

@@ -6,7 +6,7 @@ const router = express.Router();
 // get all
 router.get('/', async (req, res) => {
 	try {
-		const users = await User.find();
+		const users = await User.find().sort(req.query.sort || 'created_at');
 		res.json(users);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -92,6 +92,43 @@ router.delete('/:id', getUser, async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 	
+})
+
+
+//add one request
+router.patch('/:id/requests/:requestID', getUser, async (req, res) => {
+	res.user.requests.push(req.params.requestID);
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+})
+
+//delete one request
+router.delete('/:id/requests/:requestID', getUser, async (req, res) => {
+	if (req.params.requestID != null) {
+		res.user.requests = arrRem(res.user.requests, req.params.requestID)
+		try {
+			const upUser = await res.user.save();
+			res.json(upUser);
+		} catch (err) {
+			res.status(400).send({message: err.message})
+		}
+	}
+})
+
+//add one recently searched
+router.patch('/:id/searched/:keyword', getUser, async (req, res) => {
+	res.user.recently_searched.push(req.params.keyword);
+	if (res.user.recently_searched.length > 20) res.user.recently_searched.shift();
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
 })
 
 // utilities:
