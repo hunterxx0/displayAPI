@@ -5,6 +5,7 @@ const cors = require("cors");
 // port
 const PORT = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 //db connection
@@ -17,8 +18,6 @@ db.on('error', (err) => console.log(err));
 db.on('open', () => {
   app.listen(PORT, () => console.log('running ' + PORT));
 });
-
-app.use(cors());
 
 // routes:
 // user route
