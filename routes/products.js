@@ -111,18 +111,7 @@ router.post('/', async (req, res) => {
 
 //update one product
 router.patch('/:id', getProduct, async (req, res) => {
-	if (req.body.title != null) {
-		res.product.title = req.body.title
-	}
-	if (req.body.pics_url != null) {
-		res.product.pics_url = req.body.pics_url
-	}
-	if (req.body.seller_id != null) {
-		res.product.seller_id = req.body.seller_id
-	}
-	if (req.body.category != null) {
-		res.product.category = req.body.category
-	}
+	res.product = {...res.product, ...req.body};
 	try {
 		const upProduct = await res.product.save();
 		res.json(upProduct);
@@ -250,6 +239,17 @@ function arrRem(arr, value) {
 	return arr.filter(function(ele){ 
         return ele != value; 
     });
+}
+
+// object update
+function updateObj(obj, upBody) {
+    for (const [key, val] of Object.entries(upBody)) {
+        if (typeof val == "object") // this also applies to arrays or null!
+            updateObj(obj[key], val);
+        else
+            obj[key] = val;
+    }
+    return obj;
 }
 
 

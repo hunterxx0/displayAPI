@@ -58,11 +58,8 @@ router.patch('/:id', getUser, async (req, res) => {
 })
 
 //add favorites
-router.patch('/:id/favorites', getUser, async (req, res) => {
-	let arr = req.body.favorites;
-	for( let i = 0; i < arr.length; i++){ 
-		res.user.favorites.push(arr[i]);
-    }
+router.patch('/:id/favorites/:favorite', getUser, async (req, res) => {
+	res.user.favorites.push(req.params.favorite);
 	try {
 		const upUser = await res.user.save();
 		res.json(upUser);
