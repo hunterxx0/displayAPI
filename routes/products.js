@@ -248,7 +248,7 @@ function updateObj(obj, upBody) {
     for (const [key, val] of Object.entries(upBody)) {
 
         if (typeof val == "object") {
-        	console.log(`key:${obj[key]}*\nval:${val}*\n`);
+        	console.log(`key:${key}*\nobj:${obj[key]}\nval:${val}*\n`);
             updateObj(obj[key], val);
         } else {
         	obj[key] = val
