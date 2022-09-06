@@ -111,8 +111,9 @@ router.post('/', async (req, res) => {
 
 //update one product
 router.put('/:id', getProduct, async (req, res) => {
-	console.log(req.body);
+	console.log({...res.product, ...req.body});
 	res.product = updateObj(res.product, req.body);
+	console.log(res.product);
 	try {
 		const upProduct = await res.product.save();
 		res.json(upProduct);
