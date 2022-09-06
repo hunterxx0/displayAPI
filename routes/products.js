@@ -245,12 +245,13 @@ function arrRem(arr, value) {
 function updateObj(obj, upBody) {
     for (const [key, val] of Object.entries(upBody)) {
     	if ( key == "Characteristics") {
+    		console.log("carrrrr");
+    		console.log(obj);
     		console.log(`key:${key}*\nobj:${obj[key]}\ntype:${typeof obj[key]}*\n`);
     		console.log(`keybd:${key}*\nobj:${upBody[key]}*\ntype:${typeof upBody[key]}*\n`);
     	}
     	
         if (typeof val == "object" && typeof obj[key] == "object") {
-        	console.log(`key:${key}*\nobj:${obj[key]}\nval:${val}*\n`);
             updateObj(obj[key], val);
         } else {
         	obj[key] = val
