@@ -48,7 +48,7 @@ const productSchema = new mongo.Schema({
 		required: true,
 		default: 0
 	},
-	favorited: {
+	favorite_count: {
 		type: Number,
 		required: true,
 		default: 0
