@@ -111,9 +111,7 @@ router.post('/', async (req, res) => {
 
 //update one product
 router.put('/:id', getProduct, async (req, res) => {
-	console.log({...res.product, ...req.body});
 	res.product = updateObj(res.product, req.body);
-	console.log(res.product);
 	try {
 		const upProduct = await res.product.save();
 		res.json(upProduct);
@@ -247,7 +245,7 @@ function arrRem(arr, value) {
 function updateObj(obj, upBody) {
     for (const [key, val] of Object.entries(upBody)) {
 
-        if (typeof val == "object") {
+        if (typeof val == "object" && typeof obj[key] == "object") {
         	console.log(`key:${key}*\nobj:${obj[key]}\nval:${val}*\n`);
             updateObj(obj[key], val);
         } else {
