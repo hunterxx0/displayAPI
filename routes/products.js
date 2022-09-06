@@ -246,11 +246,12 @@ function arrRem(arr, value) {
 function updateObj(obj, upBody) {
     for (const [key, val] of Object.entries(upBody)) {
 
-        if (typeof val == "object")
+        if (typeof val == "object") {
         	console.log(`key:${key}*\nval:${val}*\n`);
             updateObj(obj[key], val);
-        else
-            obj[key] = val;
+        } else {
+        	obj[key] = val
+        };
     }
     return obj;
 }
