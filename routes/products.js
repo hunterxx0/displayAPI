@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
 })
 
 //update one product
-router.put('/:id', getProduct, async (req, res) => {
+router.patch('/:id', getProduct, async (req, res) => {
 	res.product = updateObj(res.product, req.body);
 	try {
 		const upProduct = await res.product.save();
