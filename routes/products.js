@@ -99,7 +99,7 @@ router.post('/', async (req, res) => {
 		descriptions: req.body.descriptions,
 		tags: req.body.tags,
 		requests: req.body.requests,
-		Characteristics: req.body.Characteristics,
+		characteristics: req.body.characteristics,
 	})
 	try {
 		const newProduct = await product.save();
@@ -110,7 +110,7 @@ router.post('/', async (req, res) => {
 })
 
 //update one product
-router.patch('/:id', getProduct, async (req, res) => {
+router.patch('/:id', getProductUID, async (req, res) => {
 	res.product = Object.assign(res.product, req.body);
 	try {
 		const upProduct = await res.product.save();
@@ -234,27 +234,26 @@ async function getProduct(req, res, next){
 	next(); 
 }
 
+// get product by id function
+async function getProductUID(req, res, next){
+	let product
+	try {
+		product = await Product.find({_id: req.params.id, seller_id: req.query.seller_id})
+		if (product == null) {
+			return res.status(404).json({message: 'Cannot find product'});
+		}
+	} catch (err) {
+		return res.status(500).json({message: err.message});
+	}
+	res.product = product;
+	next(); 
+}
+
 // remove a value from an array
 function arrRem(arr, value) {
 	return arr.filter(function(ele){ 
         return ele != value; 
     });
 }
-
-// object update
-function updateObj(obj, upBody) {
-    for (const [key, val] of Object.entries(upBody)) {    	
-        if (typeof val == "object" && typeof obj[key] == "object") {
-        	console.log(`oookey:${key}*\nobj:${obj[key]}*\nval:${val}*\n`)
-            updateObj(obj[key], val);
-        } else {
-        	console.log(`key:${key}*\nobj:${obj[key]}*\nval:${val}*\n`)
-        	obj[key] = val
-        };
-    }
-    return obj;
-}
-
-
 
 module.exports = router;
