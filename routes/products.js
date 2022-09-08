@@ -240,10 +240,10 @@ async function getProductUID(req, res, next){
 	try {
 		product = await Product.findOne({_id: req.params.id, seller_id: req.query.seller_id})
 		if (product == null) {
-			return res.status(404).json({message: 'Cannot find product'});
+			return res.status(404).json({message: "Product doesn't exist or Seller doesn't own this product"});
 		}
 	} catch (err) {
-		return res.status(500).json({message: "Product doesn't exist or Seller doesn't own this product" });
+		return res.status(500).json({message: err.message});
 	}
 	console.log(product);
 	res.product = product;
