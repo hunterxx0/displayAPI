@@ -243,7 +243,7 @@ async function getProductUID(req, res, next){
 			return res.status(404).json({message: 'Cannot find product'});
 		}
 	} catch (err) {
-		return res.status(500).json({message: err.message});
+		return res.status(500).json({message: "Product doesn't exist or Seller doesn't own this product" });
 	}
 	console.log(product);
 	res.product = product;
