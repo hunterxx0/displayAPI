@@ -238,7 +238,7 @@ async function getProduct(req, res, next){
 async function getProductUID(req, res, next){
 	let product
 	try {
-		product = await Product.find({_id: req.params.id, seller_id: req.query.seller_id})
+		product = await Product.findOne({_id: req.params.id, seller_id: req.query.seller_id})
 		if (product == null) {
 			return res.status(404).json({message: 'Cannot find product'});
 		}
