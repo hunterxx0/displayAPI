@@ -10,7 +10,7 @@ const productSchema = new mongo.Schema({
 		required: false,
 		default: [],
 	},
-	seller_id: {
+	seller_name: {
 		type: String,
 		required: true,
 	},

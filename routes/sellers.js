@@ -51,22 +51,7 @@ router.post('/', async (req, res) => {
 
 //update one
 router.patch('/:id', getSeller, async (req, res) => {
-	if (req.body.name != null) {
-		res.seller.name = req.body.name
-	}
-
-	if (req.body.email != null) {
-		res.seller.email = req.body.email
-	}
-	if (req.body.phone_number != null) {
-		res.seller.phone_number = req.body.phone_number
-	}
-	if (req.body.website != null) {
-		res.seller.website = req.body.website
-	}
-	if (req.body.seller_country != null) {
-		res.seller.seller_country = req.body.seller_country
-	}
+	res.seller = Object.assign(res.product, req.body);
 	try {
 		const upSeller = await res.seller.save();
 		res.json(upSeller);
@@ -86,6 +71,9 @@ router.delete('/:id', getSeller, async (req, res) => {
 	
 })
 
+// utilities:
+
+// get product by id or name function
 async function getSeller(req, res, next){
 	let seller = null;
 	try {
