@@ -19,7 +19,7 @@ router.get('/page/:number', async (req, res) => {
 	try {
 		let sortVal = req.query.sort || 'title';
 		const products = await Product.find()
-		.sort({ create_at : -1})
+		.sort({ created_at : -1})
 		.skip(page * 20)
 		.limit(20);
 		res.json(products);
