@@ -92,7 +92,7 @@ router.post('/', async (req, res) => {
 	const product = new Product({
 		title: req.body.title,
 		pics_url: req.body.pics_url,
-		seller_id: req.body.seller_id,
+		seller_name: req.body.seller_name,
 		category: req.body.category,
 		descriptions: req.body.descriptions,
 		tags: req.body.tags,
