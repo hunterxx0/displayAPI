@@ -20,7 +20,7 @@ router.get('/:id', getSeller, (req, res) => {
 
 //get seller by name
 router.get('/name/:name', getSeller, (req, res) => {
-	let jsonObj = res.seller.toJson();
+	let jsonObj = res.seller.toJSON();
 	delete jsonObj["_id"];
 	console.log(jsonObj); 
 	res.json(jsonObj);
