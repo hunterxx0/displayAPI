@@ -91,7 +91,7 @@ async function getSeller(req, res, next){
 	} catch (err) {
 		return res.status(500).json({message: err.message});
 	}
-	delete seller["_id"]; 
+	delete seller["id"]; 
 	res.seller = seller;
 	next(); 
 }
