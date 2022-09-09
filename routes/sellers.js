@@ -7,7 +7,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	try {
 		const sellers = await Seller.find().sort(req.query.sort || 'name');
-		res.json(sellers);
+		let jsonObj = sellers.toJSON();
+		jsonObj.forEach(function(v){ delete v["_id"]; delete v["__v"]; });
+		res.json(jsonObj);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
@@ -15,14 +17,16 @@ router.get('/', async (req, res) => {
 
 //get seller by id
 router.get('/:id', getSeller, (req, res) => {
-	res.json(res.seller);
+	let jsonObj = res.seller.toJSON();
+	delete jsonObj["_id"];delete jsonObj["__v"]; 
+	res.json(jsonObj);
 })
 
 //get seller by name
 router.get('/name/:name', getSeller, (req, res) => {
 	let jsonObj = res.seller.toJSON();
 	delete jsonObj["_id"];
-	console.log(jsonObj); 
+	delete jsonObj["__v"]; 
 	res.json(jsonObj);
 })
 
