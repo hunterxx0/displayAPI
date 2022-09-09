@@ -16,12 +16,13 @@ router.get('/', async (req, res) => {
 // get products by page
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 0;
+    const limit = parseInt(req.query.limit, 10) || 20;
 	try {
 		let sortVal = req.query.sort || 'title';
 		const products = await Product.find()
 		.sort({ created_at : -1})
-		.skip(page * 20)
-		.limit(20);
+		.skip(page * limit)
+		.limit(limit);
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
