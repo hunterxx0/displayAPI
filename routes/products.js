@@ -17,9 +17,10 @@ router.get('/', async (req, res) => {
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 0;
 	try {
+		let sortVal = req.query.sort || 'title';
 		const products = await Product.find()
+		.sort({ sortVal : -1})
 		.skip(page * 20)
-		.sort(req.query.sort || 'title')
 		.limit(20);
 		res.json(products);
 	} catch (err) {
@@ -42,7 +43,7 @@ router.get('/title/:title', async (req, res) => {
 // get products by title and category
 router.get('/title/:title/category/:category', async (req, res) => {
 	try {
-		let sortVal = req.query.sort || 'title';
+
 		const query = (req.params.category == 'all' ) ? {
 			"title" : { $regex: req.params.title, $options: 'i'}} :  {
 				"title" : { $regex: req.params.title, $options: 'i'},
@@ -52,7 +53,7 @@ router.get('/title/:title/category/:category', async (req, res) => {
 		const products = await Product.find( query )
 		.skip(page * 10)
 		.limit(10)
-		.sort({ sortVal : -1});
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
