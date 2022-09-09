@@ -19,8 +19,8 @@ router.get('/page/:number', async (req, res) => {
 	try {
 		const products = await Product.find()
 		.skip(page * 20)
-		.limit(20)
-		.sort(req.query.sort || 'title');
+		.sort(req.query.sort || 'title')
+		.limit(20);
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -38,7 +38,6 @@ router.get('/title/:title', async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 })
-
 
 // get products by title and category
 router.get('/title/:title/category/:category', async (req, res) => {
@@ -58,7 +57,6 @@ router.get('/title/:title/category/:category', async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 })
-
 
 //get one product
 router.get('/:id', getProduct, (req, res) => {
@@ -120,91 +118,6 @@ router.patch('/:id', getProductUID, async (req, res) => {
 	}
 })
 
-
-//add urls
-router.patch('/:id/pic', getProduct, async (req, res) => {
-	let arr = req.body.tags;
-	if (arr != null) {
-		for( let i = 0; i < arr.length; i++){ 
-			res.product.tags.push(arr[i]);
-	    }
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-})
-
-//delete one url
-router.delete('/:id/pic', getProduct, async (req, res) => {
-	res.product.tags = arrRem(res.product.tags, req.params.tag)
-	try {
-		const upProduct = await res.product.save();
-		res.json(upProduct);
-	} catch (err) {
-		res.status(400).send({message: err.message})
-	}
-})
-
-
-//add tags
-router.patch('/:id/tags', getProduct, async (req, res) => {
-	let arr = req.body.tags;
-	if (arr != null) {
-		for( let i = 0; i < arr.length; i++){ 
-			res.product.tags.push(arr[i]);
-	    }
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-})
-
-//delete one tag
-router.delete('/:id/tags/:tag', getProduct, async (req, res) => {
-	res.product.tags = arrRem(res.product.tags, req.params.tag)
-	try {
-		const upProduct = await res.product.save();
-		res.json(upProduct);
-	} catch (err) {
-		res.status(400).send({message: err.message})
-	}
-})
-
-//add one request
-router.patch('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID && req.body) {
-		let obj = {};
-		obj[req.params.requestID] = req.body;
-		res.product.requests.push(obj);
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-
-})
-
-//delete one request
-router.delete('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID != null) {
-		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-})
-
 //delete one product
 router.delete('/:id', getProduct, async (req, res) => {
 	try {
@@ -240,7 +153,7 @@ async function getProductUID(req, res, next){
 	try {
 		product = await Product.findOne({_id: req.params.id, seller_id: req.query.seller_id})
 		if (product == null) {
-			return res.status(404).json({message: "Product doesn't exist or Seller doesn't own this product"});
+			return res.status(404).json({message: "Product doesn't exist or you do not have permissions to change it"});
 		}
 	} catch (err) {
 		return res.status(500).json({message: err.message});

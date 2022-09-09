@@ -13,8 +13,13 @@ router.get('/', async (req, res) => {
 	}
 })
 
-//get one
+//get seller by id
 router.get('/:id', getSeller, (req, res) => {
+	res.json(res.seller);
+})
+
+//get seller by name
+router.get('/:name', getSeller, (req, res) => {
 	res.json(res.seller);
 })
 
@@ -73,9 +78,13 @@ router.delete('/:id', getSeller, async (req, res) => {
 })
 
 async function getSeller(req, res, next){
-	let seller
+	let seller = null;
 	try {
-		seller = await Seller.findById(req.params.id)
+		if (req.params.id) {
+			seller = await Seller.findById(req.params.id);
+		} else if ( req.params.name ) {
+			seller = await Seller.findOne(req.params.name);
+		}
 		if (seller == null) {
 			return res.status(404).json({message: 'Cannot find seller'});
 		}
