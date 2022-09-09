@@ -42,6 +42,7 @@ router.get('/title/:title', async (req, res) => {
 // get products by title and category
 router.get('/title/:title/category/:category', async (req, res) => {
 	try {
+		let sortVal = req.query.sort || 'title';
 		const query = (req.params.category == 'all' ) ? {
 			"title" : { $regex: req.params.title, $options: 'i'}} :  {
 				"title" : { $regex: req.params.title, $options: 'i'},
@@ -51,7 +52,7 @@ router.get('/title/:title/category/:category', async (req, res) => {
 		const products = await Product.find( query )
 		.skip(page * 10)
 		.limit(10)
-		.sort(req.query.sort || 'title');
+		.sort({ sortVal : -1});
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
