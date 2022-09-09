@@ -83,7 +83,7 @@ async function getSeller(req, res, next){
 		if (req.params.id) {
 			seller = await Seller.findById(req.params.id);
 		} else if ( req.params.name ) {
-			seller = await Seller.findOne(req.params.name);
+			seller = await Seller.findOne({name: req.params.name});
 		}
 		if (seller == null) {
 			return res.status(404).json({message: 'Cannot find seller'});
@@ -91,6 +91,7 @@ async function getSeller(req, res, next){
 	} catch (err) {
 		return res.status(500).json({message: err.message});
 	}
+	delete seller._id 
 	res.seller = seller;
 	next(); 
 }
