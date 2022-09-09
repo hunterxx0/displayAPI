@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
 	try {
 		const sellers = await Seller.find().sort(req.query.sort || 'name');
 		let jsonObj = JSON.stringify(sellers);
+		console.log(jsonObj);
 		jsonObj.forEach(function(v){ delete v["_id"]; delete v["__v"]; });
 		res.json(jsonObj);
 	} catch (err) {
