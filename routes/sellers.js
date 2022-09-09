@@ -7,10 +7,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 	try {
 		const sellers = await Seller.find().sort(req.query.sort || 'name');
-		let jsonObj = JSON.stringify(sellers);
-		console.log(jsonObj);
-		jsonObj.forEach(function(v){ delete v["_id"]; delete v["__v"]; });
-		res.json(jsonObj);
+
+		sellers.forEach(function(v){ delete v["_id"]; delete v["__v"]; });
+		res.json(sellers);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
