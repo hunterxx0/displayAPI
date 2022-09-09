@@ -19,7 +19,7 @@ router.get('/:id', getSeller, (req, res) => {
 })
 
 //get seller by name
-router.get('/:name', getSeller, (req, res) => {
+router.get('/name/:name', getSeller, (req, res) => {
 	res.json(res.seller);
 })
 
