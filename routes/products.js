@@ -18,8 +18,9 @@ router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 0;
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
+    const sortVal = req.query.sort || 'title';
 	try {
-		let sortVal = req.query.sort || 'title';
+		
 		const products = await Product.find()
 		.sort({ [sortVal] : sortRev})
 		.skip(page * limit)
@@ -72,6 +73,7 @@ router.get('/seller/:sellerName', async (req, res) => {
     const page = parseInt(req.query.page, 10) || 0;
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
+    const sortVal = req.query.sort || 'title';
 	try {
 		const products = await Product.find({ seller_name: req.params.sellerName })
 		.sort({ [sortVal] : sortRev})
