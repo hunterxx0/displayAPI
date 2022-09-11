@@ -85,6 +85,7 @@ async function getSeller(req, res, next){
 		if (seller == null) {
 			return res.status(404).json({message: 'Cannot find seller'});
 		}
+		console.log(seller);
 	} catch (err) {
 		return res.status(500).json({message: err.message});
 	}

@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 	}
 })
 
-// get products by page
+//		get products by page
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 0;
     const limit = parseInt(req.query.limit, 10) || 20;
@@ -119,7 +119,7 @@ router.post('/', async (req, res) => {
 	}
 })
 
-//update one product
+//		update one product
 router.patch('/:id', getProductUID, async (req, res) => {
 	res.product = Object.assign(res.product, req.body);
 	try {
@@ -130,7 +130,7 @@ router.patch('/:id', getProductUID, async (req, res) => {
 	}
 })
 
-//delete one product
+//		delete one product
 router.delete('/:id', getProduct, async (req, res) => {
 	try {
 		await res.product.remove()
@@ -142,9 +142,9 @@ router.delete('/:id', getProduct, async (req, res) => {
 })
 
 
-// utilities:
+//utilities:
 
-// get product by id function
+//		get product by id function
 async function getProduct(req, res, next){
 	let product
 	try {
@@ -159,7 +159,7 @@ async function getProduct(req, res, next){
 	next(); 
 }
 
-// get product by id function
+//		get product by id function
 async function getProductUID(req, res, next){
 	let product
 	try {
@@ -175,7 +175,7 @@ async function getProductUID(req, res, next){
 	next(); 
 }
 
-// remove a value from an array
+//		remove a value from an array
 function arrRem(arr, value) {
 	return arr.filter(function(ele){ 
         return ele != value; 
