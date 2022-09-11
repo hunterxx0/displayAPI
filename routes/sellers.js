@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
 
 //update one
 router.patch('/:id', getSeller, async (req, res) => {
-	res.seller = Object.assign(res.product, req.body);
+	res.seller = Object.assign(res.seller, req.body);
 	try {
 		const upSeller = await res.seller.save();
 		res.json(upSeller);
@@ -85,7 +85,6 @@ async function getSeller(req, res, next){
 		if (seller == null) {
 			return res.status(404).json({message: 'Cannot find seller'});
 		}
-		console.log(seller);
 	} catch (err) {
 		return res.status(500).json({message: err.message});
 	}
