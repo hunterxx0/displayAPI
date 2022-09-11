@@ -2,8 +2,8 @@ const express = require('express');
 const Product = require('../models/product');
 const router = express.Router();
 
-
-// get all products
+// all the get routes:
+//		get all products
 router.get('/', async (req, res) => {
 	try {
 		const products = await Product.find().sort(req.query.sort || 'title');
@@ -17,10 +17,11 @@ router.get('/', async (req, res) => {
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 0;
     const limit = parseInt(req.query.limit, 10) || 20;
+    const sortRev = parseInt(req.query.reverse, 10) || -1;
 	try {
 		let sortVal = req.query.sort || 'title';
 		const products = await Product.find()
-		.sort({ [sortVal] : -1})
+		.sort({ [sortVal] : sortRev})
 		.skip(page * limit)
 		.limit(limit);
 		res.json(products);
@@ -29,7 +30,7 @@ router.get('/page/:number', async (req, res) => {
 	}
 })
 
-// get products by title
+//		get products by title
 router.get('/title/:title', async (req, res) => {
 	try {
 		const products = await Product.find( {
@@ -41,7 +42,7 @@ router.get('/title/:title', async (req, res) => {
 	}
 })
 
-// get products by title and category
+//		get products by title and category
 router.get('/title/:title/category/:category', async (req, res) => {
 	try {
 
@@ -61,24 +62,28 @@ router.get('/title/:title/category/:category', async (req, res) => {
 	}
 })
 
-//get one product
+//		get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
 })
 
-//get seller's products
-router.get('/seller/:sellerID', async (req, res) => {
-	
+//		get seller's products by name
+router.get('/seller/:sellerName', async (req, res) => {
+    const page = parseInt(req.query.page, 10) || 0;
+    const limit = parseInt(req.query.limit, 10) || 20;
+    const sortRev = parseInt(req.query.reverse, 10) || -1;
 	try {
-		const products = await Product.find({ seller_id: req.params.sellerID })
-		.sort(req.query.sort || 'title');
+		const products = await Product.find({ seller_name: req.params.sellerName })
+		.sort({ [sortVal] : sortRev})
+		.skip(page * limit)
+		.limit(limit);
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
 })
 
-//get products by category
+//		get products by category
 router.get('/category/:category', async (req, res) => {
 	
 	try {
@@ -90,7 +95,9 @@ router.get('/category/:category', async (req, res) => {
 	}
 })
 
-//create one product
+
+// other routes
+//		create one product
 router.post('/', async (req, res) => {
 	const product = new Product({
 		title: req.body.title,
