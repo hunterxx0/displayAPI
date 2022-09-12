@@ -83,13 +83,7 @@ router.get('/sellers/category/:category', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category})
 		.select('seller_name -_id');
-		const val = products.map(a => a.seller_name);
-		const jsonObj = JSON.parse(JSON.stringify(products));
-		const values = jsonObj.map(a => a.seller_name);
-		console.log(val);
-		console.log('--------------');
-		console.log(values);
-		res.json(values);
+		res.json(products.map(a => a.seller_name));
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
