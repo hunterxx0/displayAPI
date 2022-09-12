@@ -12,6 +12,7 @@ const userSchema = new mongo.Schema({
 	email: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	phone_number: {
 		type: Number,

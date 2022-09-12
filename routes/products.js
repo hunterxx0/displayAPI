@@ -2,7 +2,7 @@ const express = require('express');
 const Product = require('../models/product');
 const router = express.Router();
 
-// all the get routes:
+// get routes:
 //		get all products
 router.get('/', async (req, res) => {
 	try {
@@ -78,17 +78,6 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 	}
 })
 
-//		get products sellers of a category
-router.get('/sellers/category/:category', async (req, res) => {
-	try {
-		const products = await Product.find({"category": req.params.category})
-		.select('seller_name -_id');
-		res.json(products.map(a => a.seller_name));
-	} catch (err) {
-		res.status(500).json({message: err.message});
-	}
-})
-
 //		get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
@@ -123,6 +112,40 @@ router.get('/category/:category', async (req, res) => {
 	}
 })
 
+//		get products sellers of a category
+router.get('/test/:id', async (req, res) => {
+	try {
+		const products = await Product.find({"_id": req.params.id})
+		.select('-_id');
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+//		get products sellers of a category
+router.get('/sellers/category/:category', async (req, res) => {
+	try {
+		const products = await Product.find({"category": req.params.category})
+		.select('seller_name -_id');
+		res.json(products.map(a => a.seller_name));
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+// Update routes
+//		update one product
+router.patch('/:id', getProductUID, async (req, res) => {
+	res.product = Object.assign(res.product, req.body);
+	try {
+		const upProduct = await res.product.save();
+		res.json(upProduct);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+})
+
 
 // other routes
 //		create one product
@@ -140,17 +163,6 @@ router.post('/', async (req, res) => {
 	try {
 		const newProduct = await product.save();
 		res.status(201).json(newProduct);
-	} catch (err) {
-		res.status(400).send({message: err.message})
-	}
-})
-
-//		update one product
-router.patch('/:id', getProductUID, async (req, res) => {
-	res.product = Object.assign(res.product, req.body);
-	try {
-		const upProduct = await res.product.save();
-		res.json(upProduct);
 	} catch (err) {
 		res.status(400).send({message: err.message})
 	}

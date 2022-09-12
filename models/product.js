@@ -48,11 +48,6 @@ const productSchema = new mongo.Schema({
 		required: true,
 		default: 0
 	},
-	response_time: {
-		type: Number,
-		required: true,
-		default: 0
-	},
 	favorite_count: {
 		type: Number,
 		required: true,

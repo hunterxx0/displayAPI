@@ -37,18 +37,7 @@ router.post('/', async (req, res) => {
 
 //update one
 router.patch('/:id', getUser, async (req, res) => {
-	if (req.body.firstName != null) {
-		res.user.firstName = req.body.firstName
-	}
-	if (req.body.lastName != null) {
-		res.user.lastName = req.body.lastName
-	}
-	if (req.body.email != null) {
-		res.user.email = req.body.email
-	}
-	if (req.body.phone_number != null) {
-		res.user.phone_number = req.body.phone_number
-	}
+	res.user = Object.assign(res.user, req.body);
 	try {
 		const upUser = await res.user.save();
 		res.json(upUser);

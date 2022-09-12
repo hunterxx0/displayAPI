@@ -22,6 +22,11 @@ const sellerSchema = new mongo.Schema({
 		type: String,
 		required: true,
 	},
+	response_time: {
+		type: Number,
+		required: true,
+		default: 0
+	},
 	created_at: {
 		type: Date,
 		required: true,
