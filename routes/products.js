@@ -31,18 +31,6 @@ router.get('/page/:number', async (req, res) => {
 	}
 })
 
-//		get products sellers of a category
-router.get('/seller/category/:category', async (req, res) => {
-	try {
-		const products = await Product.find({"category": req.params.category});
-		console.log(products);
-		console.log("----------");
-		res.json(products);
-	} catch (err) {
-		res.status(500).json({message: err.message});
-	}
-})
-
 //		get products by title
 router.get('/title/:title', async (req, res) => {
 	try {
@@ -85,6 +73,20 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 		const products = await Product.find( query )
 		.sort(req.query.sort || 'title');
 		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+//		get products sellers of a category
+router.get('/sellers/category/:category', async (req, res) => {
+	try {
+		const products = await Product.find({"category": req.params.category})
+		.select('seller_name -_id');
+		console.log(products);
+		console.log("----------");
+		console.log(Object.values(products));
+		res.json(Object.values(products));
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
