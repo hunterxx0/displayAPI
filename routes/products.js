@@ -32,7 +32,7 @@ router.get('/page/:number', async (req, res) => {
 })
 
 //		get products sellers of a category
-router.get('seller/category/:category', async (req, res) => {
+router.get('/seller/category/:category', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category});
 		console.log(products);
