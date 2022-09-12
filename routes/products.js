@@ -82,7 +82,6 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 router.get('category/:category/sellers', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category})
-		.select('seller_name -_id');
 		console.log(products);
 		console.log("----------");
 		console.log(Object.values(products));
