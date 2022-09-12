@@ -6,7 +6,9 @@ const router = express.Router();
 //		get all products
 router.get('/', async (req, res) => {
 	try {
-		const products = await Product.find().sort(req.query.sort || 'title');
+		const products = await Product.find()
+		.select('-seller_id')
+		.sort(req.query.sort || 'title');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -22,6 +24,7 @@ router.get('/page/:number', async (req, res) => {
 	try {
 		
 		const products = await Product.find()
+		.select('-seller_id')
 		.sort({ [sortVal] : sortRev})
 		.skip(page * limit)
 		.limit(limit);
@@ -37,6 +40,7 @@ router.get('/title/:title', async (req, res) => {
 		const products = await Product.find( {
 			"title" : { $regex: req.params.title, $options: 'i'}
 		} ).sort(req.query.sort || 'title')
+		.select('-seller_id');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -54,6 +58,7 @@ router.get('/title/:title/category/:category', async (req, res) => {
 			};
 		const page = parseInt(req.query.page, 10) || 0;
 		const products = await Product.find( query )
+		.select('-seller_id')
 		.skip(page * 10)
 		.limit(10)
 		.sort(req.query.sort || 'title');
@@ -71,7 +76,8 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 				"category": req.params.category
 			};
 		const products = await Product.find( query )
-		.sort(req.query.sort || 'title');
+		.sort(req.query.sort || 'title')
+		.select('-seller_id');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -92,6 +98,7 @@ router.get('/seller/:sellerName', async (req, res) => {
 	try {
 		const products = await Product.find({ seller_name: req.params.sellerName })
 		.sort({ [sortVal] : sortRev})
+		.select('-seller_id')
 		.skip(page * limit)
 		.limit(limit);
 		res.json(products);
@@ -105,18 +112,8 @@ router.get('/category/:category', async (req, res) => {
 	
 	try {
 		const products = await Product.find({ category: req.params.category })
+		.select('-seller_id')
 		.sort(req.query.sort || 'title');
-		res.json(products);
-	} catch (err) {
-		res.status(500).json({message: err.message});
-	}
-})
-
-//		get products sellers of a category
-router.get('/test/:id', async (req, res) => {
-	try {
-		const products = await Product.find({"_id": req.params.id})
-		.select('-_id');
 		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
@@ -187,6 +184,7 @@ async function getProduct(req, res, next){
 	let product
 	try {
 		product = await Product.findById(req.params.id)
+		.select('-seller_id');
 		if (product == null) {
 			return res.status(404).json({message: 'Cannot find product'});
 		}
@@ -202,13 +200,13 @@ async function getProductUID(req, res, next){
 	let product
 	try {
 		product = await Product.findOne({_id: req.params.id, seller_id: req.query.seller_id})
+		.select('-seller_id');
 		if (product == null) {
 			return res.status(404).json({message: "Product doesn't exist or you do not have permissions to change it"});
 		}
 	} catch (err) {
 		return res.status(500).json({message: err.message});
 	}
-	console.log(product);
 	res.product = product;
 	next(); 
 }

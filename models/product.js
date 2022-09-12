@@ -14,6 +14,11 @@ const productSchema = new mongo.Schema({
 		type: String,
 		required: true,
 	},
+	seller_id: {
+		type: String,
+		required: true,
+		default: "none",
+	},
 	category: {
 		type: String,
 		required: true,
