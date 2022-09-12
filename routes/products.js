@@ -79,7 +79,7 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 })
 
 //		get products sellers of a category
-router.get('category/:category/sellers', async (req, res) => {
+router.get('sellers/category/:category', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category})
 		console.log(products);
