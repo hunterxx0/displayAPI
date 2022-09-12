@@ -63,6 +63,34 @@ router.get('/title/:title/category/:category', async (req, res) => {
 	}
 })
 
+//		get products by seller and category
+router.get('/seller/:seller/category/:category', async (req, res) => {
+	try {
+		const query = {
+				"seller_name" : req.params.seller,
+				"category": req.params.category
+			};
+		const products = await Product.find( query )
+		.sort(req.query.sort || 'title');
+		res.json(products);
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
+//		get products by seller and category
+router.get('category/:category/sellers/', async (req, res) => {
+	try {
+		const query = {
+				"category": req.params.category
+			};
+		const products = await Product.find( query ).select('seller_name -_id');
+		res.json(Object.values(products));
+	} catch (err) {
+		res.status(500).json({message: err.message});
+	}
+})
+
 //		get one product
 router.get('/:id', getProduct, (req, res) => {
 	res.json(res.product);
