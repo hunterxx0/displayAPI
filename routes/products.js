@@ -79,12 +79,15 @@ router.get('/seller/:seller/category/:category', async (req, res) => {
 })
 
 //		get products by seller and category
-router.get('category/:category/sellers/', async (req, res) => {
+router.get('category/:category/sellers', async (req, res) => {
 	try {
 		const query = {
 				"category": req.params.category
 			};
 		const products = await Product.find( query ).select('seller_name -_id');
+		console.log(products);
+		console.log("----------");
+		console.log(Object.values(products));
 		res.json(Object.values(products));
 	} catch (err) {
 		res.status(500).json({message: err.message});
