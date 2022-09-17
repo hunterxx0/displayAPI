@@ -1,6 +1,6 @@
 const express = require('express');
 const Product = require('../models/product');
-import {v4 as uuidv4} from 'uuid';
+const { v4 } = require('uuid');
 
 const router = express.Router();
 
@@ -148,7 +148,7 @@ router.patch('/:id', getProductUID, async (req, res) => {
 //		add one request
 router.patch('/:id/requests/', getProduct, async (req, res) => {
 	let request = req.body;
-	const myuuid = uuidv4();
+	const myuuid = v4();
 	request.id = myuuid;
 	res.product.requests.push(request);
 	try {

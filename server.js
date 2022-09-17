@@ -9,12 +9,8 @@ app.use( express.json() );
 app.use( urlencoded({ extended: true }) );
 
 // Twilio
-const accountSid = process.env.TWILIO_ACCOUNT_SID;
-const authToken = process.env.TWILIO_AUTH_TOKEN;
-const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
 const twilPost = require('./controllers/twilPost')
-const TwilioClient = require("twilio")(accountSid, authToken);
-app.post("/", TwilioClient);
+app.post("/", twilPost);
 
 //db connection
 const username = encodeURIComponent(process.env.USERNAME);
@@ -42,7 +38,7 @@ app.use('/products', productsRouter);
 
 //        Auth routes
 const auth = require('./routes/auth');
-app.use("/auth", router);
+app.use("/auth", auth);
 
 // port
 const PORT = process.env.PORT || 3000;
