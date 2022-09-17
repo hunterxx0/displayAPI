@@ -1,3 +1,7 @@
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
+const TwilioClient = require("twilio")(accountSid, authToken);
 function twilPost(req, res) {
   const { message, user: sender, type, members } = req.body;
 
