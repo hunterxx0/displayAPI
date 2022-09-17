@@ -1,6 +1,7 @@
 const express = require('express');
 const Product = require('../models/product');
 const { v4 } = require('uuid');
+const { ObjectID } = require('bson');
 
 const router = express.Router();
 
@@ -231,7 +232,7 @@ async function getProduct(req, res, next){
 async function getProductUID(req, res, next){
 	let product
 	try {
-		product = await Product.findOne({_id: ObjectId(req.params.id), seller_id: ObjectId(req.query.seller_id)})
+		product = await Product.findOne({_id: ObjectID(req.params.id), seller_id: ObjectID(req.query.seller_id)})
 		.select('-seller_id');
 		if (product == null) {
 			return res.status(404).json({message: "Product doesn't exist or you do not have permissions to change it"});
