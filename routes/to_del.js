@@ -54,31 +54,3 @@ router.delete('/:id/tags/:tag', getProduct, async (req, res) => {
 	}
 })
 
-//add one request
-router.patch('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID && req.body) {
-		let obj = {};
-		obj[req.params.requestID] = req.body;
-		res.product.requests.push(obj);
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-
-})
-
-//delete one request
-router.delete('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID != null) {
-		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-})

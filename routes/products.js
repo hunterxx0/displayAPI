@@ -1,5 +1,7 @@
 const express = require('express');
 const Product = require('../models/product');
+import {v4 as uuidv4} from 'uuid';
+
 const router = express.Router();
 
 // get routes:
@@ -140,6 +142,34 @@ router.patch('/:id', getProductUID, async (req, res) => {
 		res.json(upProduct);
 	} catch (err) {
 		res.status(400).send({message: err.message})
+	}
+})
+
+//		add one request
+router.patch('/:id/requests/', getProduct, async (req, res) => {
+	let request = req.body;
+	const myuuid = uuidv4();
+	request.id = myuuid;
+	res.product.requests.push(request);
+	try {
+		const upProduct = await res.product.save();
+		res.json(upProduct);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+
+})
+
+//		delete one request
+router.delete('/:id/requests/:requestID', getProduct, async (req, res) => {
+	if (req.params.requestID != null) {
+		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
+		try {
+			const upProduct = await res.product.save();
+			res.json(upProduct);
+		} catch (err) {
+			res.status(400).send({message: err.message})
+		}
 	}
 })
 

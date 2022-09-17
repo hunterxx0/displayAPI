@@ -1,12 +1,20 @@
 const mongo = require("mongoose");
 const express = require('express');
+const { urlencoded } = require("express");
 const app = express();
 const cors = require("cors");
-// port
-const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json());
+app.use( cors() );
+app.use( express.json() );
+app.use( urlencoded({ extended: true }) );
+
+// Twilio
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
+const twilPost = require('./controllers/twilPost')
+const TwilioClient = require("twilio")(accountSid, authToken);
+app.post("/", TwilioClient);
 
 //db connection
 const username = encodeURIComponent(process.env.USERNAME);
@@ -20,14 +28,21 @@ db.on('open', () => {
 });
 
 // routes:
-// user route
+//        User route
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
-//seller routes
+//        Seller routes
 const sellersRouter = require('./routes/sellers');
 app.use('/sellers', sellersRouter);
 
-//product routes
+//        Product routes
 const productsRouter = require('./routes/products');
 app.use('/products', productsRouter);
+
+//        Auth routes
+const auth = require('./routes/auth');
+app.use("/auth", router);
+
+// port
+const PORT = process.env.PORT || 3000;
