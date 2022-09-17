@@ -127,7 +127,8 @@ router.get('/sellers/category/:category', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category})
 		.select('seller_name -_id');
-		res.json(products.map(a => a.seller_name));
+		let result = products.map(a => a.seller_name).
+		res.json([...new set(result)]);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
