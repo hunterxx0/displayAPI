@@ -232,7 +232,7 @@ async function getProduct(req, res, next){
 async function getProductUID(req, res, next){
 	let product
 	try {
-		let query = {_id: (req.params.id), seller_id: (req.query.seller_id)};
+		let query = {_id: ObjectID(req.params.id), seller_id: ObjectID(req.query.seller_id)};
 		console.log(query);
 		product = await Product.findOne(query)
 		if (product == null) {
