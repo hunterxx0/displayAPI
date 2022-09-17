@@ -232,9 +232,9 @@ async function getProduct(req, res, next){
 async function getProductUID(req, res, next){
 	let product
 	try {
-		let query = {_id: ObjectID(req.params.id), seller_id: (req.query.seller_id)};
+		let query = {_id: ObjectID(req.params.id)};
 		console.log(query);
-		product = await Product.findOne(query)
+		product = await Product.findOne(query).select('-seller_id');
 		console.log(product);		
 		if (product == null) {
 			return res.status(404).json({message: "Product doesn't exist or you do not have permissions to change it"});
