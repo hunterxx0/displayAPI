@@ -5,26 +5,20 @@ import {User} from '../models/user.js';
 
 
 export async function  requestAdd(req, res) {
-	const session = await mongoose.startSession();
-	await session.startTransaction();
 	try {
 		let request = req.body;
 		const myuuid = v4();
 		request.id = myuuid;
 		const user = getUser(request.user_id);
-		if (!user.requests) throw 'Cannot find user';
-		if (!res.product.requests) throw 'Cannot find product';
+		if (!user) throw 'Cannot find user';
 		res.product.requests.push(request);
 		user.requests.push(myuuid);
 		await user.save();
 		const upProduct = await res.product.save();
-		await session.commitTransaction();
 		res.json(upProduct);
 	} catch (err) {
-		await session.abortTransaction();
+
 		res.status(400).send({message: err.message})
-	} finally {
-		session.endSession();
 	}
 
 }
