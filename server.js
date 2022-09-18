@@ -1,4 +1,4 @@
-import * as mongo from "mongoose";
+import mongoose from "mongoose";
 import express from "express";
 import { urlencoded } from "express";
 import cors from "cors";
@@ -16,8 +16,8 @@ app.post("/", twilPost);
 const username = encodeURIComponent(process.env.USERNAME);
 const password = encodeURIComponent(process.env.PASSWORD);
 const url = `mongodb+srv://${username}:${password}@${process.env.DATAURL}`;
-mongo.connect(url)
-const db = mongo.connection;
+mongoose.connect(url)
+const db = mongoose.connection;
 db.on('error', (err) => console.log(err));
 db.on('open', () => {
   app.listen(PORT, () => console.log('running ' + PORT));
