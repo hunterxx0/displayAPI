@@ -4,7 +4,7 @@ const Product = require('../models/product');
 const User = require('../models/user');
 
 
-export async function  requestAdd(req, res) {
+async function  requestAdd(req, res) {
 	const session = await db.startSession();
 	await session.startTransaction();
 	try {
@@ -38,7 +38,7 @@ if (req.params.requestID != null) {
 		}
 	}
 
-export async function  requestDel(req, res) {
+async function  requestDel(req, res) {
 	const session = await db.startSession();
 	await session.startTransaction();
 	try {
