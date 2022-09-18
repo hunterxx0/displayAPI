@@ -10,7 +10,9 @@ export async function  requestAdd(req, res) {
 		const myuuid = v4();
 		request.id = myuuid;
 		const user = await getUser(request.user_id);
-		if (!user) throw 'Cannot find user';
+		if (!user) {
+			throw 'Cannot find user';
+		}
 		console.log(user);
 		console.log('------------');
 		console.log(res.product);
@@ -20,7 +22,6 @@ export async function  requestAdd(req, res) {
 		const upProduct = await res.product.save();
 		res.json(upProduct);
 	} catch (err) {
-
 		res.status(400).send({message: err.message})
 	}
 
