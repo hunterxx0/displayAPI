@@ -28,15 +28,6 @@ export async function  requestAdd(req, res) {
 
 }
 
-if (req.params.requestID != null) {
-		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
 
 export async function  requestDel(req, res) {
 	const session = await db.startSession();
