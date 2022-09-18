@@ -5,14 +5,13 @@ import {User} from '../models/user.js';
 
 
 export async function  requestAdd(req, res) {
-	let request = req.body;
-	const myuuid = v4();
-	request.id = myuuid;
-	const user = await User.findById(request.user_id);
-	console.log(user);
-	console.log('------------');
+	const session = await mongoose.startSession();
+	await session.startTransaction();
 	try {
-		
+		let request = req.body;
+		const myuuid = v4();
+		request.id = myuuid;
+		const user = await User.findById(request.user_id);
 		if (!user) {
 			throw 'Cannot find user';
 		}
@@ -20,16 +19,20 @@ export async function  requestAdd(req, res) {
 		user.requests.push(myuuid);
 		await user.save();
 		const upProduct = await res.product.save();
+		await session.commitTransaction();
 		res.json(upProduct);
 	} catch (err) {
+		await session.abortTransaction();
 		res.status(400).send({message: err.message})
+	} finally {
+		session.endSession();
 	}
 
 }
 
 
 export async function  requestDel(req, res) {
-	const session = await db.startSession();
+	const session = await mongoose.startSession();
 	await session.startTransaction();
 	try {
 		const user = User.findOneAndUpdate(
