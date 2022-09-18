@@ -1,7 +1,7 @@
 import * as mongo from "mongoose";
 import express from "express";
 import { urlencoded } from "express";
-import "cors";
+import cors from "cors";
 
 const app = express();
 app.use( cors() );
