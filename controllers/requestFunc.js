@@ -73,3 +73,5 @@ async function getUser(userId){
 	}
 	return (user);
 }
+
+module.exports = { requestAdd, requestDel }
