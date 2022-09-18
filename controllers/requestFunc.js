@@ -54,7 +54,7 @@ export async function  requestDel(req, res) {
 async function getUser(userId){
 	let user
 	try {
-		user = await User.findById(id)
+		user = await User.findById(userId)
 		if (!user) {
 			return null;
 		return (user);
