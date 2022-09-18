@@ -152,11 +152,11 @@ router.patch('/:id', getProductUID, async (req, res) => {
 })
 
 //		add one request
-import {requestAdd} from '../controllers/requestFunc';
+import {requestAdd} from '../controllers/requestFunc.js';
 router.patch('/:id/requests/', getProduct, requestAdd);
 
 //		delete one request
-import {requestDel} from '../controllers/requestFunc';
+import {requestDel} from '../controllers/requestFunc.js';
 router.delete('/:id/requests/:requestID', getProduct, requestDel);
 
 
