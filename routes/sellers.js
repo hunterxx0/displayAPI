@@ -92,4 +92,4 @@ async function getSeller(req, res, next){
 	next(); 
 }
 
-module.exports = router;
+export {router as sellersRouter};

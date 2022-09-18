@@ -236,4 +236,4 @@ function arrRem(arr, value) {
     });
 }
 
-module.exports = router;
+export {router as productsRouter};

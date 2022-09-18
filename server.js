@@ -25,19 +25,19 @@ db.on('open', () => {
 
 // routes:
 //        User route
-import * as usersRouter from './routes/users.js';
+import {usersRouter} from './routes/users.js';
 app.use('/users', usersRouter);
 
 //        Seller routes
-import * as sellersRouter from './routes/sellers.js';
+import {sellersRouter} from './routes/sellers.js';
 app.use('/sellers', sellersRouter);
 
 //        Product routes
-import * as productsRouter from './routes/products.js';
+import {productsRouter} from './routes/products.js';
 app.use('/products', productsRouter);
 
 //        Auth routes
-import * as auth from './routes/auth.js';
+import {auth} from './routes/auth.js';
 app.use("/auth", auth);
 
 // port
