@@ -8,7 +8,7 @@ export async function  requestAdd(req, res) {
 	let request = req.body;
 	const myuuid = v4();
 	request.id = myuuid;
-	const user = await getUser(request.user_id);
+	const user = await User.findById(request.user_id);
 	console.log(user);
 	console.log('------------');
 	try {
@@ -16,7 +16,6 @@ export async function  requestAdd(req, res) {
 		if (!user) {
 			throw 'Cannot find user';
 		}
-		
 		res.product.requests.push(request);
 		user.requests.push(myuuid);
 		await user.save();
@@ -49,19 +48,3 @@ export async function  requestDel(req, res) {
 		session.endSession();
 	}
 }
-
-
-// get User by id function
-async function getUser(userId){
-	let user
-	try {
-		user = await User.findById(userId)
-		if (!user) {
-			return null;
-		return (user);
-		}
-	} catch (err) {
-		return null;
-	}
-}
-
