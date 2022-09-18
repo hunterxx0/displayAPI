@@ -1,5 +1,5 @@
-const express = require('express');
-const Seller = require('../models/seller');
+import "express";
+import {Seller} from '../models/seller';
 
 const router = express.Router();
 

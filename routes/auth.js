@@ -1,6 +1,6 @@
-const express = require('express');
-const AuthController = require('../controllers/AuthController');
-const UserController = require('../controllers/UserController');
+import "express";
+import {AuthController} from '../controllers/AuthController';
+import {UserController} from '../controllers/UserController';
 
 const router = express();
 

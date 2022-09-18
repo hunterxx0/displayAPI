@@ -1,9 +1,9 @@
-const mongo = require("mongoose");
-const express = require('express');
-const { urlencoded } = require("express");
-const app = express();
-const cors = require("cors");
+import * as mongo from "mongoose";
+import "express";
+import { urlencoded } from "express";
+import "cors";
 
+const app = express();
 app.use( cors() );
 app.use( express.json() );
 app.use( urlencoded({ extended: true }) );
@@ -25,19 +25,19 @@ db.on('open', () => {
 
 // routes:
 //        User route
-const usersRouter = require('./routes/users');
+import * as usersRouter from './routes/users';
 app.use('/users', usersRouter);
 
 //        Seller routes
-const sellersRouter = require('./routes/sellers');
+import * as sellersRouter from './routes/sellers';
 app.use('/sellers', sellersRouter);
 
 //        Product routes
-const productsRouter = require('./routes/products');
+import * as productsRouter from './routes/products';
 app.use('/products', productsRouter);
 
 //        Auth routes
-const auth = require('./routes/auth');
+import * as auth from './routes/auth';
 app.use("/auth", auth);
 
 // port

@@ -1,4 +1,4 @@
-const StreamChat = require('stream-chat').StreamChat;
+import {StreamChat} from 'stream-chat';
 
 
 const api_key = process.env.STREAM_API_KEY;

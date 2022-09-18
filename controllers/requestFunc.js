@@ -1,7 +1,7 @@
-const { v4 } = require('uuid');
-const db = require("mongoose");
-const Product = require('../models/product');
-const User = require('../models/user');
+import { v4 } from 'uuid';
+import * as db from "mongoose";
+import {Product} from '../models/product';
+import {User} from '../models/user';
 
 
 export async function  requestAdd(req, res) {

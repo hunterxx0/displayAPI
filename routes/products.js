@@ -1,7 +1,6 @@
-const express = require('express');
-const Product = require('../models/product');
-const { v4 } = require('uuid');
-const { ObjectID } = require('bson');
+import "express";
+import {Product} from '../models/product';
+import { ObjectID } from 'bson';
 
 const router = express.Router();
 
@@ -153,11 +152,11 @@ router.patch('/:id', getProductUID, async (req, res) => {
 })
 
 //		add one request
-const requestAdd = require('../controllers/requestFunc').requestAdd;
+import {requestAdd} from '../controllers/requestFunc';
 router.patch('/:id/requests/', getProduct, requestAdd);
 
 //		delete one request
-const requestDel = require('../controllers/requestFunc').requestDel;
+import {requestDel} from '../controllers/requestFunc';
 router.delete('/:id/requests/:requestID', getProduct, requestDel);
 
 

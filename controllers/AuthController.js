@@ -1,7 +1,7 @@
-const { connect } = require('getstream');
-const crypto = require('crypto');
-const bcrypt = require('bcrypt');
-const StreamChat = require('stream-chat').StreamChat;
+import { connect } from 'getstream';
+import 'crypto';
+import 'bcrypt';
+import {StreamChat} from 'stream-chat';
 
 
 const api_key = process.env.STREAM_API_KEY;
