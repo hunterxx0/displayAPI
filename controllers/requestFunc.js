@@ -8,10 +8,9 @@ export async function  requestAdd(req, res) {
 	let request = req.body;
 	const myuuid = v4();
 	request.id = myuuid;
-	const user = getUser(request.user_id);
+	const user = await getUser(request.user_id);
 	console.log(user);
 	console.log('------------');
-	console.log(res.product);
 	try {
 		
 		if (!user) {
