@@ -22,4 +22,4 @@ class UserController {
   }
 }
 
-module.exports = {UserController};
+export {UserController};
