@@ -1,6 +1,6 @@
-import * as mongo from "mongoose";
+import mongoose from "mongoose";
 
-const productSchema = new mongo.Schema({
+const productSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
@@ -60,4 +60,4 @@ const productSchema = new mongo.Schema({
 	},	
 })
 
-module.exports = mongo.model('product', productSchema);
+module.exports = mongoose.model('product', productSchema);
