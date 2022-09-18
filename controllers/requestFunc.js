@@ -11,6 +11,9 @@ export async function  requestAdd(req, res) {
 		request.id = myuuid;
 		const user = getUser(request.user_id);
 		if (!user) throw 'Cannot find user';
+		console.log(user);
+		console.log('------------');
+		console.log(res.product);
 		res.product.requests.push(request);
 		user.requests.push(myuuid);
 		await user.save();
