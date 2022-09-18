@@ -16,7 +16,7 @@ const userSchema = new mongo.Schema({
 	},
 	phone_number: {
 		type: Number,
-		required: false,
+		required: true,
 	},
 	created_at: {
 		type: Date,

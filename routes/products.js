@@ -153,32 +153,12 @@ router.patch('/:id', getProductUID, async (req, res) => {
 })
 
 //		add one request
-router.patch('/:id/requests/', getProduct, async (req, res) => {
-	let request = req.body;
-	const myuuid = v4();
-	request.id = myuuid;
-	res.product.requests.push(request);
-	try {
-		const upProduct = await res.product.save();
-		res.json(upProduct);
-	} catch (err) {
-		res.status(400).send({message: err.message})
-	}
-
-})
+const requestAdd = require('../controllers/requestFunc').requestAdd;
+router.patch('/:id/requests/', getProduct, requestAdd);
 
 //		delete one request
-router.delete('/:id/requests/:requestID', getProduct, async (req, res) => {
-	if (req.params.requestID != null) {
-		res.product.requests = res.product.requests.filter( obj => obj.id !== req.params.requestID)
-		try {
-			const upProduct = await res.product.save();
-			res.json(upProduct);
-		} catch (err) {
-			res.status(400).send({message: err.message})
-		}
-	}
-})
+const requestDel = require('../controllers/requestFunc').requestDel;
+router.delete('/:id/requests/:requestID', getProduct, requestDel);
 
 
 // other routes
@@ -236,7 +216,7 @@ async function getProduct(req, res, next){
 async function getProductUID(req, res, next){
 	let product
 	try {
-		let query = {_id: ObjectID(req.params.id)};
+		let query = {_id: ObjectID(req.params.id), seller_id: ObjectID(req.query.seller_id)};
 		console.log(query);
 		product = await Product.findOne(query).select('-seller_id');
 		console.log(product);		
