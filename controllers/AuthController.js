@@ -76,4 +76,4 @@ class AuthController {
   }
 }
 
-module.exports = AuthController;
+module.exports = {AuthController};
