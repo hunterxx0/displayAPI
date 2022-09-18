@@ -1,5 +1,5 @@
 import "express";
-import * as Product from '../models/product.js';
+import {Product} from '../models/product.js';
 import { ObjectID } from 'bson';
 
 const router = express.Router();

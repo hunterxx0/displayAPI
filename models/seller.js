@@ -34,4 +34,7 @@ const sellerSchema = new mongoose.Schema({
 	},
 })
 
-module.exports = mongoose.model('seller', sellerSchema);
+
+const Seller = mongoose.model('seller', sellerSchema);
+
+export { Seller } ;
