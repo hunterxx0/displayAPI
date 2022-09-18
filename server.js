@@ -1,5 +1,5 @@
 import * as mongo from "mongoose";
-import "express";
+import express from "express";
 import { urlencoded } from "express";
 import "cors";
 
@@ -35,7 +35,7 @@ app.use('/sellers', sellersRouter);
 //        Product routes
 import {productsRouter} from './routes/products.js';
 app.use('/products', productsRouter);
-
+  
 //        Auth routes
 import {auth} from './routes/auth.js';
 app.use("/auth", auth);
