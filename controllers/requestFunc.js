@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import * as db from "mongoose";
-import {Product} from '../models/product.js';
-import {User} from '../models/user.js';
+import * as Product from '../models/product.js';
+import * as User from '../models/user.js';
 
 
 export async function  requestAdd(req, res) {
