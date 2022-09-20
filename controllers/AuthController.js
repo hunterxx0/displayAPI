@@ -22,9 +22,15 @@ class AuthController {
         avatarURL,
       }
       const newUser = new User(user);
+      console.log(newUser);
+      console.log('----------------');
       const token = serverClient.createUserToken(newUser._id);
       newUser.token = token;
+      console.log(newUser);
+      console.log('----------------');
       const savedUser = await newUser.save();
+      console.log(savedUser);
+      console.log('----------------');
       return res.status(201).json({...user, userId: savedUser._id, token} );
     } catch (error) {
       res.status(500).json({ message: error });
