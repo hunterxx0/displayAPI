@@ -24,7 +24,7 @@ class AuthController {
       }
       const newUser = new User(user);
       console.log(newUser);
-      console.log('----------------');
+      console.log(newUser._id.toString());
       const token = serverClient.createUserToken(newUser._id);
       newUser.token = token;
       console.log(newUser);
