@@ -24,9 +24,12 @@ class AuthController {
         email
       }
       const newUser = new User(user);
+      console.log(newUser);
       const token = serverClient.createUserToken(newUser._id.toString());
       newUser.token = token;
+      console.log(newUser);
       const savedUser = await newUser.save();
+      console.log(savedUser);
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
       console.log(error);
