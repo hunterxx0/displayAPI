@@ -12,11 +12,11 @@ const app_id = process.env.STREAM_APP_ID;
 class AuthController {
   static async signup(req, res) {
     try {
-      const { username, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
+      const { name, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
       const serverClient = connect(api_key, api_secret, app_id);
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = {
-        username,
+        name,
         hashedPassword,
         fullName,
         phone_number,
@@ -34,12 +34,12 @@ class AuthController {
   }
   static async login(req, res) {
     try {
-      const { username, password } = req.body;
+      const { name, password } = req.body;
 
       const serverClient = connect(api_key, api_secret, app_id);
       const client = StreamChat.getInstance(api_key, api_secret);
 
-      const { users } = await client.queryUsers({ name: username });
+      const { users } = await client.queryUsers({ name });
       const userdb = await User.findOne({username});
       // const updateResponse = await client.upsertUser({
       //   id: users[0].id,
@@ -58,7 +58,7 @@ class AuthController {
           token,
           role: users[0].role,
           fullName: users[0].fullName,
-          username,
+          name,
           userId: users[0].id,
         });
       } else {
