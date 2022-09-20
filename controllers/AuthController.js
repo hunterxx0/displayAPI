@@ -1,6 +1,6 @@
 import { connect } from 'getstream';
-import 'crypto';
-import 'bcrypt';
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 import {StreamChat} from 'stream-chat';
 
 
@@ -52,8 +52,9 @@ class AuthController {
       if (!users.length)
         return res.status(400).json({ message: 'User not found' });
       console.log(users);
-      const success = await bcrypt.compare(password, users[0].hashedPassword);
       console.log('----------');
+      const success = await bcrypt.compare(password, users[0].hashedPassword);
+
       const token = serverClient.createUserToken(users[0].id);
       console.log(success);
       console.log('----------');
