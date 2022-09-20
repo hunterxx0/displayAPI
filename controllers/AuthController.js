@@ -29,6 +29,7 @@ class AuthController {
       console.log(token);
       newUser.token = token;
       const savedUser = await newUser.save();
+      console.log('------------');
       console.log(savedUser);
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
