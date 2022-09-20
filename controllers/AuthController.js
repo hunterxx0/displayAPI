@@ -12,11 +12,11 @@ const app_id = process.env.STREAM_APP_ID;
 class AuthController {
   static async signup(req, res) {
     try {
-      const { name, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
+      const { username, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
       const serverClient = connect(api_key, api_secret, app_id);
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = {
-        name,
+        username,
         hashedPassword,
         fullName,
         phone_number,
@@ -29,17 +29,18 @@ class AuthController {
       const savedUser = await newUser.save();
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: error });
     }
   }
   static async login(req, res) {
     try {
-      const { name, password } = req.body;
+      const { username, password } = req.body;
 
       const serverClient = connect(api_key, api_secret, app_id);
       const client = StreamChat.getInstance(api_key, api_secret);
 
-      const { users } = await client.queryUsers({ name });
+      const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
       // const updateResponse = await client.upsertUser({
       //   id: users[0].id,
@@ -58,7 +59,7 @@ class AuthController {
           token,
           role: users[0].role,
           fullName: users[0].fullName,
-          name,
+          username,
           userId: users[0].id,
         });
       } else {
