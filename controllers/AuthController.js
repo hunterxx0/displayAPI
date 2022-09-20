@@ -11,25 +11,21 @@ const app_id = process.env.STREAM_APP_ID;
 class AuthController {
   static async signup(req, res) {
     try {
-      const { username, password, fullName, phoneNumber, avatarURL } = req.body;
-
-      const userId = crypto.randomBytes(16).toString('hex');
-
+      const { username, password, fullName, phoneNumber: phone_number, avatarURL } = req.body;
       const serverClient = connect(api_key, api_secret, app_id);
-
       const hashedPassword = await bcrypt.hash(password, 10);
-
-      const token = serverClient.createUserToken(userId);
-
-      return res.status(201).json({
+      const user = {
         username,
         hashedPassword,
         fullName,
-        phoneNumber,
+        phone_number,
         avatarURL,
-        token,
-        userId,
-      });
+      }
+      const newUser = new User(user);
+      const token = serverClient.createUserToken(newUser._id);
+      newUser.token = token;
+      const savedUser = await newUser.save();
+      return res.status(201).json({...user, userId: savedUser._id, token} );
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -51,15 +47,8 @@ class AuthController {
 
       if (!users.length)
         return res.status(400).json({ message: 'User not found' });
-      console.log(users);
-      console.log('----------');
       const success = await bcrypt.compare(password, users[0].hashedPassword);
-
       const token = serverClient.createUserToken(users[0].id);
-      console.log(success);
-      console.log('----------');
-      console.log(token);
-      console.log('----------');
 
       // console.log(users);
       if (success) {

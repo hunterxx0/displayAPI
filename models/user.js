@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-	firstName: {
+	username: {
 		type: String,
 		required: true,
+		unique: true,
 	},
-	lastName: {
+	fullName: {
 		type: String,
 		required: true,
 	},
@@ -14,9 +15,18 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		unique: true,
 	},
+	hashedPassword: {
+		type: String,
+		required: true,
+	},
 	phone_number: {
 		type: Number,
 		required: true,
+	},
+	token: {
+		type: String,
+		required: true,
+		default: null
 	},
 	created_at: {
 		type: Date,
@@ -25,6 +35,10 @@ const userSchema = new mongoose.Schema({
 	},
 	updated_at: {
 		type: Date,
+		required: false,
+	},
+	avatarURL: {
+		type: String,
 		required: false,
 	},
 	favorites: {

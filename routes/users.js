@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
 router.get('/:id', getUser, (req, res) => {
 	res.json(res.user);
 })
-
+/*
 //create one
 router.post('/', async (req, res) => {
 	const user = new User({
@@ -34,7 +34,7 @@ router.post('/', async (req, res) => {
 		res.status(400).send({message: err.message})
 	}
 })
-
+*/
 //update one
 router.patch('/:id', getUser, async (req, res) => {
 	res.user = Object.assign(res.user, req.body);
