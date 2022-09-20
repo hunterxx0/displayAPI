@@ -32,7 +32,7 @@ class AuthController {
       const savedUser = await newUser.save();
       console.log(savedUser);
       console.log('----------------');
-      return res.status(201).json({...user, userId: savedUser._id, token} );
+      return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -45,18 +45,22 @@ class AuthController {
       const client = StreamChat.getInstance(api_key, api_secret);
 
       const { users } = await client.queryUsers({ name: username });
-
+      const userdb = await User.findOne({username});
+      console.log(userdb);
       // const updateResponse = await client.upsertUser({
       //   id: users[0].id,
       //   role: 'admin',
       // });
       // console.log(updateResponse);
 
-      if (!users.length)
+      if (!users.length || !userdb)
         return res.status(400).json({ message: 'User not found' });
-      const success = await bcrypt.compare(password, users[0].hashedPassword);
+      let success = await bcrypt.compare(password, users[0].hashedPassword);
+      console.log(success);
+      if (success) success = bcrypt.compare(password, userdb.hashedPassword);
+      console.log(success);
       const token = serverClient.createUserToken(users[0].id);
-
+      console.log(token);
       // console.log(users);
       if (success) {
         res.status(200).json({
