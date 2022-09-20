@@ -1,5 +1,6 @@
 import express from "express";
 import {Product} from '../models/product.js';
+import {User} from '../models/user.js';
 import { ObjectID } from 'bson';
 
 const router = express.Router();
@@ -241,6 +242,21 @@ async function getProductUID(req, res, next){
 		return res.status(500).json({message: err.message});
 	}
 	res.product = product;
+	next(); 
+}
+
+//		get product by id function
+async function userVal(req, res, next){
+	let user
+	try {
+		user = await User.findOne(token);
+		console.log(user);		
+		if (user == null) {
+			return res.status(401).json({message: "Unauthorized user"});
+		}
+	} catch (err) {
+		return res.status(500).json({message: err.message});
+	}
 	next(); 
 }
 

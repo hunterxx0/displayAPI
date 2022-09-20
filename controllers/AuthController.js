@@ -22,16 +22,14 @@ class AuthController {
         phone_number,
         avatarURL,
       }
+      console.log(user);
       const newUser = new User(user);
       console.log(newUser);
-      console.log(newUser._id);
       const token = serverClient.createUserToken(newUser._id.toString());
+      console.log(token);
       newUser.token = token;
-      console.log(newUser);
-      console.log('----------------');
       const savedUser = await newUser.save();
       console.log(savedUser);
-      console.log('----------------');
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
       res.status(500).json({ message: error });
@@ -46,7 +44,6 @@ class AuthController {
 
       const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
-      console.log(userdb);
       // const updateResponse = await client.upsertUser({
       //   id: users[0].id,
       //   role: 'admin',
@@ -56,11 +53,8 @@ class AuthController {
       if (!users.length || !userdb)
         return res.status(400).json({ message: 'User not found' });
       let success = await bcrypt.compare(password, users[0].hashedPassword);
-      console.log(success);
-      if (success) success = bcrypt.compare(password, userdb.hashedPassword);
-      console.log(success);
+      if (success) success = await bcrypt.compare(password, userdb.hashedPassword);
       const token = serverClient.createUserToken(users[0].id);
-      console.log(token);
       // console.log(users);
       if (success) {
         res.status(200).json({
