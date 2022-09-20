@@ -51,10 +51,12 @@ class AuthController {
 
       if (!users.length)
         return res.status(400).json({ message: 'User not found' });
-
+      console.log(users);
       const success = await bcrypt.compare(password, users[0].hashedPassword);
 
       const token = serverClient.createUserToken(users[0].id);
+      console.log(token);
+
       // console.log(users);
       if (success) {
         res.status(200).json({
