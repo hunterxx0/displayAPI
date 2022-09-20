@@ -12,7 +12,7 @@ const app_id = process.env.STREAM_APP_ID;
 class AuthController {
   static async signup(req, res) {
     try {
-      const { username, password, fullName, phoneNumber: phone_number, avatarURL } = req.body;
+      const { username, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
       const serverClient = connect(api_key, api_secret, app_id);
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = {
@@ -21,6 +21,7 @@ class AuthController {
         fullName,
         phone_number,
         avatarURL,
+        email
       }
       console.log(user);
       const newUser = new User(user);
@@ -28,11 +29,13 @@ class AuthController {
       const token = serverClient.createUserToken(newUser._id.toString());
       console.log(token);
       newUser.token = token;
+      console.log(newUser);
       const savedUser = await newUser.save();
       console.log('------------');
       console.log(savedUser);
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
+      console.log(error);
       res.status(500).json({ message: error });
     }
   }
