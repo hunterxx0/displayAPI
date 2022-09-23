@@ -21,12 +21,7 @@ router.get('/', async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 })
-{
-	totalpages: products.count() / limit
-	nextPage: current + 1
-	prevPage: current - 1
-	data: {il data ili mawjouda tawa}
-}
+
 //		get products by page
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 1;
