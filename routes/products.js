@@ -30,16 +30,16 @@ router.get('/page/:number', async (req, res) => {
     const sortVal = req.query.sort || 'title';
     const result = {}
 	try {
-		
+		if (page <= 0) throw 'Bad Request';
 		const products = await Product.find()
 		.select('-seller_id')
 		.sort({ [sortVal] : sortRev})
-		.skip((page - 1) * limit)
+		.skip(page * limit)
 		.limit(limit);
 		const productsCount = await Product.find().count();
 		result.totalpages = Math.floor(productsCount/limit);
 		if (productsCount%limit) result.totalpages += 1;
-		if (page > result.totalpages || page < 0) throw 'Bad Request';
+		if (page > result.totalpages) throw 'Bad Request';
 		result.nextPage = (page == result.totalpages) ? null : page + 1;
 		result.prevPage = (page == 1) ? null : page - 1;
 		result.data = products;
