@@ -24,13 +24,13 @@ router.get('/', async (req, res) => {
 
 //		get products by page
 router.get('/page/:number', async (req, res) => {
+	if (req.params.number == "0") return res.status(400).json({message: 'Bad Request'});
     const page = parseInt(req.params.number, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
     const sortVal = req.query.sort || 'title';
     const result = {}
 	try {
-		
 		const products = await Product.find()
 		.select('-seller_id')
 		.sort({ [sortVal] : sortRev})
@@ -43,7 +43,6 @@ router.get('/page/:number', async (req, res) => {
 		result.nextPage = (page == result.totalpages) ? null : page + 1;
 		result.prevPage = (page == 1) ? null : page - 1;
 		result.data = products;
-
 		res.json(result);
 	} catch (err) {
 		if (err.message == 'Bad Request') res.status(400).json({message: err.message});
