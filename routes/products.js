@@ -21,21 +21,35 @@ router.get('/', async (req, res) => {
 		res.status(500).json({message: err.message});
 	}
 })
-
+{
+	totalpages: products.count() / limit
+	nextPage: current + 1
+	prevPage: current - 1
+	data: {il data ili mawjouda tawa}
+}
 //		get products by page
 router.get('/page/:number', async (req, res) => {
-    const page = parseInt(req.params.number, 10) || 0;
+    const page = parseInt(req.params.number, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
     const sortVal = req.query.sort || 'title';
+    const result = {}
+    
 	try {
 		
 		const products = await Product.find()
 		.select('-seller_id')
 		.sort({ [sortVal] : sortRev})
-		.skip(page * limit)
+		.skip((page - 1) * limit)
 		.limit(limit);
-		res.json(products);
+		let productCount = products.count();
+		result.totalpages = Math.floor(productCount/limit);
+		if (productCount%limit) result.totalpages += 1;
+		result.nextPage = page + 1 ? page == result.totalpages : null;
+		result.prevPage = page - 1 ? page == 1 : null;
+		result.data = products;
+
+		res.json(result);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
