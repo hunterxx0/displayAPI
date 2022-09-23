@@ -29,7 +29,6 @@ router.get('/page/:number', async (req, res) => {
     const sortRev = parseInt(req.query.reverse, 10) || -1;
     const sortVal = req.query.sort || 'title';
     const result = {}
-    
 	try {
 		
 		const products = await Product.find()
@@ -40,12 +39,14 @@ router.get('/page/:number', async (req, res) => {
 		const productsCount = await Product.find().count();
 		result.totalpages = Math.floor(productsCount/limit);
 		if (productsCount%limit) result.totalpages += 1;
-		result.nextPage = page == result.totalpages ? null : page + 1;
-		result.prevPage = page == 1 ? null : page - 1;
+		if (page > result.totalpages || page < 0) throw 'Bad Request';
+		result.nextPage = (page == result.totalpages) ? null : page + 1;
+		result.prevPage = (page == 1) ? null : page - 1;
 		result.data = products;
 
 		res.json(result);
 	} catch (err) {
+		if (err.message == 'Bad Request') res.status(400).json({message: err.message});
 		res.status(500).json({message: err.message});
 	}
 })
