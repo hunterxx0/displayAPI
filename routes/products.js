@@ -30,11 +30,11 @@ router.get('/page/:number', async (req, res) => {
     const sortVal = req.query.sort || 'title';
     const result = {}
 	try {
-		if (page <= 0) throw 'Bad Request';
+		
 		const products = await Product.find()
 		.select('-seller_id')
 		.sort({ [sortVal] : sortRev})
-		.skip(page * limit)
+		.skip((page - 1) * limit)
 		.limit(limit);
 		const productsCount = await Product.find().count();
 		result.totalpages = Math.floor(productsCount/limit);
