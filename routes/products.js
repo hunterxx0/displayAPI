@@ -37,7 +37,7 @@ router.get('/page/:number', async (req, res) => {
 		.sort({ [sortVal] : sortRev})
 		.skip((page - 1) * limit)
 		.limit(limit);
-		let productCount = products.count();
+		let productCount = products.length;
 		result.totalpages = Math.floor(productCount/limit);
 		if (productCount%limit) result.totalpages += 1;
 		result.nextPage = page + 1 ? page == result.totalpages : null;
