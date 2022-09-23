@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
 //		get products by page
 router.get('/page/:number', async (req, res) => {
     const page = parseInt(req.params.number, 10) || 1;
+    if (page == 0) res.status(500).json({message: 'Bad Request'});
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
     const sortVal = req.query.sort || 'title';
