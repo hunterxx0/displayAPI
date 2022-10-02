@@ -143,6 +143,7 @@ router.get('/sellers/category/:category', async (req, res) => {
 		.select('seller_name -_id');
 
 		let result = products.map(a => a.seller_name);
+		result = [...new Set(result)];
 		res.json(result);
 	} catch (err) {
 		res.status(500).json({message: err.message});
