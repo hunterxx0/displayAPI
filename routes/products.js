@@ -163,7 +163,7 @@ router.get('/user/requests', async (req, res) => {
 		let result = products.map(a => a.requests.filter(request => requests.includes(request.id) ));
 		console.log(`result:${result}`);
 		console.log('-----------------');
-		result = [...new Set(result)];
+		result = [...new Set(result)].flat();
 		res.json(result);
 	} catch (err) {
 		res.status(500).json({message: err.message});
