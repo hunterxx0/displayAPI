@@ -156,9 +156,6 @@ router.get('/user/requests', async (req, res) => {
 	console.log('-----------------');
 	try {
 		if (!requests) throw 'No requests';
-		requests = requests.map(a => console.log(a));
-		console.log(`OBJrequests:${requests}`);
-		console.log('-----------------');
 		const products = await Product.find({"requests.id": { $in: requests}})
 		.select('-seller_id')
 		console.log(`products:${products}`);
