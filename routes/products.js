@@ -150,15 +150,15 @@ router.get('/sellers/category/:category', async (req, res) => {
 })
 
 //		get seller's requests
-router.get('/user-request', async (req, res) => {
+router.get('/user-requests', async (req, res) => {
 	const requests = req.body.requests
 	try {
 		if (!requests) throw 'No requests';
 		const products = await Product.find({"requests.id": { $in: requests}})
-		.select('seller_name -_id');
-		let result = products.map(a => a.requests.map());
+		.select('-seller_id')
+		let result = products.map(a => a.requests.filter(request => requests.includes(request.id) ));
 		result = [...new Set(result)];
-		res.json(products);
+		res.json(result);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
