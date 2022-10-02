@@ -141,9 +141,9 @@ router.get('/sellers/category/:category', async (req, res) => {
 	try {
 		const products = await Product.find({"category": req.params.category})
 		.select('seller_name -_id');
-		/*
-		let result = products.map(a => a.seller_name);*/
-		res.json(products);
+
+		let result = products.map(a => a.seller_name);
+		res.json(result);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
@@ -152,17 +152,11 @@ router.get('/sellers/category/:category', async (req, res) => {
 //		get seller's requests
 router.get('/user/requests', async (req, res) => {
 	let requests = req.body.requests
-	console.log(`requests:${requests}`);
-	console.log('-----------------');
 	try {
 		if (!requests) throw 'No requests';
 		const products = await Product.find({"requests.id": { $in: requests}})
 		.select('-seller_id')
-		console.log(`products:${products}`);
-		console.log('-----------------');
 		let result = products.map(a => a.requests.filter(request => requests.includes(request.id) ));
-		console.log(`result:${result}`);
-		console.log('-----------------');
 		result = [...new Set(result)].flat();
 		res.json(result);
 	} catch (err) {
