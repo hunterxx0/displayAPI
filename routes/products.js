@@ -150,7 +150,7 @@ router.get('/sellers/category/:category', async (req, res) => {
 })
 
 //		get seller's requests
-router.get('/user-requests', async (req, res) => {
+router.get('/userRequests', async (req, res) => {
 	let requests = req.body.requests
 	console.log(requests);
 	console.log('-----------------');
