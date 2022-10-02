@@ -151,9 +151,10 @@ router.get('/sellers/category/:category', async (req, res) => {
 
 //		get seller's requests
 router.get('/user-requests', async (req, res) => {
-	const requests = req.body.requests
+	let requests = req.body.requests
 	try {
 		if (!requests) throw 'No requests';
+		requests = requests.map(a => ObjectID(a));
 		const products = await Product.find({"requests.id": { $in: requests}})
 		.select('-seller_id')
 		let result = products.map(a => a.requests.filter(request => requests.includes(request.id) ));
