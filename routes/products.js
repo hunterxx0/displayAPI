@@ -282,14 +282,21 @@ async function userVal(req, res, next){
 //		JWT check
 function JWTAuth(req, res, next){
 	let token = req.headers['authorization'];
+	console.log("token:");
+	console.log(token);
 	if (!token) return res.status(401).json({message: "Unauthorized"});
 	token = token.slice(7);
+	console.log("Stoken:");
+	console.log(token);
+
 	verify(token, jwtKey, (err, decoded) => {
         if (err) {
           console.log(`JWT Error: ${err}`);
           return res.status(401).send({message: "Unauthorized"});
         }
+        console.log("ccccccccccc:");
         console.log(credentials);
+        console.log("dddddddddddddd:");
         console.log(decoded);
 
     });
