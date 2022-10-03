@@ -298,9 +298,9 @@ function JWTAuth(req, res, next){
         console.log(credentials);
         console.log("dddddddddddddd:");
         console.log(decoded);
-
+    	next();
     });
-    next(); 
+     
 }
 
 //		remove a value from an array
