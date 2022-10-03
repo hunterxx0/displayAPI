@@ -291,11 +291,10 @@ function JWTAuth(req, res, next){
 
 	verify(token, jwtKey, (err, decoded) => {
         if (err) {
-          console.log(`JWT Error: ${err}`);
+          console.log(err);
           return res.status(401).json({message: "Unauthorized"});
         }
-        console.log("ccccccccccc:");
-        console.log(credentials);
+
         console.log("dddddddddddddd:");
         console.log(decoded);
     	next();
