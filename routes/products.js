@@ -2,8 +2,10 @@ import express from "express";
 import {Product} from '../models/product.js';
 import {User} from '../models/user.js';
 import { ObjectID } from 'bson';
+import {verify} from 'jsonwebtoken'
 
 const router = express.Router();
+const jwtKey = process.env.JWTKEY;
 
 // get routes:
 //		get all products
@@ -218,6 +220,11 @@ router.delete('/:id', getProduct, async (req, res) => {
 	
 })
 
+//		testing
+router.get('/test/test', JWTAuth, async (req, res) => {
+	res.json({message: 'working good'});
+})
+
 
 //utilities:
 
@@ -270,9 +277,26 @@ async function userVal(req, res, next){
 	next(); 
 }
 
+//		JWT check
+function JWTAuth(req, res, next){
+	let token = req.headers['authorization'];
+	if (!token) return res.status(401).json({message: "Unauthorized"});
+	token = token.slice(7);
+	verify(token, jwtKey, (err, decoded) => {
+        if (err) {
+          console.log(`JWT Error: ${err}`);
+          return res.status(401).send({message: "Unauthorized"});
+        }
+        console.log(credentials);
+        console.log(decoded);
+
+    });
+    next(); 
+}
+
 //		remove a value from an array
 function arrRem(arr, value) {
-	return arr.filter(function(ele){ 
+	return arr.filter(function(ele) { 
         return ele != value; 
     });
 }

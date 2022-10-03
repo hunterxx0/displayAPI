@@ -14,6 +14,10 @@ const sellerSchema = new mongoose.Schema({
 		type: Number,
 		required: false,
 	},
+	hashedPassword: {
+		type: String,
+		required: true,
+	},
 	website: {
 		type: String,
 		required: false,
@@ -26,6 +30,11 @@ const sellerSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 		default: 0
+	},
+	token: {
+		type: String,
+		required: true,
+		default: null
 	},
 	created_at: {
 		type: Date,

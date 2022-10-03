@@ -8,12 +8,55 @@ import {Seller} from '../models/seller.js';
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
 const app_id = process.env.STREAM_APP_ID;
+const jwtKey = process.env.JWTKEY;
 
 class AuthController {
+  static async sellerSignup(req, res) {
+    try {
+      const {
+        name,
+        password,
+        phoneNumber: phone_number,
+        avatarURL,
+        email,
+        website,
+        seller_country
+      } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const seller = {
+        name,
+        hashedPassword,
+        phone_number,
+        avatarURL,
+        email,
+        website,
+        seller_country
+      }
+      const newSeller = new Seller(seller);
+      // token expires in 3 hours
+      const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
+      const serverClient = connect(api_key, api_secret, app_id);
+      const token = serverClient.createUserToken({
+        id: newSeller._id.toString(),
+        role: "user"
+      }, jwtKey, timestamp);
+      newUser.token = token;
+      const savedSeller = await newSeller.save();
+      return res.status(201).json({...seller, userId: savedSeller._id.toString(), token} );
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
   static async signup(req, res) {
     try {
-      const { username, password, fullName, phoneNumber: phone_number, avatarURL, email } = req.body;
-      const serverClient = connect(api_key, api_secret, app_id);
+      const { 
+        username,
+        password,
+        fullName,
+        phoneNumber: phone_number,
+        avatarURL,
+        email
+      } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = {
         username,
@@ -24,15 +67,17 @@ class AuthController {
         email
       }
       const newUser = new User(user);
-      console.log(newUser);
-      const token = serverClient.createUserToken(newUser._id.toString());
+      // token expires in 3 hours
+      const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
+      const serverClient = connect(api_key, api_secret, app_id);
+      const token = serverClient.createUserToken({
+        id: newUser._id.toString(),
+        role: "user"
+      }, jwtKey, timestamp);
       newUser.token = token;
-      console.log(newUser);
       const savedUser = await newUser.save();
-      console.log(savedUser);
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
-      console.log(error);
       res.status(500).json({ message: error });
     }
   }
@@ -55,11 +100,12 @@ class AuthController {
         return res.status(401).json({ message: 'User not found' });
       let success = await bcrypt.compare(password, users[0].hashedPassword);
       if (success) success = await bcrypt.compare(password, dbcustomer.hashedPassword);
-
+      // token expires in 3 hours
+      const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const token = serverClient.createUserToken({
         id: users[0].id,
         role: userdb ? "user" : "seller"
-      });
+      }, jwtKey, timestamp);
       // console.log(users);
       if (success) {
         res.status(200).json({
@@ -72,6 +118,35 @@ class AuthController {
       } else {
         res.status(401).json({ message: 'Unauthorized' });
       }
+    } catch (error) {
+      // ads;
+      // console.log(error);
+
+      res.status(500).json({ message: error });
+    }
+  }
+  static async editLogin(req, res) {
+    try {
+      const info = req.body;
+      Object.keys(info).forEach(key => info[key] === undefined && delete info[key]);
+      if (password in info) {
+        info.hashedPassword = await bcrypt.hash(password, 10);
+      }
+      const client = StreamChat.getInstance(api_key, api_secret);
+      const { users } = await client.queryUsers({ name: (info.username || info.name) });
+      if (!users.length)
+        return res.status(401).json({ message: 'User not found' });
+      const sUsers = await client.upsertUser(info);
+      if (!sUsers)
+        return res.status(401).json({ message: 'User not found' });
+      let dbcustomer;
+      if (info.name) dbcustomer = await Seller.findOneAndUpdate({name: info.name}, info);
+      else if (info.username) dbcustomer = await User.findOneAndUpdate({name: info.username}, info);
+      if (!dbcustomer) {
+        await client.upsertUser(users[0]);
+        return res.status(401).json({ message: 'User not found' });
+      }
+      res.status(200).json('User Updated');
     } catch (error) {
       // ads;
       // console.log(error);

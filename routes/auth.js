@@ -10,6 +10,12 @@ router.get('/', (req, res) => {
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
 /*
+SellerSignup
+router.post('/sellerSignup', AuthController.sellerSignup);
+router.post('/editlogin', AuthController.editLogin);
+
+
+
 router.get('/role/:userId', UserController.getUserRole);
 */
 export {router as auth};
