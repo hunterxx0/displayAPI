@@ -2,9 +2,10 @@ import express from "express";
 import {Product} from '../models/product.js';
 import {User} from '../models/user.js';
 import { ObjectID } from 'bson';
-import jwt from 'jsonwebtoken'
-const { verify } = jwt;
+import jwt from 'jsonwebtoken';
 
+
+const { verify } = jwt;
 const router = express.Router();
 const jwtKey = process.env.JWTKEY;
 
