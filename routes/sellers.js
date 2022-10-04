@@ -6,11 +6,10 @@ const router = express.Router();
 // get all
 router.get('/', async (req, res) => {
 	try {
-		const sellers = await Seller.find().sort(req.query.sort || 'name');
-		let jsonObj = JSON.parse(JSON.stringify(sellers));
-		console.log(jsonObj);
-		jsonObj.forEach(function(v){ delete v["_id"]; delete v["__v"]; });
-		res.json(jsonObj);
+		const sellers = await Seller.find()
+		.select('-_id -__v')
+		.sort(req.query.sort || 'name');
+		res.json(sellers);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}
