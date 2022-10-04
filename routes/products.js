@@ -292,7 +292,7 @@ async function JWTAuth(req, res, next) {
         }
         if (decoded.role !== 'seller' && decoded.role !== 'admin')
         	return res.status(401).json({message: "Unauthorized"});
-		if (res.product) {
+		if (res.product && decoded.role == 'seller') {
 	    	let seller = await Seller.findOne({name: res.product.seller_name});
 	    	if (!seller) return res.status(401).json({message: "Unauthorized"});
 	    	if (seller._id.toString() !== decoded.id)
