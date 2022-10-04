@@ -15,8 +15,8 @@ import {getByCatg} from '../controllers/getProductReqs/getByCatg.js';
 import {getCatgSellers} from '../controllers/getProductReqs/getCatgSellers.js';
 import {getSellerReq} from '../controllers/getProductReqs/getSellerReq.js';
 
-import {updateProduct} from '../controllers/updateProductReq/updateProduct.js';
-import {requestAdd, requestDel} from '../controllers/updateProductReq/requestFunc.js';
+import {updateProduct} from '../controllers/upProductReq/updateProduct.js';
+import {requestAdd, requestDel} from '../controllers/upProductReq/requestFunc.js';
 
 import {getProduct} from '../controllers/utils/getProductByID.js';
 import {JWTAuth} from '../controllers/utils/jwtCheck.js';
