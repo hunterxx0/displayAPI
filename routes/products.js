@@ -281,16 +281,11 @@ async function userVal(req, res, next){
 }
 
 //		JWT check
-async function JWTAuth(req, res, next){
+async function JWTAuth(req, res, next) {
 	let token = req.headers['authorization'];
-	console.log("token:");
-	console.log(token);
 	if (!token) return res.status(401).json({message: "Unauthorized"});
 	token = token.slice(7);
-	console.log("Stoken:");
-	console.log(token);
-
-	verify(token, jwtKey, (err, decoded) => {
+	verify(token, jwtKey, async (err, decoded) => {
         if (err) {
           console.log(err);
           return res.status(401).json({message: "Unauthorized"});
