@@ -38,7 +38,7 @@ class AuthController {
       const serverClient = connect(api_key, api_secret, app_id);
       const token = serverClient.createUserToken({
         id: newSeller._id.toString(),
-        role: "user"
+        role: "seller"
       }, jwtKey, timestamp);
       newUser.token = token;
       const savedSeller = await newSeller.save();
@@ -90,11 +90,6 @@ class AuthController {
 
       const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
-      // const updateResponse = await client.upsertUser({
-      //   id: users[0].id,
-      //   role: 'admin',
-      // });
-      // console.log(updateResponse);
       const dbcustomer = userdb || (await Seller.findOne({name: username}));
       if (!users.length || !dbcustomer)
         return res.status(401).json({ message: 'User not found' });
@@ -108,6 +103,8 @@ class AuthController {
       }, jwtKey, timestamp);
       // console.log(users);
       if (success) {
+        dbcustomer.token = token;
+        await dbcustomer.save();
         res.status(200).json({
           token,
           role: users[0].role,
@@ -119,9 +116,7 @@ class AuthController {
         res.status(401).json({ message: 'Unauthorized' });
       }
     } catch (error) {
-      // ads;
       // console.log(error);
-
       res.status(500).json({ message: error });
     }
   }
@@ -148,9 +143,7 @@ class AuthController {
       }
       res.status(200).json('User Updated');
     } catch (error) {
-      // ads;
       // console.log(error);
-
       res.status(500).json({ message: error });
     }
   }
