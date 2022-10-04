@@ -1,6 +1,7 @@
 import express from "express";
 import {Product} from '../models/product.js';
 import {User} from '../models/user.js';
+import {Seller} from '../models/seller.js';
 import { ObjectID } from 'bson';
 import jwt from 'jsonwebtoken';
 
@@ -223,7 +224,7 @@ router.delete('/:id', getProduct, async (req, res) => {
 })
 
 //		testing
-router.get('/test/test', JWTAuth, async (req, res) => {
+router.get('/test/test/:id', getProduct, JWTAuth, async (req, res) => {
 	res.json({message: 'working good'});
 })
 
@@ -280,7 +281,7 @@ async function userVal(req, res, next){
 }
 
 //		JWT check
-function JWTAuth(req, res, next){
+async function JWTAuth(req, res, next){
 	let token = req.headers['authorization'];
 	console.log("token:");
 	console.log(token);
@@ -294,9 +295,14 @@ function JWTAuth(req, res, next){
           console.log(err);
           return res.status(401).json({message: "Unauthorized"});
         }
-
-        console.log("dddddddddddddd:");
-        console.log(decoded);
+        if (decoded.role !== 'seller' && decoded.role !== 'admin')
+        	return res.status(401).json({message: "Unauthorized"});
+		if (res.product) {
+	    	const seller = await Seller.find({name: res.product.seller_name})
+	    	if (!seller) return res.status(401).json({message: "Unauthorized"});
+	    	if (seller._id.toString() !== decoded.id)
+	    		return res.status(401).json({message: "Unauthorized"});
+    	}
     	next();
     });
      
