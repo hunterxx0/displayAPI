@@ -39,10 +39,8 @@ class AuthController {
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = connect(api_key, api_secret, app_id);
-      const token = serverClient.createUserToken({
-        id: newSeller._id.toString(),
-        role: "seller"
-      }, jwtKey, timestamp);
+      const token = serverClient.createUserToken(newSeller._id.toString(), timestamp);
+
       newUser.token = token;
       const savedSeller = await newSeller.save();
       return res.status(201).json({...seller, userId: savedSeller._id.toString(), token} );
@@ -73,10 +71,7 @@ class AuthController {
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = connect(api_key, api_secret, app_id);
-      const token = serverClient.createUserToken({
-        id: newUser._id.toString(),
-        role: "user"
-      }, jwtKey, timestamp);
+      const token = serverClient.createUserToken(newUser._id.toString(), timestamp);
       newUser.token = token;
       const savedUser = await newUser.save();
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
@@ -99,8 +94,6 @@ class AuthController {
       if (success) success = await bcrypt.compare(password, dbcustomer.hashedPassword);
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
-      console.log(users[0].id);
-      console.log(dbcustomer);
       const token = serverClient.createUserToken(users[0].id, timestamp);
       // console.log(users);
       if (success) {

@@ -47,6 +47,19 @@ router.patch('/:id', getUser, async (req, res) => {
 })
 
 //add favorites
+router.patch('/:id/search/:keyword', getUser, async (req, res) => {
+	res.user.recently_searched.push(req.params.keyword);
+	if (res.user.recently_searched.length > 20) res.user.recently_searched.shift();
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+})
+
+
+//add favorites
 router.patch('/:id/favorites/:favorite', getUser, async (req, res) => {
 	res.user.favorites.push(req.params.favorite);
 	try {

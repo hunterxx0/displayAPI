@@ -2,12 +2,13 @@ import {Seller} from '../../models/seller.js';
 import jwt from 'jsonwebtoken';
 
 const { verify } = jwt;
+const api_secret = process.env.STREAM_API_SECRET;
 
 export async function JWTAuth(req, res, next) {
 	let token = req.headers['authorization'];
 	if (!token) return res.status(401).json({message: "Unauthorized"});
 	token = token.slice(7);
-	verify(token, jwtKey, async (err, decoded) => {
+	verify(token, api_secret, async (err, decoded) => {
 		if (err) {
       console.log(err);
       return res.status(401).json({message: "Unauthorized"});
