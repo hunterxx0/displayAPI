@@ -87,7 +87,6 @@ class AuthController {
 
       const serverClient = connect(api_key, api_secret, app_id);
       const client = StreamChat.getInstance(api_key, api_secret);
-      console.log(err);
       const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
       const dbcustomer = userdb || (await Seller.findOne({name: username}));
