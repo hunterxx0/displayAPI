@@ -87,7 +87,7 @@ class AuthController {
 
       const serverClient = connect(api_key, api_secret, app_id);
       const client = StreamChat.getInstance(api_key, api_secret);
-
+      console.log(err);
       const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
       const dbcustomer = userdb || (await Seller.findOne({name: username}));
@@ -116,7 +116,7 @@ class AuthController {
         res.status(401).json({ message: 'Unauthorized' });
       }
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ message: error });
     }
   }
