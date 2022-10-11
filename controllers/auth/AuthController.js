@@ -101,7 +101,7 @@ class AuthController {
       const token = serverClient.createUserToken({
         id: users[0].id,
         role: userdb ? "user" : "seller"
-      }, jwtKey, timestamp);
+      }, timestamp);
       // console.log(users);
       if (success) {
         dbcustomer.token = token;
