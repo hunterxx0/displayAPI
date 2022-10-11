@@ -3,7 +3,7 @@ import {Product} from '../models/product.js';
 import {User} from '../models/user.js';
 import {Seller} from '../models/seller.js';
 import { ObjectID } from 'bson';
-import jwt from 'jsonwebtoken';
+
 
 import {getAllReq} from '../controllers/getProductReqs/getAllReq.js';
 import {getPage} from '../controllers/getProductReqs/getPage.js';
@@ -21,7 +21,7 @@ import {requestAdd, requestDel} from '../controllers/upProductReq/requestFunc.js
 import {getProduct} from '../controllers/utils/getProductByID.js';
 import {JWTAuth} from '../controllers/utils/jwtCheck.js';
 
-const { verify } = jwt;
+
 const router = express.Router();
 const jwtKey = process.env.JWTKEY;
 

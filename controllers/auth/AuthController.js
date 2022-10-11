@@ -5,7 +5,9 @@ import {StreamChat} from 'stream-chat';
 
 import {User} from '../../models/user.js';
 import {Seller} from '../../models/seller.js';
+import jwt from 'jsonwebtoken';
 
+const { verify } = jwt;
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
 const app_id = process.env.STREAM_APP_ID;
@@ -99,7 +101,7 @@ class AuthController {
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       console.log(users[0].id);
       console.log(dbcustomer);
-      const token = serverClient.createUserToken(users[0].id);
+      const token = serverClient.createUserToken(users[0].id, timestamp);
       // console.log(users);
       if (success) {
         dbcustomer.token = token;

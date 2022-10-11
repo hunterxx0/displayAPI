@@ -1,4 +1,7 @@
 import {Seller} from '../../models/seller.js';
+import jwt from 'jsonwebtoken';
+
+const { verify } = jwt;
 
 export async function JWTAuth(req, res, next) {
 	let token = req.headers['authorization'];
