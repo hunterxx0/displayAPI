@@ -2,8 +2,8 @@ import { connect } from 'getstream';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import {StreamChat} from 'stream-chat';
-import {User} from '../models/user.js';
-import {Seller} from '../models/seller.js';
+import {User} from '../../models/user.js';
+import {Seller} from '../../models/seller.js';
 
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
