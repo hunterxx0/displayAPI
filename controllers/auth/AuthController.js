@@ -2,6 +2,7 @@ import { connect } from 'getstream';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import {StreamChat} from 'stream-chat';
+
 import {User} from '../../models/user.js';
 import {Seller} from '../../models/seller.js';
 
@@ -97,7 +98,7 @@ class AuthController {
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       console.log(users[0].id);
-      console.log(typeof users[0].id);
+      console.log(dbcustomer);
       const token = serverClient.createUserToken();
       // console.log(users);
       if (success) {
