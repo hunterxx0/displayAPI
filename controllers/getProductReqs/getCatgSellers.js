@@ -7,7 +7,7 @@ export async function getCatgSellers (req, res) {
 		/*
 		const result = [...new Set(products.map(a => a.seller_name))];
 		*/
-		res.json(result);
+		res.json(products);
 	} catch (err) {
 		res.status(500).json({message: err.message});
 	}

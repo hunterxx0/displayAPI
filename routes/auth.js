@@ -1,6 +1,5 @@
 import express from "express";
-import {AuthController} from '../controllers/AuthController.js';
-import {UserController} from '../controllers/UserController.js';
+import {AuthController} from '../controllers/auth/AuthController.js';
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.post('/sellerSignup', AuthController.sellerSignup);
 router.post('/editlogin', AuthController.editLogin);
 
 
-
+import {UserController} from '../controllers/UserController.js';
 router.get('/role/:userId', UserController.getUserRole);
 */
 export {router as auth};

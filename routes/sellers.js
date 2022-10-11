@@ -17,18 +17,12 @@ router.get('/', async (req, res) => {
 
 //get seller by id
 router.get('/:id', getSeller, (req, res) => {
-	let jsonObj = res.seller.toJSON();
-	delete jsonObj["_id"];
-	delete jsonObj["__v"]; 
-	res.json(jsonObj);
+	res.json(res.seller);
 })
 
 //get seller by name
 router.get('/name/:name', getSeller, (req, res) => {
-	let jsonObj = res.seller.toJSON();
-	delete jsonObj["_id"];
-	delete jsonObj["__v"]; 
-	res.json(jsonObj);
+	res.json(res.seller);
 })
 
 //create one
@@ -76,12 +70,14 @@ router.delete('/:id', getSeller, async (req, res) => {
 async function getSeller(req, res, next){
 	let seller = null;
 	try {
-		if (req.params.id) {
-			seller = await Seller.findById(req.params.id);
+		if ( req.params.id ) {
+			seller = await Seller.findById(req.params.id)
+			.select('-_id -__v');
 		} else if ( req.params.name ) {
-			seller = await Seller.findOne({name: req.params.name});
+			seller = await Seller.findOne({name: req.params.name})
+			.select('-_id -__v');
 		}
-		if (seller == null) {
+		if (!seller) {
 			return res.status(404).json({message: 'Cannot find seller'});
 		}
 	} catch (err) {
