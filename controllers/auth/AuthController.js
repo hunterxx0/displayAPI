@@ -99,7 +99,7 @@ class AuthController {
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       console.log(users[0].id);
       console.log(dbcustomer);
-      const token = serverClient.createUserToken();
+      const token = serverClient.createUserToken(users[0].id);
       // console.log(users);
       if (success) {
         dbcustomer.token = token;
