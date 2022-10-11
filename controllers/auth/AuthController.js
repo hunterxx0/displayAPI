@@ -100,7 +100,6 @@ class AuthController {
       console.log(typeof users[0].id);
       const token = serverClient.createUserToken({
         id: users[0].id,
-        role: userdb ? "user" : "seller"
       });
       // console.log(users);
       if (success) {
