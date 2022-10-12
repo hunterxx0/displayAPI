@@ -3,6 +3,7 @@ import express from "express";
 import {User} from '../models/user.js';
 
 import {arrRem} from '../controllers/utils/arrRem.js';
+import {getUser} from '../controllers/utils/getUser.js';
 
 const router = express.Router();
 
@@ -136,40 +137,7 @@ router.delete('/:id/requests/:requestID', getUser, async (req, res) => {
 	}
 })
 
-//add one recently searched
-router.patch('/:id/searched/:keyword', getUser, async (req, res) => {
-	res.user.recently_searched.push(req.params.keyword);
-	if (res.user.recently_searched.length > 20) res.user.recently_searched.shift();
-	try {
-		const upUser = await res.user.save();
-		res.json(upUser);
-	} catch (err) {
-		res.status(400).send({message: err.message})
-	}
-})
 
-// utilities:
 
-// get User by id function
-async function getUser(req, res, next){
-	let user
-	try {
-		user = await User.findById(req.params.id)
-		if (user == null) {
-			return res.status(404).json({message: 'Cannot find user'});
-		}
-	} catch (err) {
-		return res.status(500).json({message: err.message});
-	}
-	res.user = user;
-	next(); 
-}
-
-// remove a value from an array
-function arrRem(arr, value) {
-	return arr.filter(function(ele){ 
-        return ele != value; 
-    });
-}
 
 export {router as usersRouter};
