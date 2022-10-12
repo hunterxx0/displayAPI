@@ -11,7 +11,6 @@ const { verify } = jwt;
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
 const app_id = process.env.STREAM_APP_ID;
-const jwtKey = process.env.JWTKEY;
 
 class AuthController {
   static async sellerSignup(req, res) {
@@ -83,7 +82,6 @@ class AuthController {
     try {
       const { username, password } = req.body;
 
-      const serverClient = connect(api_key, api_secret, app_id);
       const client = StreamChat.getInstance(api_key, api_secret);
       const { users } = await client.queryUsers({ name: username });
       const userdb = await User.findOne({username});
@@ -94,6 +92,7 @@ class AuthController {
       if (success) success = await bcrypt.compare(password, dbcustomer.hashedPassword);
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
+      const serverClient = connect(api_key, api_secret, app_id);
       const token = serverClient.createUserToken(users[0].id, timestamp);
       // console.log(users);
       if (success) {
@@ -118,8 +117,9 @@ class AuthController {
     try {
       const info = req.body;
       Object.keys(info).forEach(key => info[key] === undefined && delete info[key]);
-      if (password in info) {
-        info.hashedPassword = await bcrypt.hash(password, 10);
+      if ('password' in info) {
+        info.hashedPassword = await bcrypt.hash(info['password'], 10);
+        delete info['password'];
       }
       const client = StreamChat.getInstance(api_key, api_secret);
       const { users } = await client.queryUsers({ name: (info.username || info.name) });
@@ -135,7 +135,7 @@ class AuthController {
         await client.upsertUser(users[0]);
         return res.status(401).json({ message: 'User not found' });
       }
-      res.status(200).json('User Updated');
+      res.status(200).json(dbcustomer);
     } catch (error) {
       // console.log(error);
       res.status(500).json({ message: error });
