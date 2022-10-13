@@ -53,17 +53,11 @@ router.patch('/:id', getUser, async (req, res) => {
 //add recently searched word
 router.patch('/:id/search/:keyword', getUser, async (req, res) => {
 	res.user.recently_searched.push(req.params.keyword);
-	console.log('user');
-	console.log(res.user);
-	console.log('recently_searched0');
-	console.log(res.user.recently_searched);
-	const index = res.user.recently_searched.indexOf(req.params.keyword);
-	if (index > -1) res.user.recently_searched.splice(index, 1);
-	console.log('recently_searched1');
-	console.log(res.user.recently_searched);
+	if (res.user.recently_searched.length != new Set(res.user.recently_searched).size) {
+		const index = res.user.recently_searched.indexOf(req.params.keyword);
+		if (index > -1) res.user.recently_searched.splice(index, 1);
+	}
 	if (res.user.recently_searched.length > 20) res.user.recently_searched.shift();
-	console.log('recently_searched2');
-	console.log(res.user.recently_searched);
 	try {
 		const upUser = await res.user.save();
 		res.json(upUser);
