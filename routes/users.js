@@ -83,6 +83,18 @@ router.delete('/:id/search/delete/:keyword', getUser, async (req, res) => {
 	} else {res.status(409).send({message: 'Connot remove the keyword'})}
 })
 
+//clear recently searched
+router.delete('/:id/search/delete/clear', getUser, async (req, res) => {
+	res.user.recently_searched = [];
+	try {
+		const upUser = await res.user.save();
+		res.json(upUser);
+	} catch (err) {
+		res.status(400).send({message: err.message})
+	}
+
+})
+
 
 //add favorites
 router.patch('/:id/favorites/:favorite', getUser, async (req, res) => {
