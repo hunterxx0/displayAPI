@@ -84,7 +84,7 @@ router.delete('/:id/search/delete/:keyword', getUser, async (req, res) => {
 })
 
 //clear recently searched
-router.delete('/:id/search/delete/clear', getUser, async (req, res) => {
+router.delete('/:id/search/clear', getUser, async (req, res) => {
 	res.user.recently_searched = [];
 	try {
 		const upUser = await res.user.save();
