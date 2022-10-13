@@ -71,7 +71,7 @@ router.delete('/:id/search/delete/:keyword', getUser, async (req, res) => {
 	if (res.user.recently_searched.includes(req.params.keyword)) {
 		console.log('bef')
 		console.log(res.user.recently_searched.length)
-		arrRem(res.user.recently_searched, req.params.keyword);
+		res.user.recently_searched = arrRem(res.user.recently_searched, req.params.keyword);
 		console.log('af')
 		console.log(res.user.recently_searched.length)
 		try {
