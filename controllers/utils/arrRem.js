@@ -1,6 +1,6 @@
 // remove the value from an array
 export async function arrRem(arr, value) {
-	return arr.filter(function(ele){ 
-        return ele !== value; 
-    });
+	const index = arr.indexOf(value);
+    arr.splice(index, 1);
+    return arr;
 }
