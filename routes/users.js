@@ -68,7 +68,7 @@ router.patch('/:id/search/:keyword', getUser, async (req, res) => {
 
 //delete recently searched word
 router.delete('/:id/search/delete/:keyword', getUser, async (req, res) => {
-	if (req.params.keyword in res.user.recently_searched) {
+	if (res.user.recently_searched.includes(req.params.keyword)) {
 		arrRem(res.user.recently_searched, req.params.keyword);
 		try {
 			const upUser = await res.user.save();
