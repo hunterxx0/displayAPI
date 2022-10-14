@@ -5,7 +5,7 @@ import {User} from '../models/user.js';
 import {getUsers} from '../controllers/userReqsHandler/getUsers.js';
 import {addRecSear} from '../controllers/userReqsHandler/addRecSear.js';
 import {delRecSear} from '../controllers/userReqsHandler/delRecSear.js';
-import {clrRecSear} from '../controllers/userReqsHandler/clrRecSear.js';
+import {clrRecView} from '../controllers/userReqsHandler/clrRecView.js';
 import {delRecView} from '../controllers/userReqsHandler/delRecView.js';
 import {addFav} from '../controllers/userReqsHandler/addFav.js';
 import {delFav} from '../controllers/userReqsHandler/delFav.js';
