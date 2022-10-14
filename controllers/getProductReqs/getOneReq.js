@@ -1,4 +1,4 @@
-import {User} from '../models/user.js';
+import {User} from '../../models/user.js';
 
 export async function getOneReq(req, res) {
 	if (req.query.visit) {
