@@ -6,10 +6,7 @@ export async function getOneReq(req, res) {
 			let user = null;
 			try {
 				user = await User.findById(req.query.visit);
-			} catch (err) {
-				console.log('////////// errUSER');
-				console.log(err);
-			}
+			} catch (err) {}
 			if (user) {
 				user.recently_viewed.push(res.product._id);
 				await user.save();
