@@ -1,4 +1,5 @@
 //delete recently searched word
+import {arrRem} from '../utils/arrRem.js';
 
 export async function delRecSear(req, res) {
 	if (res.user.recently_searched.includes(req.params.keyword)) {

@@ -1,4 +1,5 @@
-
+//delete recently viewed product
+import {arrRem} from '../utils/arrRem.js';
 
 export async function delRecView(req, res) {
 	if (res.user.recently_viewed.includes(req.params.productID)) {

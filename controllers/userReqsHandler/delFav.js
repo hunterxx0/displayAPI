@@ -1,4 +1,5 @@
 //delete favorites
+import {arrRem} from '../utils/arrRem.js';
 
 export async function delFav(req, res) {
 	if (res.user.favorites.includes(req.params.favorite)) {

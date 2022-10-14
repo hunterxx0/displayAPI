@@ -1,4 +1,5 @@
 //delete request
+import {arrRem} from '../utils/arrRem.js';
 
 export async function delRequest(req, res) {
 	if (res.user.requests.includes(req.params.requestID)) {
