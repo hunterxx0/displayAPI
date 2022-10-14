@@ -3,7 +3,13 @@ import {User} from '../../models/user.js';
 export async function getOneReq(req, res) {
 	if (req.query.visit) {
 		try {
-			const user = await User.findById(req.query.visit);
+			let user = null;
+			try {
+				user = await User.findById(req.query.visit);
+			} catch (err) {
+				console.log('////////// errUSER');
+				console.log(err);
+			}
 			if (user) {
 				user.recently_viewed.push(res.product._id);
 				await user.save();
