@@ -4,12 +4,14 @@ export async function getOneReq(req, res) {
 	if (req.query.visit) {
 		try {
 			let user = null;
-			try {
-				user = await User.findById(req.query.visit);
-			} catch (err) {}
-			if (user && !user.recently_viewed.includes(res.product._id.toString())) {
-				user.recently_viewed.push(res.product._id);
-				await user.save();
+			if (req.query.userId) {
+				try {
+					user = await User.findById(req.query.userId);
+				} catch (err) {}
+				if (user && !user.recently_viewed.includes(res.product._id.toString())) {
+					user.recently_viewed.push(res.product._id);
+					await user.save();
+				}
 			}
 			if (res.product.views) res.product.views += 1;
 			else res.product.views = 1;
