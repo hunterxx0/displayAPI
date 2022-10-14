@@ -4,7 +4,7 @@ import {User} from '../models/user.js';
 import {Seller} from '../models/seller.js';
 import { ObjectID } from 'bson';
 
-
+import {getOneReq} from '../controllers/getProductReqs/getOneReq.js';
 import {getAllReq} from '../controllers/getProductReqs/getAllReq.js';
 import {getPage} from '../controllers/getProductReqs/getPage.js';
 import {getByTitle} from '../controllers/getProductReqs/getByTitle.js';
@@ -27,9 +27,7 @@ const jwtKey = process.env.JWTKEY;
 
 // get routes:
 //		get one product
-router.get('/:id', getProduct, (req, res) => {
-	res.json(res.product);
-});
+router.get('/:id', getProduct, getOneReq);
 
 //		get all products
 router.get('/', getAllReq);

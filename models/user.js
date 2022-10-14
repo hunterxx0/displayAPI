@@ -51,6 +51,11 @@ const userSchema = new mongoose.Schema({
 		required: false,
 		default: []
 	},
+	recently_viewed: {
+		type: Array,
+		required: false,
+		default: []
+	},
 	recently_searched: {
 		type: Array,
 		required: false,
