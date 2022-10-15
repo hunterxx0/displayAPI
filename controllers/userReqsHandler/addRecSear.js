@@ -14,8 +14,8 @@ export async function addRecSear(req, res) {
 		console.log('bef:');
 		console.log(res.user.recently_searched);
 		console.log('aft:');
-		if (index && index.length > 1)
-			res.user.recently_searched.splice(index[1], 1);
+		if (indeces && indeces.length > 1)
+			res.user.recently_searched.splice(indeces[1], 1);
 		console.log(res.user.recently_searched);
 	}
 	if (res.user.recently_searched.length > 20) res.user.recently_searched.pop();
