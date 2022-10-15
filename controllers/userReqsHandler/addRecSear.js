@@ -2,21 +2,8 @@
 export async function addRecSear(req, res) {
 	res.user.recently_searched.unshift(req.params.keyword);
 	if (res.user.recently_searched.length != new Set(res.user.recently_searched).size) {
-		const indeces = [];
-		const findDuplicate = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
-		const findindex = arr => arr.filter((item, index) => {
-			if (item == findDuplicate(res.user.recently_searched)[0])
-				indeces.push(index);
-		})
-		console.log('dup:');
-		findindex(res.user.recently_searched);
-		console.log(indeces);
-		console.log('bef:');
-		console.log(res.user.recently_searched);
-		console.log('aft:');
-		if (indeces && indeces.length > 1)
-			res.user.recently_searched.splice(indeces[1], 1);
-		console.log(res.user.recently_searched);
+		const index = findDup(res.user.recently_searched);
+		res.user.recently_searched.splice(index, 1);
 	}
 	if (res.user.recently_searched.length > 20) res.user.recently_searched.pop();
 	try {
@@ -25,4 +12,15 @@ export async function addRecSear(req, res) {
 	} catch (err) {
 		res.status(500).send({message: err.message})
 	}
+}
+
+function findDup(array) {
+	const indeces = [];
+	const findDuplicate = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+	const findindex = arr => arr.filter((item, index) => {
+		if (item == findDuplicate(array)[0])
+			indeces.push(index);
+	})
+	findindex(array);
+	return indeces[1];
 }
