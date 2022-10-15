@@ -5,7 +5,7 @@ export async function addRecSear(req, res) {
 		const indeces = [];
 		const findDuplicate = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
 		const findindex = arr => arr.filter((item, index) => {
-			if (item == findDuplicates(res.user.recently_searched)[0])
+			if (item == findDuplicate(res.user.recently_searched)[0])
 				indeces.push(index);
 		})
 		console.log('dup:');
