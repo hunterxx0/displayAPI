@@ -9,7 +9,7 @@ export async function getOneReq(req, res) {
 					user = await User.findById(req.query.userId);
 				} catch (err) {}
 				if (user && !user.recently_viewed.includes(res.product._id.toString())) {
-					user.recently_viewed.push(res.product._id);
+					user.recently_viewed.unshift(res.product._id.toString());
 					await user.save();
 				}
 			}
