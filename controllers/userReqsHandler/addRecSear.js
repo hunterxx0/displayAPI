@@ -2,10 +2,15 @@
 export async function addRecSear(req, res) {
 	res.user.recently_searched.unshift(req.params.keyword);
 	if (res.user.recently_searched.length != new Set(res.user.recently_searched).size) {
-		const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+		const indeces = [];
+		const findDuplicate = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+		const findindex = arr => arr.filter((item, index) => {
+			if (item == findDuplicates(res.user.recently_searched)[0])
+				indeces.push(index);
+		})
 		console.log('dup:');
-		const index = findDuplicates(res.user.recently_searched);
-		console.log(index);
+		findindex(res.user.recently_searched);
+		console.log(indeces);
 		console.log('bef:');
 		console.log(res.user.recently_searched);
 		console.log('aft:');
