@@ -127,7 +127,7 @@ class AuthController {
         const { users } = await client.queryUsers({ id: constmID });
         if (!users.length)
           return res.status(401).json({ message: 'User not found' });
-        const obj = {id: constmID, name: info.username, role: users[0].role};
+        const obj = {id: constmID, name: info.username, role: 'seller'};
         console.log(obj);
         const sUsers = await client.upsertUser(obj);
         if (!sUsers)
