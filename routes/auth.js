@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 router.post('/signupSeller', AuthController.sellerSignup);
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
-router.post('/editlogin', AuthController.editLogin);
+router.patch('/editlogin', AuthController.editLogin);
 /*
 import {UserController} from '../controllers/UserController.js';
 router.get('/role/:userId', UserController.getUserRole);
