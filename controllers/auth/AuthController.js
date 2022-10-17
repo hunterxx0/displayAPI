@@ -159,7 +159,7 @@ class AuthController {
       let dbcustomer = findUserSeller(constmID);
       if (!dbcustomer)
         return res.status(401).json({ message: 'User not found' });
-      await dbcustomer.deleteOne(constmID);
+      await dbcustomer(constmID);
       await client.deleteUser(constmID, {hard_delete: true});
       res.status(200).json('User deleted');
     } catch (error) {
@@ -199,10 +199,10 @@ async function findUserSeller(userId) {
     console.log('findUser');
     console.log(err);
   }
-  if (user) return User;
+  if (user) return User.deleteOne;
   try {
     user = await Seller.findById(userId);
-    if (user) return Seller;
+    if (user) return Seller.deleteOne;
   } catch (err) {
     console.log('findSeller');
     console.log(err);
