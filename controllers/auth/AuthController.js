@@ -154,14 +154,20 @@ async function updateSeller(id, info) {
   let seller = null;
   try {
     seller = await Seller.findOneAndUpdate({_id: constmID}, info);
-  } catch {}
+  } catch (err) {
+    console.log('updateSeller');
+    console.log(err);
+  }
   return seller;
 }
 async function updateUser(id, info) {
   const user = null;
   try {
     user = await User.findOneAndUpdate({name: info.username}, info);
-  } catch {}
+  } catch (err) {
+    console.log('updateUser');
+    console.log(err);
+  }
   return user;
 }
 
