@@ -39,10 +39,10 @@ class AuthController {
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = connect(api_key, api_secret, app_id);
       const token = serverClient.createUserToken(newSeller._id.toString(), timestamp);
-
       newSeller.token = token;
       const savedSeller = await newSeller.save();
-      return res.status(201).json({...seller, userId: savedSeller._id.toString(), token} );
+      const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller'});
+      return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -88,8 +88,7 @@ class AuthController {
       const dbcustomer = userdb || (await Seller.findOne({name: username}));
       if (!users.length || !dbcustomer)
         return res.status(401).json({ message: 'User not found' });
-      let success = await bcrypt.compare(password, users[0].hashedPassword);
-      if (success) success = await bcrypt.compare(password, dbcustomer.hashedPassword);
+      let success = await bcrypt.compare(password, dbcustomer.hashedPassword);
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = connect(api_key, api_secret, app_id);
