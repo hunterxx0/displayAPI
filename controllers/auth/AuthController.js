@@ -132,8 +132,11 @@ class AuthController {
           return res.status(401).json({ message: 'User not found' });
       }
       let dbcustomer = null;
-      dbcustomer = await updateSeller(constmID, info);
-      if (!dbcustomer) dbcustomer = await updateUser(constmID, info);
+      dbcustomer = await updateUser(constmID, info);
+      if (!dbcustomer) {
+        delete Object.assign(info, {['name']: info['username'] })['username'];
+        dbcustomer = await updateSeller(constmID, info);
+      }
       if (!dbcustomer) {
         await client.upsertUser(users[0]);
         return res.status(401).json({ message: 'User not found' });
