@@ -41,7 +41,7 @@ class AuthController {
       const token = serverClient.createToken(newSeller._id.toString(), timestamp);
       newSeller.token = token;
       const savedSeller = await newSeller.save();
-      const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller'});
+      const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller', image: avatarURL});
       return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
     } catch (error) {
       //rollback funct
