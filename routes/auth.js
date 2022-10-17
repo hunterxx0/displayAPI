@@ -9,12 +9,8 @@ router.get('/', (req, res) => {
 router.post('/signupSeller', AuthController.sellerSignup);
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
-/*
-SellerSignup
-router.post('/sellerSignup', AuthController.sellerSignup);
 router.post('/editlogin', AuthController.editLogin);
-
-
+/*
 import {UserController} from '../controllers/UserController.js';
 router.get('/role/:userId', UserController.getUserRole);
 */

@@ -44,6 +44,7 @@ class AuthController {
       const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller'});
       return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
     } catch (error) {
+      //rollback funct
       console.log(error)
       res.status(500).json({ message: error });
     }
@@ -70,8 +71,8 @@ class AuthController {
       const newUser = new User(user);
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
-      const serverClient = connect(api_key, api_secret, app_id);
-      const token = serverClient.createUserToken(newUser._id.toString(), timestamp);
+      const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
+      const token = serverClient.createToken(newUser._id.toString(), timestamp);
       newUser.token = token;
       const savedUser = await newUser.save();
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
@@ -100,8 +101,6 @@ class AuthController {
         await dbcustomer.save();
         res.status(200).json({
           token,
-          role: users[0].role,
-          fullName: users[0].fullName,
           username,
           userId: users[0].id,
         });
@@ -116,31 +115,51 @@ class AuthController {
   static async editLogin(req, res) {
     try {
       const info = req.body;
+      const constmID = info.id;
+      delete info.id;
       Object.keys(info).forEach(key => info[key] === undefined && delete info[key]);
       if ('password' in info) {
         info.hashedPassword = await bcrypt.hash(info['password'], 10);
         delete info['password'];
       }
-      const client = StreamChat.getInstance(api_key, api_secret);
-      const { users } = await client.queryUsers({ name: (info.username || info.name) });
-      if (!users.length)
-        return res.status(401).json({ message: 'User not found' });
-      const sUsers = await client.upsertUser(info);
-      if (!sUsers)
-        return res.status(401).json({ message: 'User not found' });
-      let dbcustomer;
-      if (info.name) dbcustomer = await Seller.findOneAndUpdate({name: info.name}, info);
-      else if (info.username) dbcustomer = await User.findOneAndUpdate({name: info.username}, info);
+      if (info.username) {
+        const client = StreamChat.getInstance(api_key, api_secret);
+        const { users } = await client.queryUsers({ id: constmID });
+        if (!users.length)
+          return res.status(401).json({ message: 'User not found' });
+        const sUsers = await client.upsertUser({id: constmID, name: info.username});
+        if (!sUsers)
+          return res.status(401).json({ message: 'User not found' });
+      }
+      let dbcustomer = null;
+      dbcustomer = await updateSeller(constmID, info);
+      if (!dbcustomer) dbcustomer = await updateUser(constmID, info);
       if (!dbcustomer) {
         await client.upsertUser(users[0]);
         return res.status(401).json({ message: 'User not found' });
       }
       res.status(200).json(dbcustomer);
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       res.status(500).json({ message: error });
     }
   }
+}
+
+
+async function updateSeller(id, info) {
+  let seller = null;
+  try {
+    seller = await Seller.findOneAndUpdate({_id: constmID}, info);
+  } catch {}
+  return seller;
+}
+async function updateUser(id, info) {
+  const user = null;
+  try {
+    user = await User.findOneAndUpdate({name: info.username}, info);
+  } catch {}
+  return user;
 }
 
 export {AuthController};

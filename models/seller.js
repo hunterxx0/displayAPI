@@ -36,6 +36,10 @@ const sellerSchema = new mongoose.Schema({
 		required: true,
 		default: null
 	},
+	avatarURL: {
+		type: String,
+		required: false,
+	},
 	created_at: {
 		type: Date,
 		required: true,
