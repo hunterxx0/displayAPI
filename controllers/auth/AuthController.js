@@ -159,8 +159,8 @@ class AuthController {
       let dbcustomer = findUserSeller(constmID);
       if (!dbcustomer)
         return res.status(401).json({ message: 'User not found' });
-      if (dbcustomer == 'user') await User.deleteOne(constmID);
-      else await Seller.deleteOne(constmID);
+      if (dbcustomer == 'user') await User.deleteById(constmID);
+      else await Seller.deleteById(constmID);
       await client.deleteUser(constmID, {hard_delete: true});
       res.status(200).json('User deleted');
     } catch (error) {
