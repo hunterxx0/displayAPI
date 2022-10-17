@@ -17,6 +17,7 @@ import {getSellerReq} from '../controllers/getProductReqs/getSellerReq.js';
 
 import {updateProduct} from '../controllers/upProductReq/updateProduct.js';
 import {requestAdd, requestDel} from '../controllers/upProductReq/requestFunc.js';
+import {createProd} from '../controllers/upProductReq/createProd.js';
 
 import {getProduct} from '../controllers/utils/getProductByID.js';
 import {JWTAuth} from '../controllers/utils/jwtCheck.js';
@@ -58,13 +59,16 @@ router.get('/user/requests', getSellerReq);
 
 // Update routes
 //		update one product
-router.patch('/:id', getProductUID, updateProduct);
+router.patch('/:id', getProduct, updateProduct);
 
 //		add one request
 router.patch('/:id/requests/', getProduct, requestAdd);
 
 //		delete one request
 router.delete('/:id/requests/:requestID', getProduct, requestDel);
+
+// Create one product
+router.post('/', createProd);
 
 //		testing
 router.get('/test/test/:id', getProduct, JWTAuth, async (req, res) => {

@@ -4,7 +4,7 @@ import {Product} from '../../models/product.js';
 import {User} from '../../models/user.js';
 
 
-export async function  requestAdd(req, res) {
+export async function requestAdd(req, res) {
 	const session = await mongoose.startSession();
 	await session.startTransaction();
 	try {
