@@ -138,7 +138,7 @@ class AuthController {
         dbcustomer = await updateSeller(constmID, info);
       }
       if (!dbcustomer) {
-        await client.upsertUser(users[0]);
+        if (client) await client.upsertUser(users[0]);
         return res.status(401).json({ message: 'User not found' });
       }
       res.status(200).json(dbcustomer);
