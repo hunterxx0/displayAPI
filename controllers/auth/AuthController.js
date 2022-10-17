@@ -149,6 +149,24 @@ class AuthController {
       res.status(500).json({ message: error });
     }
   }
+  static async deleteUser(req, res) {
+    try {
+      const constmID = req.params.id;
+      const client = StreamChat.getInstance(api_key, api_secret);
+      const { users } = await client.queryUsers({ id: constmID });
+      if (!users.length)
+        return res.status(401).json({ message: 'User not found' });
+      let dbcustomer = findUserSeller(constmID);
+      if (!dbcustomer)
+        return res.status(401).json({ message: 'User not found' });
+      await dbcustomer.deleteOne(constmID);
+      await client.deleteUser(constmID, {hard_delete: true});
+      res.status(200).json('User deleted');
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: error });
+    }
+  }
 }
 
 
@@ -171,6 +189,25 @@ async function updateUser(userId, info) {
     console.log(err);
   }
   return user;
+}
+
+async function findUserSeller(userId) {
+  let user = null;
+  try {
+    user = await User.findById(userId);
+  } catch (err) {
+    console.log('findUser');
+    console.log(err);
+  }
+  if (user) return User;
+  try {
+    user = await Seller.findById(userId);
+    if (user) return Seller;
+  } catch (err) {
+    console.log('findSeller');
+    console.log(err);
+  }
+  return user
 }
 
 export {AuthController};
