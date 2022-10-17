@@ -1,5 +1,6 @@
 import {Seller} from '../../models/seller.js';
 import jwt from 'jsonwebtoken';
+import {StreamChat} from 'stream-chat';
 
 const { verify } = jwt;
 const api_key = process.env.STREAM_API_KEY;
