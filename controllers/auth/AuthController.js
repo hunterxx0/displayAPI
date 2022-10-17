@@ -40,7 +40,7 @@ class AuthController {
       const serverClient = connect(api_key, api_secret, app_id);
       const token = serverClient.createUserToken(newSeller._id.toString(), timestamp);
 
-      newUser.token = token;
+      newSeller.token = token;
       const savedSeller = await newSeller.save();
       return res.status(201).json({...seller, userId: savedSeller._id.toString(), token} );
     } catch (error) {
