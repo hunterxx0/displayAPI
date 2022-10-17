@@ -37,7 +37,7 @@ class AuthController {
       const newSeller = new Seller(seller);
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
-      const serverClient = getInstance(api_key, api_secret, app_id);
+      const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
       const token = serverClient.createUserToken(newSeller._id.toString(), timestamp);
       newSeller.token = token;
       const savedSeller = await newSeller.save();
