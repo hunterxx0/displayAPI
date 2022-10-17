@@ -150,20 +150,20 @@ class AuthController {
 }
 
 
-async function updateSeller(id, info) {
+async function updateSeller(sellerId, info) {
   let seller = null;
   try {
-    seller = await Seller.findOneAndUpdate({_id: constmID}, info);
+    seller = await Seller.findOneAndUpdate({_id: sellerId}, info);
   } catch (err) {
     console.log('updateSeller');
     console.log(err);
   }
   return seller;
 }
-async function updateUser(id, info) {
-  const user = null;
+async function updateUser(userId, info) {
+  let user = null;
   try {
-    user = await User.findOneAndUpdate({name: info.username}, info);
+    user = await User.findOneAndUpdate({_id: userId}, info);
   } catch (err) {
     console.log('updateUser');
     console.log(err);
