@@ -59,7 +59,7 @@ router.get('/user/requests', getSellerReq);
 
 // Update routes
 //		update one product
-router.patch('/:id', getProduct, updateProduct);
+router.patch('/:id', getProduct, JWTAuth, updateProduct);
 
 //		add one request
 router.patch('/:id/requests/', getProduct, requestAdd);
@@ -74,49 +74,5 @@ router.post('/', createProd);
 router.get('/test/test/:id', getProduct, JWTAuth, async (req, res) => {
 	res.json({message: 'working good'});
 })
-
-
-
-//		get product by id function
-async function getProductUID(req, res, next){
-	let product
-	try {
-		let query = {_id: ObjectID(req.params.id), seller_id: ObjectID(req.query.seller_id)};
-		console.log(query);
-		product = await Product.findOne(query).select('-seller_id');
-		console.log(product);		
-		if (product == null) {
-			return res.status(404).json({message: "Product doesn't exist or you do not have permissions to change it"});
-		}
-	} catch (err) {
-		return res.status(500).json({message: err.message});
-	}
-	res.product = product;
-	next(); 
-}
-
-//		get product by id function
-async function userVal(req, res, next){
-	let user
-	try {
-		user = await User.findOne(token);
-		console.log(user);		
-		if (user == null) {
-			return res.status(401).json({message: "Unauthorized user"});
-		}
-	} catch (err) {
-		return res.status(500).json({message: err.message});
-	}
-	next(); 
-}
-
-
-
-//		remove a value from an array
-function arrRem(arr, value) {
-	return arr.filter(function(ele) { 
-        return ele != value; 
-    });
-}
 
 export {router as productsRouter};
