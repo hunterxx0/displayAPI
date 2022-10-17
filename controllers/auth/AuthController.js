@@ -16,7 +16,7 @@ class AuthController {
   static async sellerSignup(req, res) {
     try {
       const {
-        name,
+        username: name,
         password,
         phoneNumber: phone_number,
         avatarURL,
@@ -44,6 +44,7 @@ class AuthController {
       const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller'});
       return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
     } catch (error) {
+      console.log(err)
       res.status(500).json({ message: error });
     }
   }
