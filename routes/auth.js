@@ -10,7 +10,7 @@ router.post('/signupSeller', AuthController.sellerSignup);
 router.post('/signup', AuthController.signup);
 router.post('/login', AuthController.login);
 router.patch('/editlogin', AuthController.editLogin);
-router.delete('/editlogin', AuthController.deleteUser);
+router.delete('/eraseUser', AuthController.deleteUser);
 
 /*
 import {UserController} from '../controllers/UserController.js';
