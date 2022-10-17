@@ -153,7 +153,7 @@ class AuthController {
 async function updateSeller(sellerId, info) {
   let seller = null;
   try {
-    seller = await Seller.findOneAndUpdate({_id: sellerId}, info);
+    seller = await Seller.findOneAndUpdate({_id: sellerId}, info, { new: true });
   } catch (err) {
     console.log('updateSeller');
     console.log(err);
@@ -163,7 +163,7 @@ async function updateSeller(sellerId, info) {
 async function updateUser(userId, info) {
   let user = null;
   try {
-    user = await User.findOneAndUpdate({_id: userId}, info);
+    user = await User.findOneAndUpdate({_id: userId}, info, { new: true });
   } catch (err) {
     console.log('updateUser');
     console.log(err);
