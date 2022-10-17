@@ -44,7 +44,7 @@ class AuthController {
       const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller'});
       return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
     } catch (error) {
-      console.log(err)
+      console.log(error)
       res.status(500).json({ message: error });
     }
   }
