@@ -18,6 +18,7 @@ import {getSellerReq} from '../controllers/getProductReqs/getSellerReq.js';
 import {updateProduct} from '../controllers/upProductReq/updateProduct.js';
 import {requestAdd, requestDel} from '../controllers/upProductReq/requestFunc.js';
 import {createProd} from '../controllers/upProductReq/createProd.js';
+import {delProduct} from '../controllers/upProductReq/delProduct.js';
 
 import {getProduct} from '../controllers/utils/getProductByID.js';
 import {JWTAuth} from '../controllers/utils/jwtCheck.js';
