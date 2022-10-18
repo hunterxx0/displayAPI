@@ -9,12 +9,14 @@ export async function getOneReq(req, res) {
 				try {
 					user = await User.findById(req.query.userId);
 				} catch (err) {}
-				if (user) user.recently_viewed.unshift(res.product._id.toString());
-				if (res.user.recently_viewed.length !== new Set(res.user.recently_viewed).size) {
-					const index = findDup(res.user.recently_viewed);
-					res.user.recently_viewed.splice(index, 1);
+				if (user) {
+					user.recently_viewed.unshift(res.product._id.toString());
+					if (res.user.recently_viewed.length !== new Set(res.user.recently_viewed).size) {
+						const index = findDup(res.user.recently_viewed);
+						res.user.recently_viewed.splice(index, 1);
+					}
+					await user.save();
 				}
-				await user.save();
 			}
 			if (res.product.views) res.product.views += 1;
 			else res.product.views = 1;
