@@ -1,7 +1,9 @@
 //add recently searched word
+import {findDup} from '../utils/findDup.js';
+
 export async function addRecSear(req, res) {
 	res.user.recently_searched.unshift(req.params.keyword);
-	if (res.user.recently_searched.length != new Set(res.user.recently_searched).size) {
+	if (res.user.recently_searched.length !== new Set(res.user.recently_searched).size) {
 		const index = findDup(res.user.recently_searched);
 		res.user.recently_searched.splice(index, 1);
 	}
@@ -12,15 +14,4 @@ export async function addRecSear(req, res) {
 	} catch (err) {
 		res.status(500).send({message: err.message})
 	}
-}
-
-function findDup(array) {
-	const indeces = [];
-	const findDuplicate = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
-	const findindex = arr => arr.filter((item, index) => {
-		if (item == findDuplicate(array)[0])
-			indeces.push(index);
-	})
-	findindex(array);
-	return indeces[1];
 }

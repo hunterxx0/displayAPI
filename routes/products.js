@@ -71,12 +71,8 @@ router.delete('/:id/requests/:requestID', getProduct, requestDel);
 // Create one product
 router.post('/', JWTAuth, createProd);
 
-//		delete one product
+// Delete one product
 router.delete('/:id', getProduct, JWTAuth, delProduct);
 
-//		testing
-router.get('/test/test/:id', getProduct, JWTAuth, async (req, res) => {
-	res.json({message: 'working good'});
-})
 
 export {router as productsRouter};
