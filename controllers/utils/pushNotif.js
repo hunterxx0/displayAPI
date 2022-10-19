@@ -6,7 +6,7 @@ export async function pushNotif(prodID, Operation) {
     try {
         const users = await User.find({ favorites: prodID });
         if (users.length)
-            users.map(user => {
+            users.map(async function(user) {
                 user.notifications.unshift({
                     id: v4(),
                     prodID,
@@ -15,6 +15,7 @@ export async function pushNotif(prodID, Operation) {
                 });
                 await user.save()
             });
+        return (users);
     } catch (err) {
         console.log('pushNotif err:')
         console.log(err)
