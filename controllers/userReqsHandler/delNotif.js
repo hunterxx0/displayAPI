@@ -3,7 +3,10 @@ import { arrRemByID } from '../utils/arrRemByID.js';
 
 export async function delNotif(req, res) {
     const lengthBefUp = res.user.notifications.length;
-    res.user.notifications = arrRemByID(res.user.notifications, req.params.notifID)
+    console.log(lengthBefUp);
+    res.user.notifications = arrRemByID(res.user.notifications, req.params.notifID);
+    console.log(res.user.notifications.length);
+    console.log(res.user.notifications);
     if (lengthBefUp > res.user.notifications.length) {
         try {
             const upUser = await res.user.save();
