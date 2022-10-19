@@ -75,11 +75,9 @@ router.post('/', JWTAuth, createProd);
 router.delete('/:id', getProduct, JWTAuth, delProduct);
 
 //		testing
-import {pushNotif} from '../controllers/utils/pushNotif.js';
 router.get('/test/test/:id', getProduct, async (req, res) => {
-	const users = await pushNotif(res.product._id.toString(), "test");
 
-	res.json(users);
+	res.json('working good');
 })
 
 
