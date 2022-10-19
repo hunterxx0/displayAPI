@@ -80,7 +80,7 @@ router.get('/test/test/:id', getProduct, async (req, res) => {
 
 
 
-	res.json(users);
+	res.json(JSON.parse(users));
 })
 
 
