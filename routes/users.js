@@ -1,20 +1,23 @@
 import express from "express";
 
-import {User} from '../models/user.js';
+import { User } from '../models/user.js';
 
-import {getUsers} from '../controllers/userReqsHandler/getUsers.js';
-import {addRecSear} from '../controllers/userReqsHandler/addRecSear.js';
-import {delRecSear} from '../controllers/userReqsHandler/delRecSear.js';
-import {clrRecView} from '../controllers/userReqsHandler/clrRecView.js';
-import {clrRecSear} from '../controllers/userReqsHandler/clrRecSear.js';
-import {delRecView} from '../controllers/userReqsHandler/delRecView.js';
-import {addFav} from '../controllers/userReqsHandler/addFav.js';
-import {delFav} from '../controllers/userReqsHandler/delFav.js';
-import {addRequest} from '../controllers/userReqsHandler/addRequest.js';
-import {delRequest} from '../controllers/userReqsHandler/delRequest.js';
+import { getUsers } from '../controllers/userReqsHandler/getUsers.js';
+import { addRecSear } from '../controllers/userReqsHandler/addRecSear.js';
+import { delRecSear } from '../controllers/userReqsHandler/delRecSear.js';
+import { clrRecView } from '../controllers/userReqsHandler/clrRecView.js';
+import { clrRecSear } from '../controllers/userReqsHandler/clrRecSear.js';
+import { delRecView } from '../controllers/userReqsHandler/delRecView.js';
+import { addFav } from '../controllers/userReqsHandler/addFav.js';
+import { delFav } from '../controllers/userReqsHandler/delFav.js';
+import { addRequest } from '../controllers/userReqsHandler/addRequest.js';
+import { delRequest } from '../controllers/userReqsHandler/delRequest.js';
+import { delNotif } from '../controllers/userReqsHandler/delNotif.js';
+import { clrNotif } from '../controllers/userReqsHandler/clrNotif.js';
 
-import {arrRem} from '../controllers/utils/arrRem.js';
-import {getUser} from '../controllers/utils/getUser.js';
+
+import { arrRem } from '../controllers/utils/arrRem.js';
+import { getUser } from '../controllers/utils/getUser.js';
 
 const router = express.Router();
 
@@ -23,7 +26,7 @@ router.get('/', getUsers);
 
 //get one
 router.get('/:id', getUser, (req, res) => {
-	res.json(res.user);
+    res.json(res.user);
 })
 
 //add recently searched word
@@ -53,5 +56,11 @@ router.patch('/:id/requests/:requestID', getUser, addRequest);
 //delete request
 router.delete('/:id/requests/:requestID', getUser, delRequest);
 
+//delete notification
+router.delete('/:id/notification/:notifID',getUser, delNotif);
 
-export {router as usersRouter};
+//clear notifications
+router.delete('/:id/clr/notification/',getUser, clrNotif);
+
+
+export { router as usersRouter };
