@@ -48,6 +48,11 @@ const productSchema = new mongoose.Schema({
 		required: true,
 		default: Date.now
 	},
+	updated_at: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
 	views: {
 		type: Number,
 		required: true,

@@ -61,6 +61,11 @@ const userSchema = new mongoose.Schema({
 		required: false,
 		default: []
 	},
+	notifications: {
+		type: Array,
+		required: false,
+		default: []
+	},
 })
 
 const User = mongoose.model('user', userSchema);

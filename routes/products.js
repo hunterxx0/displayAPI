@@ -74,5 +74,14 @@ router.post('/', JWTAuth, createProd);
 // Delete one product
 router.delete('/:id', getProduct, JWTAuth, delProduct);
 
+//		testing
+router.get('/test/test/:id', getProduct, async (req, res) => {
+	const users = User.find({favorites: res.product._id});
+
+
+
+	res.json(users);
+})
+
 
 export {router as productsRouter};
