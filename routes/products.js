@@ -76,11 +76,12 @@ router.delete('/:id', getProduct, JWTAuth, delProduct);
 
 //		testing
 router.get('/test/test/:id', getProduct, async (req, res) => {
-	const users = User.find({favorites: res.product._id});
+	const users = User.find({favorites: res.product._id.toString()});
+	console.log(users);
+	const resss = JSON.parse(users);
 
 
-
-	res.json(JSON.parse(users));
+	res.json(resss);
 })
 
 
