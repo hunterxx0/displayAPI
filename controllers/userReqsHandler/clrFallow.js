@@ -1,8 +1,8 @@
 //clear notifications
 
 export async function clrNotif(req, res) {
-    if (res.user.notifications.length) {
-        res.user.notifications = [];
+    if (res.user.following.length) {
+        res.user.following = [];
         try {
             const upUser = await res.user.save();
             res.json(upUser);

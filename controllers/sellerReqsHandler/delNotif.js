@@ -2,12 +2,12 @@
 import { arrRemByID } from '../utils/arrRemByID.js';
 
 export async function delNotif(req, res) {
-    const lengthBefUp = res.user.notifications.length;
-    res.user.notifications = arrRemByID(res.user.notifications, req.params.notifID);
-    if (lengthBefUp > res.user.notifications.length) {
+    const lengthBefUp = res.seller.notifications.length;
+    res.seller.notifications = arrRemByID(res.seller.notifications, req.params.notifID);
+    if (lengthBefUp > res.seller.notifications.length) {
         try {
-            const upUser = await res.user.save();
-            res.json(upUser);
+            const upSeller = await res.seller.save();
+            res.json(upSeller);
         } catch (err) {
             res.status(500).send({ message: err.message })
         }

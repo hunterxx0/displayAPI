@@ -14,7 +14,9 @@ import { addRequest } from '../controllers/userReqsHandler/addRequest.js';
 import { delRequest } from '../controllers/userReqsHandler/delRequest.js';
 import { delNotif } from '../controllers/userReqsHandler/delNotif.js';
 import { clrNotif } from '../controllers/userReqsHandler/clrNotif.js';
-
+import { addFallow } from '../controllers/userReqsHandler/addFallow.js';
+import { delFallow } from '../controllers/userReqsHandler/delFallow.js';
+import { clrFallow } from '../controllers/userReqsHandler/clrFallow.js';
 
 import { arrRem } from '../controllers/utils/arrRem.js';
 import { getUser } from '../controllers/utils/getUser.js';
@@ -62,5 +64,13 @@ router.delete('/:id/notification/:notifID',getUser, delNotif);
 //clear notifications
 router.delete('/:id/clr/notification/',getUser, clrNotif);
 
+//add follow to seller
+router.patch('/:id/follow/:sellerName', getUser, addFallow);
+
+//delete follow to seller
+router.delete('/:id/follow/:sellerName',getUser, delFallow);
+
+//clear follow list
+router.delete('/:id/clr/follow/',getUser, clrFallow);
 
 export { router as usersRouter };

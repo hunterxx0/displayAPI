@@ -40,6 +40,11 @@ const sellerSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
+	notifications: {
+		type: Array,
+		required: false,
+		default: []
+	},
 	created_at: {
 		type: Date,
 		required: true,

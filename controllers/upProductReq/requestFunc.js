@@ -2,6 +2,9 @@ import { v4 } from 'uuid';
 import mongoose from "mongoose";
 import {Product} from '../../models/product.js';
 import {User} from '../../models/user.js';
+import {Seller} from '../../models/seller.js';
+
+import { pushSellerNotif } from '../utils/pushSellerNotif.js';
 
 
 export async function requestAdd(req, res) {
@@ -9,15 +12,20 @@ export async function requestAdd(req, res) {
 	await session.startTransaction();
 	try {
 		let request = req.body;
-		const myuuid = v4();
-		request.id = myuuid;
+		request.id = v4();
 		const user = await User.findById(request.user_id);
 		if (!user) {
 			throw 'Cannot find user';
 		}
+		const seller = await Seller.find(res.product.seller_name);
+		if (!seller) {
+			throw 'Cannot find seller';
+		}
+		seller.notifications.unshift(pushSellerNotif(request.id, request.user_id, 'New request'))
 		res.product.requests.push(request);
 		user.requests.push(myuuid);
 		await user.save();
+		await seller.save();
 		const upProduct = await res.product.save();
 		await session.commitTransaction();
 		res.json(upProduct);
