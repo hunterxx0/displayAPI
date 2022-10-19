@@ -10,7 +10,7 @@ export async function pushNotif(prodID, Operation) {
                 user.notifications.unshift({
                     id: v4(),
                     prodID,
-                    date: Date.now,
+                    date: Date.now(),
                     Operation
                 });
                 await user.save()
