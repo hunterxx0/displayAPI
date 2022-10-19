@@ -1,7 +1,7 @@
 //delete following
 import { arrRem } from '../utils/arrRem.js';
 
-export async function delFav(req, res) {
+export async function delFallow(req, res) {
     if (!res.user.following.includes(req.params.sellerName)) {
         res.user.following = arrRem(res.user.following, req.params.sellerName)
         try {

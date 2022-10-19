@@ -1,6 +1,6 @@
 //add favorite
 
-export async function addFav(req, res) {
+export async function addFallow(req, res) {
     if (!res.user.following.includes(req.params.sellerName)) {
         res.user.following.push(req.params.sellerName);
         try {

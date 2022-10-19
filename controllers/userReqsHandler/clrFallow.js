@@ -1,6 +1,6 @@
 //clear notifications
 
-export async function clrNotif(req, res) {
+export async function clrFallow(req, res) {
     if (res.user.following.length) {
         res.user.following = [];
         try {
