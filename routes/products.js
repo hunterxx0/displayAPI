@@ -78,7 +78,7 @@ router.delete('/:id', getProduct, JWTAuth, delProduct);
 router.get('/test/test/:id', getProduct, async (req, res) => {
 	const users = await User.find({favorites: res.product._id.toString()});
 
-	res.json(resss);
+	res.json(users);
 })
 
 
