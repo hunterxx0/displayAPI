@@ -77,7 +77,7 @@ router.delete('/:id', getProduct, JWTAuth, delProduct);
 //		testing
 router.get('/test/test/:id', getProduct, async (req, res) => {
 
-	res.json(testing(res.product, req.body, res.product.seller_name, 'update'));
+	res.json(testing(res.product, req.body, res.product.seller_name, 'upda'));
 })
 
 function testing(prod, UpObj, seller_name, Operation) {
