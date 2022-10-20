@@ -82,7 +82,7 @@ router.get('/test/test/:id', getProduct, async (req, res) => {
 
 function testing(prod, UpObj, seller_name, Operation) {
     return {
-        id: v4(),
+        id: 'aaaaa',
         date: Date.now(),
         prodID: prod._id.toString(),
         seller_name,
