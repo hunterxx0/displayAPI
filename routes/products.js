@@ -77,21 +77,8 @@ router.delete('/:id', getProduct, JWTAuth, delProduct);
 //		testing
 router.get('/test/test/:id', getProduct, async (req, res) => {
 
-	res.json(testing(res.product, req.body, res.product.seller_name, 'upda'));
+	res.json('working good');
 })
 
-function testing(prod, UpObj, seller_name, Operation) {
-    return {
-        id: 'aaaaa',
-        date: Date.now(),
-        prodID: prod._id.toString(),
-        seller_name,
-        Operation,
-        targets: ((Operation === 'update') ? (Object.keys(UpObj).map(x => {
-            return {
-                [x]: { from: prod[x], to: UpObj[x] } }
-        })) : undefined)
-    }
-}
 
 export {router as productsRouter};
