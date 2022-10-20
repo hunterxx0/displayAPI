@@ -63,11 +63,6 @@ const productSchema = new mongoose.Schema({
 		required: true,
 		default: 0
 	},
-	favorite_count: {
-		type: Number,
-		required: true,
-		default: 0
-	},
 })
 
 const Product = mongoose.model('product', productSchema);
