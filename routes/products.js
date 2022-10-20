@@ -1,27 +1,27 @@
 import express from "express";
-import {Product} from '../models/product.js';
-import {User} from '../models/user.js';
-import {Seller} from '../models/seller.js';
+import { Product } from '../models/product.js';
+import { User } from '../models/user.js';
+import { Seller } from '../models/seller.js';
 import { ObjectID } from 'bson';
 
-import {getOneReq} from '../controllers/getProductReqs/getOneReq.js';
-import {getAllReq} from '../controllers/getProductReqs/getAllReq.js';
-import {getPage} from '../controllers/getProductReqs/getPage.js';
-import {getByTitle} from '../controllers/getProductReqs/getByTitle.js';
-import {getByTitleCatg} from '../controllers/getProductReqs/getByTitleCatg.js';
-import {getBySellerCatg} from '../controllers/getProductReqs/getBySellerCatg.js';
-import {getBySellerName} from '../controllers/getProductReqs/getBySellerName.js';
-import {getByCatg} from '../controllers/getProductReqs/getByCatg.js';
-import {getCatgSellers} from '../controllers/getProductReqs/getCatgSellers.js';
-import {getSellerReq} from '../controllers/getProductReqs/getSellerReq.js';
+import { getOneReq } from '../controllers/getProductReqs/getOneReq.js';
+import { getAllReq } from '../controllers/getProductReqs/getAllReq.js';
+import { getPage } from '../controllers/getProductReqs/getPage.js';
+import { getByTitle } from '../controllers/getProductReqs/getByTitle.js';
+import { getByTitleCatg } from '../controllers/getProductReqs/getByTitleCatg.js';
+import { getBySellerCatg } from '../controllers/getProductReqs/getBySellerCatg.js';
+import { getBySellerName } from '../controllers/getProductReqs/getBySellerName.js';
+import { getByCatg } from '../controllers/getProductReqs/getByCatg.js';
+import { getCatgSellers } from '../controllers/getProductReqs/getCatgSellers.js';
+import { getSellerReq } from '../controllers/getProductReqs/getSellerReq.js';
 
-import {updateProduct} from '../controllers/upProductReq/updateProduct.js';
-import {requestAdd, requestDel} from '../controllers/upProductReq/requestFunc.js';
-import {createProd} from '../controllers/upProductReq/createProd.js';
-import {delProduct} from '../controllers/upProductReq/delProduct.js';
+import { updateProduct } from '../controllers/upProductReq/updateProduct.js';
+import { requestAdd, requestDel } from '../controllers/upProductReq/requestFunc.js';
+import { createProd } from '../controllers/upProductReq/createProd.js';
+import { delProduct } from '../controllers/upProductReq/delProduct.js';
 
-import {getProduct} from '../controllers/utils/getProductByID.js';
-import {JWTAuth} from '../controllers/utils/jwtCheck.js';
+import { getProduct } from '../controllers/utils/getProductByID.js';
+import { JWTAuth } from '../controllers/utils/jwtCheck.js';
 
 
 const router = express.Router();
@@ -77,8 +77,8 @@ router.delete('/:id', getProduct, JWTAuth, delProduct);
 //		testing
 router.get('/test/test/:id', getProduct, async (req, res) => {
 
-	res.json('working good');
-})
+    res.json('working good');
+});
 
 
-export {router as productsRouter};
+export { router as productsRouter };

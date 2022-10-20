@@ -71,6 +71,11 @@ const userSchema = new mongoose.Schema({
 		required: false,
 		default: []
 	},
+	unfollowed: {
+		type: Array,
+		required: false,
+		default: []
+	},
 })
 
 const User = mongoose.model('user', userSchema);

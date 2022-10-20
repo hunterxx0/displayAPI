@@ -14,6 +14,9 @@ import { addRequest } from '../controllers/userReqsHandler/addRequest.js';
 import { delRequest } from '../controllers/userReqsHandler/delRequest.js';
 import { delNotif } from '../controllers/userReqsHandler/delNotif.js';
 import { clrNotif } from '../controllers/userReqsHandler/clrNotif.js';
+import { getAllNotif } from '../controllers/userReqsHandler/getAllNotif.js';
+import { getUnreadNotif } from '../controllers/userReqsHandler/getUnreadNotif.js';
+import { readNotif } from '../controllers/userReqsHandler/readNotif.js';
 import { addFallow } from '../controllers/userReqsHandler/addFallow.js';
 import { delFallow } from '../controllers/userReqsHandler/delFallow.js';
 import { clrFallow } from '../controllers/userReqsHandler/clrFallow.js';
@@ -60,6 +63,15 @@ router.delete('/:id/requests/:requestID', getUser, delRequest);
 
 //delete notification
 router.delete('/:id/notification/:notifID',getUser, delNotif);
+
+//get all notifications
+router.get('/:id/notifications/',getUser, getAllNotif);
+
+//get unread notifications
+router.get('/:id/notifications/unread',getUser, getUnreadNotif);
+
+//read notification
+router.patch('/:id/notifications/:notifID',getUser, readNotif);
 
 //clear notifications
 router.delete('/:id/clr/notification/',getUser, clrNotif);
