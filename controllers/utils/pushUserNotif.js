@@ -12,6 +12,7 @@ export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
                     date: Date.now(),
                     prodID: prod._id.toString(),
                     product_name: prod.title,
+                    read: false,
                     seller_name,
                     Operation,
                     targets: ( (Operation === 'update') ? (Object.keys(UpObj).map(x => { 

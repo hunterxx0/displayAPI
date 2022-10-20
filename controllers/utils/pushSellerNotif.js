@@ -5,6 +5,7 @@ export async function pushSellerNotif(reqID, userID, Operation) {
     return ({
             id: v4(),
             date: Date.now(),
+            read: false,
             reqID,
             userID,
             Operation
