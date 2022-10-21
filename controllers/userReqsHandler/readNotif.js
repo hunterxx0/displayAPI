@@ -9,6 +9,11 @@ export async function readNotif(req, res) {
         }
         return notif;
     });
-    if (updated) await res.user.save();
+    console.log(res.user.notifications);
+    if (updated) {
+        try {
+            await res.user.save();
+        } catch (err) { console.log(err) }
+    }
     res.json(updated);
 }
