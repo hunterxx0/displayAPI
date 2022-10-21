@@ -1,5 +1,6 @@
 // push Notifications to users
 import { User } from '../../models/user.js';
+import { removeUndefined } from './removeUndefined.js'
 import { v4 } from 'uuid';
 
 export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
@@ -29,12 +30,4 @@ export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
         console.log('pushNotif err:')
         console.log(err)
     }
-}
-
-function removeUndefined(obj) {
-    Object.keys(obj).forEach(key => {
-        if (!obj[key]) delete obj[key];
-        else if (typeof obj[key] === Object) removeUndefined(obj[key])
-    });
-    return obj;
 }
