@@ -12,7 +12,7 @@ export async function readNotif(req, res) {
     console.log(res.user.notifications);
     if (updated) {
         try {
-            await res.user.save();
+            updated = await res.user.save();
         } catch (err) { console.log(err) }
     }
     res.json(updated);
