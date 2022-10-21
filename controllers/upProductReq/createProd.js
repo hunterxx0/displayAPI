@@ -1,4 +1,5 @@
 import {Product} from '../../models/product.js';
+import { pushUserNotif } from '../utils/pushUserNotif.js';
 
 export async function createProd(req, res) {
 	const product = new Product({
