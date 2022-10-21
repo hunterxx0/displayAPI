@@ -4,13 +4,14 @@ import { v4 } from 'uuid';
 
 export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
     try {
+        console.log(prod);
         const users = await User.find({ following: seller_name });
         if (users.length)
             users.map(async function(user) {
                 user.notifications.unshift({
                     id: v4(),
                     date: Date.now(),
-                    prodID: prod._id.toString(),
+                    prodID: prod._id,
                     product_name: prod.title,
                     read: false,
                     seller_name,
