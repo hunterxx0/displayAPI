@@ -4,8 +4,6 @@ import { v4 } from 'uuid';
 
 export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
     try {
-        console.log(prod);
-
         const users = await User.find({ following: seller_name });
         if (users.length)
             users.map(async function(user) {

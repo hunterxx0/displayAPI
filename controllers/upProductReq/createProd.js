@@ -14,7 +14,7 @@ export async function createProd(req, res) {
 	})
 	try {
 		const newProduct = await product.save();
-        pushUserNotif(newProduct._id.toString(), newProduct.seller_name, 'add');
+        pushUserNotif(newProduct, undefined, newProduct.seller_name, 'add');
 		res.status(201).json(newProduct);
 	} catch (err) {
 		console.log(err)
