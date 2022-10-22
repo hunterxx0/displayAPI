@@ -92,6 +92,8 @@ router.get('/:id/notifications/test',getUser, (req, res) => {
         targets: res.user.notifications[0].targets,
         type0: typeof res.user.notifications[0].targets[0],
         targets0: res.user.notifications[0].targets[0],
+        type1: typeof res.user.notifications[0].targets[1],
+        targets1: res.user.notifications[0].targets[1],
     }
     res.json(ret);
 });
