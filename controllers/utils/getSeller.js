@@ -6,10 +6,10 @@ export async function getSeller(req, res, next){
 	try {
 		if ( req.params.id ) {
 			seller = await Seller.findById(req.params.id)
-			.select('-_id -__v');
+			.select(' -__v');
 		} else if ( req.params.name ) {
 			seller = await Seller.findOne({name: req.params.name})
-			.select('-_id -__v');
+			.select(' -__v');
 		}
 		if (!seller) {
 			return res.status(404).json({message: 'Cannot find seller'});

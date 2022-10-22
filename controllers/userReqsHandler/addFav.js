@@ -8,10 +8,13 @@ export async function addFav(req, res) {
         const product = await Product.findById(req.params.favorite)
         if (!product) return res.status(404).send({ message: 'Product not found' });
         const seller = await Seller.findOne({ name: product.seller_name });
-        seller.notifications.unshift(pushSellerNotif(
+        const notif = pushSellerNotif(
             res.user._id,
             product,
-            'favorite'));
+            'favorite')
+        console.log('****************');
+        console.log(notif);
+        seller.notifications.unshift(notif);
         const newSeller = await seller.save();
         console.log('****************');
         console.log(newSeller.notifications);

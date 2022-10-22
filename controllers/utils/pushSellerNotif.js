@@ -7,16 +7,12 @@ export async function pushSellerNotif(req, prod, Operation) {
         id: v4(),
         date: Date.now(),
         read: 'notRead',
-        request_id: ((Operation === 'request') ? request.id : undefined),
+        request_id: ((Operation === 'request') ? request.id.toString() : undefined),
         user_id: ((Operation === 'request') ? req.user_id : req),
         product_name: ((Operation === 'request' || Operation === 'favorite') ? prod.title : undefined),
-        product_id: ((Operation === 'request' || Operation === 'favorite') ? prod._id : undefined),
+        product_id: ((Operation === 'request' || Operation === 'favorite') ? prod._id.toString() : undefined),
         Operation
     }
-    console.log('----------------');
-    console.log(notif);
-    console.log('+++++++++++++++++');
     notif = removeUndefined(notif);
-    console.log(notif);
     return (notif);
 }
