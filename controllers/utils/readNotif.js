@@ -2,7 +2,7 @@
 
 export async function readNotif(req, res) {
     let updated = false;
-    const dbcustomer = dbcustomer || res.seller;
+    const dbcustomer = res.user || res.seller;
     dbcustomer.notifications = dbcustomer.notifications.map(notif => {
         if (notif.id == req.params.notifID) {
             notif.read = 1;
