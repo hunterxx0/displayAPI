@@ -62,40 +62,28 @@ router.patch('/:id/requests/:requestID', getUser, addRequest);
 router.delete('/:id/requests/:requestID', getUser, delRequest);
 
 //delete notification
-router.delete('/:id/notification/:notifID',getUser, delNotif);
+router.delete('/:id/notification/:notifID', getUser, delNotif);
 
 //get all notifications
-router.get('/:id/notifications/',getUser, getAllNotif);
+router.get('/:id/notifications/', getUser, getAllNotif);
 
 //get unread notifications
-router.get('/:id/notifications/unread',getUser, getUnreadNotif);
+router.get('/:id/notifications/unread', getUser, getUnreadNotif);
 
 //read notification
-router.patch('/:id/notifications/:notifID',getUser, readNotif);
+router.patch('/:id/notifications/:notifID', getUser, readNotif);
 
 //clear notifications
-router.delete('/:id/clr/notification/',getUser, clrNotif);
+router.delete('/:id/clr/notification/', getUser, clrNotif);
 
 //add follow to seller
 router.patch('/:id/follow/:sellerName', getUser, addFallow);
 
 //delete follow to seller
-router.delete('/:id/follow/:sellerName',getUser, delFallow);
+router.delete('/:id/follow/:sellerName', getUser, delFallow);
 
 //clear follow list
-router.delete('/:id/clr/follow/',getUser, clrFallow);
+router.delete('/:id/clr/follow/', getUser, clrFallow);
 
-//get test notifications
-router.get('/:id/notifications/test',getUser, (req, res) => {
-    const ret = {
-        type: typeof res.user.notifications[0].targets,
-        targets: res.user.notifications[0].targets,
-        type0: typeof res.user.notifications[0].targets[0],
-        targets0: res.user.notifications[0].targets[0],
-        type1: typeof res.user.notifications[0].targets[1],
-        targets1: res.user.notifications[0].targets[1],
-    }
-    res.json(ret);
-});
 
 export { router as usersRouter };

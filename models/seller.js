@@ -40,11 +40,41 @@ const sellerSchema = new mongoose.Schema({
 		type: String,
 		required: false,
 	},
-	notifications: {
-		type: Array,
-		required: false,
-		default: []
-	},
+	notifications: [{
+        _id: false,
+        id: {
+            type: String,
+            required: false,
+        },
+        date: {
+            type: Number,
+            required: false,
+        },
+        product_id: {
+            type: String,
+            required: false,
+        },
+        product_name: {
+            type: String,
+            required: false,
+        },
+        request_id: {
+            type: String,
+            required: false,
+        },
+        user_id: {
+            type: String,
+            required: false,
+        },
+        read: {
+            type: String,
+            required: false,
+        },
+        Operation: {
+            type: String,
+            required: false,
+        },
+    }],
 	created_at: {
 		type: Date,
 		required: true,
