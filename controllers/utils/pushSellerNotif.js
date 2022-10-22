@@ -2,8 +2,8 @@
 import { v4 } from 'uuid';
 import { removeUndefined } from './removeUndefined.js'
 
-export async function pushSellerNotif(req, prod, Operation) {
-    let notif = {
+export function pushSellerNotif(req, prod, Operation) {
+    const notif = {
         id: v4(),
         date: Date.now(),
         read: 'notRead',
@@ -13,6 +13,5 @@ export async function pushSellerNotif(req, prod, Operation) {
         product_id: ((Operation === 'request' || Operation === 'favorite') ? prod._id.toString() : undefined),
         Operation
     }
-    notif = removeUndefined(notif);
-    return (notif);
+    return (removeUndefined(notif));
 }
