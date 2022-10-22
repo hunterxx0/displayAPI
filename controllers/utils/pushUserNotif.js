@@ -18,7 +18,7 @@ export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
                     Operation,
                     targets: ((Operation === 'update') ? (Object.keys(UpObj).map(
                         x => {
-                            if (JSON.stringify(UpObj[x]) !== JSON.stringify(prod[x]))
+                            if ((JSON.stringify(UpObj[x]) !== JSON.stringify(prod[x])) && x !== 'seller_id')
                                 return { name: x, from: prod[x], to: UpObj[x] }
                         })) : undefined)
                 }
