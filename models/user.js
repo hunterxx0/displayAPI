@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: []
     },
-    notifications: {
+    notifications: [{
         id: {
             type: String,
             required: false,
@@ -104,7 +104,7 @@ const userSchema = new mongoose.Schema({
                 required: false,
             },
         },
-    },
+    }],
     following: {
         type: Array,
         required: false,
