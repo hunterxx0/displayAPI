@@ -2,7 +2,10 @@
 import { removeUndefined } from '../utils/removeUndefined.js';
 
 export function getUnreadNotif(req, res) {
-    let unreadNotif = res.user.notifications.map(notif => { if (!notif.read) return notif });
+    const dbcustomer = res.user || res.seller;
+    let unreadNotif = dbcustomer.notifications.map(notif => { 
+        if (notif.read === 'notRead') return notif 
+    });
     unreadNotif = removeUndefined(unreadNotif);
     res.json(unreadNotif);
 }

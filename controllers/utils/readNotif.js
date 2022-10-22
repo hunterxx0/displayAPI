@@ -4,8 +4,8 @@ export async function readNotif(req, res) {
     let updated = false;
     const dbcustomer = res.user || res.seller;
     dbcustomer.notifications = dbcustomer.notifications.map(notif => {
-        if (notif.id == req.params.notifID) {
-            notif.read = 1;
+        if (notif.id === req.params.notifID && notif.read === 'notRead') {
+            notif.read = 'read';
             updated = true;
         }
         return notif;

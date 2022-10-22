@@ -6,11 +6,13 @@ import { sellerAll } from '../controllers/sellerReqsHandler/sellerAll.js';
 import { sellerCreate } from '../controllers/sellerReqsHandler/sellerCreate.js';
 import { sellerUpdate } from '../controllers/sellerReqsHandler/sellerUpdate.js';
 import { sellerDel } from '../controllers/sellerReqsHandler/sellerDel.js';
-import { delNotif } from '../controllers/sellerReqsHandler/delNotif.js';
-import { clrNotif } from '../controllers/sellerReqsHandler/clrNotif.js';
-import { readNotif } from '../controllers/utils/readNotif.js';
 
 import { getSeller } from '../controllers/utils/getSeller.js';
+import { delNotif } from '../controllers/utils/delNotif.js';
+import { clrNotif } from '../controllers/utils/clrNotif.js';
+import { getAllNotif } from '../controllers/utils/getAllNotif.js';
+import { getUnreadNotif } from '../controllers/utils/getUnreadNotif.js';
+import { readNotif } from '../controllers/utils/readNotif.js';
 
 const router = express.Router();
 
@@ -35,6 +37,12 @@ router.patch('/:id', getSeller, sellerUpdate)
 
 //delete one
 router.delete('/:id', getSeller, sellerDel);
+
+//get all notifications
+router.get('/:id/notifications/', getSeller, getAllNotif);
+
+//get unread notifications
+router.get('/:id/notifications/unread', getSeller, getUnreadNotif);
 
 //delete notification
 router.delete('/:id/notification/:notifID', getSeller, delNotif);

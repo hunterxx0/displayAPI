@@ -1,10 +1,11 @@
 //clear notifications
 
 export async function clrNotif(req, res) {
-    if (res.user.notifications.length) {
-        res.user.notifications = [];
+    const dbcustomer = res.user || res.seller;
+    if (dbcustomer.notifications.length) {
+        dbcustomer.notifications = [];
         try {
-            const upUser = await res.user.save();
+            const upUser = await dbcustomer.save();
             res.json(upUser);
         } catch (err) {
             res.status(500).send({ message: err.message })
