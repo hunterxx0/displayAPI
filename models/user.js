@@ -90,20 +90,10 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
-        targets: [{
-            name: {
-                type: String,
-                required: false,
-            },
-            from: {
-                type: mongoose.Mixed,
-                required: false,
-            },
-            to: {
-                type: mongoose.Mixed,
-                required: false,
-            },
-        }],
+        targets: {
+            type: Array,
+            required: false,
+        },
     }],
     following: {
         type: Array,
