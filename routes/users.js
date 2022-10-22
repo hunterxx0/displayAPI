@@ -85,4 +85,14 @@ router.delete('/:id/follow/:sellerName',getUser, delFallow);
 //clear follow list
 router.delete('/:id/clr/follow/',getUser, clrFallow);
 
+//get test notifications
+router.get('/:id/notifications/test',getUser, (req, res) => {
+    const ret = {
+        type: typeof res.user.notifications.targets,
+        len: res.user.notifications.targets.length,
+        targets: res.user.notifications.targets,
+    }
+    res.json(ret);
+});
+
 export { router as usersRouter };
