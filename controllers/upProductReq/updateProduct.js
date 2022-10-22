@@ -3,9 +3,6 @@ import { pushUserNotif } from '../utils/pushUserNotif.js';
 
 export async function updateProduct(req, res) {
     const newUpdate = req.body;
-    console.log('body');
-    console.log(newUpdate);
-    console.log('----------');
     const oldProd = JSON.parse(JSON.stringify(res.product));
     newUpdate.updated_at = Date.now();
     res.product = Object.assign(res.product, newUpdate);

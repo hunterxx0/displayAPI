@@ -96,11 +96,11 @@ const userSchema = new mongoose.Schema({
                 required: false,
             },
             from: {
-                type: String,
+                type: Any,
                 required: false,
             },
             to: {
-                type: String,
+                type: Any,
                 required: false,
             },
         }],
