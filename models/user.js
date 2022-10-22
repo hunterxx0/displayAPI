@@ -96,11 +96,11 @@ const userSchema = new mongoose.Schema({
                 required: false,
             },
             from: {
-                type: Any,
+                type: mongoose.Mixed,
                 required: false,
             },
             to: {
-                type: Any,
+                type: mongoose.Mixed,
                 required: false,
             },
         }],
