@@ -4,8 +4,8 @@ import { removeUndefined } from './removeUndefined.js'
 import { v4 } from 'uuid';
 
 export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
-    try { { $or: [{ following: seller_name }, { favorites: prod._id }] }
-        const users = await User.find();
+    try {
+        const users = await User.find({ $or: [{ following: seller_name }, { favorites: prod._id }] });
         if (users.length)
             users.map(async function(user) {
                 let notif = {
@@ -16,11 +16,15 @@ export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
                     read: 'notRead',
                     seller_name,
                     Operation,
-                    targets: ((Operation === 'update') ? (Object.keys(UpObj).map(
-                        x => {
-                            if ((JSON.stringify(UpObj[x]) !== JSON.stringify(prod[x])) && x !== 'seller_id')
+                    targets: ((Operation === 'update') ? (Object.keys(UpObj)
+                        .filter(
+                            val => ((JSON.stringify(UpObj[val]) !== JSON.stringify(prod[val])) && val !== 'seller_id'))
+                        .map(
+                            x => {
                                 return { name: x, from: prod[x], to: UpObj[x] }
-                        })) : undefined)
+                            }
+                        )
+                    ) : undefined)
                 }
                 notif = removeUndefined(notif);
                 user.notifications.unshift(notif);
