@@ -13,6 +13,10 @@ export async function pushSellerNotif(req, prod, Operation) {
         product_id: ((Operation === 'request' || Operation === 'favorite') ? prod._id : undefined),
         Operation
     }
+    console.log('----------------');
+    console.log(notif);
+    console.log('+++++++++++++++++');
     notif = removeUndefined(notif);
+    console.log(notif);
     return (notif);
 }
