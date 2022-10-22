@@ -1,6 +1,7 @@
 //add favorite
 import { Product } from '../../models/product.js';
 import { Seller } from '../../models/seller.js';
+import { pushSellerNotif } from '../utils/pushSellerNotif.js';
 
 export async function addFav(req, res) {
     try {
