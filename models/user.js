@@ -62,6 +62,7 @@ const userSchema = new mongoose.Schema({
         default: []
     },
     notifications: [{
+        _id: false,
         id: {
             type: String,
             required: false,
