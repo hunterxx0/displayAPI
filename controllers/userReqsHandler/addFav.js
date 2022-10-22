@@ -12,7 +12,9 @@ export async function addFav(req, res) {
             res.user._id,
             product,
             'favorite'));
-        await seller.save();
+        const newSeller = await seller.save();
+        console.log('****************');
+        console.log(newSeller.notifications);
         res.user.favorites.push(req.params.favorite);
         const upUser = await res.user.save();
         res.json(upUser);
