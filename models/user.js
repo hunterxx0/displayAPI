@@ -81,7 +81,6 @@ const userSchema = new mongoose.Schema({
         read: {
             type: String,
             required: false,
-            default: 'unRead'
         },
         seller_name: {
             type: String,
