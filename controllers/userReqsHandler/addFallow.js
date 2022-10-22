@@ -20,6 +20,7 @@ export async function addFallow(req, res) {
             res.json(upUser);
         } else res.status(409).send({ message: 'Already following' });
     } catch (err) {
+        console.log(err);
         res.status(500).send({ message: err.message })
     }
 }

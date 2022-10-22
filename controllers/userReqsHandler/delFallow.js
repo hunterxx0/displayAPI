@@ -10,6 +10,7 @@ export async function delFallow(req, res) {
             const upUser = await res.user.save();
             res.json(upUser);
         } catch (err) {
+            console.log(err);
             res.status(500).send({ message: err.message })
         }
     } else res.status(409).send({ message: 'Connot remove the follow' });

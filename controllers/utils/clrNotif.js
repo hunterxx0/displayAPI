@@ -8,6 +8,7 @@ export async function clrNotif(req, res) {
             const upUser = await dbcustomer.save();
             res.json(upUser);
         } catch (err) {
+            console.log(err);
             res.status(500).send({ message: err.message })
         }
     }

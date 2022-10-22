@@ -10,6 +10,7 @@ export async function delNotif(req, res) {
             const upCostumer = await dbcustomer.save();
             res.json(upCostumer);
         } catch (err) {
+            console.log(err);
             res.status(500).send({ message: err.message })
         }
     } else res.status(409).send({ message: 'Connot remove the notification' });

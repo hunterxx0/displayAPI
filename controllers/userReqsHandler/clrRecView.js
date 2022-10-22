@@ -7,6 +7,7 @@ export async function clrRecView(req, res) {
             const upUser = await res.user.save();
             res.json(upUser);
         } catch (err) {
+            console.log(err);
             res.status(500).send({ message: err.message })
         }
     }
