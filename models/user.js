@@ -64,32 +64,32 @@ const userSchema = new mongoose.Schema({
     notifications: {
         id: {
             type: String,
-            required: true,
+            required: false,
         },
         date: {
             type: Number,
-            required: true,
+            required: false,
         },
         prodID: {
             type: String,
-            required: true,
+            required: false,
         },
         product_name: {
             type: String,
-            required: true,
+            required: false,
         },
         read: {
             type: String,
-            required: true,
+            required: false,
             default: 'unRead'
         },
         seller_name: {
             type: String,
-            required: true,
+            required: false,
         },
         Operation: {
             type: String,
-            required: true,
+            required: false,
         },
         targets: {
             name: {
