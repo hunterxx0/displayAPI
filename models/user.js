@@ -90,7 +90,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             required: false,
         },
-        targets: {
+        targets: [{
             name: {
                 type: String,
                 required: false,
@@ -103,7 +103,7 @@ const userSchema = new mongoose.Schema({
                 type: String,
                 required: false,
             },
-        },
+        }],
     }],
     following: {
         type: Array,
