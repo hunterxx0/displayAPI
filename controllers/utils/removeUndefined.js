@@ -6,6 +6,9 @@ export function removeUndefined(obj) {
         if (obj[key] === undefined || obj[key] === null) delete obj[key];
         else if (typeof obj[key] === 'object' || typeof obj[key] === Object) removeUndefined(obj[key]);
     });
+    console.log('+++++++++++++');
+    console.log(obj);
+    console.log('-------------------------');    
     console.log(obj.targets);
     return obj;
 }
