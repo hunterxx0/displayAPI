@@ -16,7 +16,7 @@ import { delNotif } from '../controllers/userReqsHandler/delNotif.js';
 import { clrNotif } from '../controllers/userReqsHandler/clrNotif.js';
 import { getAllNotif } from '../controllers/userReqsHandler/getAllNotif.js';
 import { getUnreadNotif } from '../controllers/userReqsHandler/getUnreadNotif.js';
-import { readNotif } from '../controllers/userReqsHandler/readNotif.js';
+import { readNotif } from '../controllers/utils/readNotif.js';
 import { addFallow } from '../controllers/userReqsHandler/addFallow.js';
 import { delFallow } from '../controllers/userReqsHandler/delFallow.js';
 import { clrFallow } from '../controllers/userReqsHandler/clrFallow.js';

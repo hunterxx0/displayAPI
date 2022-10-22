@@ -2,17 +2,17 @@
 
 export async function readNotif(req, res) {
     let updated = false;
-    res.user.notifications = res.user.notifications.map(notif => {
+    const dbcustomer = dbcustomer || res.seller;
+    dbcustomer.notifications = dbcustomer.notifications.map(notif => {
         if (notif.id == req.params.notifID) {
-            notif.read = true;
+            notif.read = 1;
             updated = true;
         }
         return notif;
     });
-    console.log(res.user.notifications);
     if (updated) {
         try {
-            updated = await res.user.save();
+            await dbcustomer.save();
         } catch (err) { console.log(err) }
     }
     res.json(updated);
