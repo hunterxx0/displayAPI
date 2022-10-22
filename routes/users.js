@@ -88,8 +88,8 @@ router.delete('/:id/clr/follow/',getUser, clrFallow);
 //get test notifications
 router.get('/:id/notifications/test',getUser, (req, res) => {
     const ret = {
-        type: typeof res.user.notifications.targets,
-        targets: res.user.notifications.targets,
+        type: typeof res.user.notifications[0].targets,
+        targets: res.user.notifications[0].targets,
     }
     res.json(ret);
 });
