@@ -9,7 +9,7 @@ export async function addFav(req, res) {
         if (!product) return res.status(404).send({ message: 'Product not found' });
         const seller = await Seller.findOne({ name: product.seller_name });
         seller.notifications.unshift(pushSellerNotif(
-            res.user._id,
+            res.user,
             product,
             'favorite'));
         await seller.save();

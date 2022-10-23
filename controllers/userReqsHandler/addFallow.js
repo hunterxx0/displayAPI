@@ -9,7 +9,7 @@ export async function addFallow(req, res) {
                 const seller = await Seller.findOne({ name: req.params.sellerName })
                 if (!seller) throw 'Seller not found';
                 seller.notifications.unshift(pushSellerNotif(
-                    res.user._id.toString(),
+                    res.user,
                     undefined,
                     'follow'
                 ))
