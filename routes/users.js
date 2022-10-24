@@ -3,6 +3,7 @@ import express from "express";
 import { User } from '../models/user.js';
 
 import { getUsers } from '../controllers/userReqsHandler/getUsers.js';
+import { userUpdate } from '../controllers/userReqsHandler/userUpdate.js';
 import { addRecSear } from '../controllers/userReqsHandler/addRecSear.js';
 import { delRecSear } from '../controllers/userReqsHandler/delRecSear.js';
 import { clrRecView } from '../controllers/userReqsHandler/clrRecView.js';
@@ -32,7 +33,10 @@ router.get('/', getUsers);
 //get one
 router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
-})
+});
+
+//update one
+router.patch('/:id', getUser, userUpdate);
 
 //add recently searched word
 router.patch('/:id/search/:keyword', getUser, addRecSear);
