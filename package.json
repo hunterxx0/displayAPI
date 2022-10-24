@@ -20,7 +20,8 @@
     "mongoose": "^6.5.1",
     "stream-chat": "^7.1.0",
     "twilio": "^3.82.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "uuidv5": "^1.0.0"
   },
   "devDependencies": {
     "dotenv": "^16.0.1",

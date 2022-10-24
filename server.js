@@ -24,6 +24,11 @@ db.on('open', () => {
 });
 
 // routes:
+//        welcome
+router.get('/', (req, res) => {
+  res.send('Hello');
+});
+
 //        User route
 import {usersRouter} from './routes/users.js';
 app.use('/users', usersRouter);

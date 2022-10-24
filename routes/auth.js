@@ -1,10 +1,12 @@
 import express from "express";
 import {AuthController} from '../controllers/auth/AuthController.js';
+import {encrDecr} from '../controllers/auth/encrDecr.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Hello');
+router.get('/:word', (req, res) => {
+  const word = encrDecr(req.params.word, req.query.op)
+  res.json({ word });
 });
 router.post('/signupSeller', AuthController.sellerSignup);
 router.post('/signup', AuthController.signup);
