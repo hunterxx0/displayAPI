@@ -6,6 +6,7 @@ export async function delProduct(req, res) {
         const users = await User.updateMany({ favorites: res.product._id.toString() }, {
             $pull: {
                 favorites: res.product._id.toString(),
+                recently_viewed: res.product._id.toString(),
             }
         });
         await res.product.remove()
