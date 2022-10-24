@@ -89,5 +89,4 @@ router.delete('/:id/clr/follow', getUser, clrFallow);
 //get following list
 router.get('/:id/following', getUser, getFollowing);
 
-
 export { router as usersRouter };
