@@ -55,6 +55,6 @@ router.delete('/:id/clr/notification', getSeller, clrNotif);
 router.patch('/:id/notifications/:notifID', getSeller, readNotif);
 
 //get followers list
-router.patch('/:name/followers', getSeller, getFollowers);
+router.get('/:name/followers', getSeller, getFollowers);
 
 export { router as sellersRouter };
