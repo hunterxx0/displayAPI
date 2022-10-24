@@ -3,7 +3,6 @@ import express from "express";
 import { User } from '../models/user.js';
 
 import { getUsers } from '../controllers/userReqsHandler/getUsers.js';
-import { userUpdate } from '../controllers/userReqsHandler/userUpdate.js';
 import { addRecSear } from '../controllers/userReqsHandler/addRecSear.js';
 import { delRecSear } from '../controllers/userReqsHandler/delRecSear.js';
 import { clrRecView } from '../controllers/userReqsHandler/clrRecView.js';
@@ -16,6 +15,7 @@ import { delRequest } from '../controllers/userReqsHandler/delRequest.js';
 import { addFallow } from '../controllers/userReqsHandler/addFallow.js';
 import { delFallow } from '../controllers/userReqsHandler/delFallow.js';
 import { clrFallow } from '../controllers/userReqsHandler/clrFallow.js';
+import { getFollowing } from '../controllers/userReqsHandler/getFollowing.js';
 
 import { arrRem } from '../controllers/utils/arrRem.js';
 import { getUser } from '../controllers/utils/getUser.js';
@@ -34,9 +34,6 @@ router.get('/', getUsers);
 router.get('/:id', getUser, (req, res) => {
     res.json(res.user);
 });
-
-//update one
-router.patch('/:id', getUser, userUpdate);
 
 //add recently searched word
 router.patch('/:id/search/:keyword', getUser, addRecSear);
@@ -78,7 +75,7 @@ router.get('/:id/notifications/unread', getUser, getUnreadNotif);
 router.patch('/:id/notifications/:notifID', getUser, readNotif);
 
 //clear notifications
-router.delete('/:id/clr/notification/', getUser, clrNotif);
+router.delete('/:id/clr/notification', getUser, clrNotif);
 
 //add follow to seller
 router.patch('/:id/follow/:sellerName', getUser, addFallow);
@@ -87,7 +84,10 @@ router.patch('/:id/follow/:sellerName', getUser, addFallow);
 router.delete('/:id/follow/:sellerName', getUser, delFallow);
 
 //clear follow list
-router.delete('/:id/clr/follow/', getUser, clrFallow);
+router.delete('/:id/clr/follow', getUser, clrFallow);
+
+//get following list
+router.get('/:id/following', getUser, getFollowing);
 
 
 export { router as usersRouter };

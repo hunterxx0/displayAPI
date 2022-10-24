@@ -14,8 +14,4 @@ router.post('/login', AuthController.login);
 router.patch('/editlogin', AuthController.editLogin);
 router.delete('/eraseUser/:id', AuthController.deleteUser);
 
-/*
-import {UserController} from '../controllers/UserController.js';
-router.get('/role/:userId', UserController.getUserRole);
-*/
 export {router as auth};

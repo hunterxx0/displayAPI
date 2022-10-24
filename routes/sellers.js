@@ -6,6 +6,7 @@ import { sellerAll } from '../controllers/sellerReqsHandler/sellerAll.js';
 import { sellerCreate } from '../controllers/sellerReqsHandler/sellerCreate.js';
 import { sellerUpdate } from '../controllers/sellerReqsHandler/sellerUpdate.js';
 import { sellerDel } from '../controllers/sellerReqsHandler/sellerDel.js';
+import { getFollowers } from '../controllers/sellerReqsHandler/getFollowers.js';
 
 import { getSeller } from '../controllers/utils/getSeller.js';
 import { delNotif } from '../controllers/utils/delNotif.js';
@@ -52,5 +53,8 @@ router.delete('/:id/clr/notification', getSeller, clrNotif);
 
 //read notification
 router.patch('/:id/notifications/:notifID', getSeller, readNotif);
+
+//get followers list
+router.patch('/:name/followers', getSeller, getFollowers);
 
 export { router as sellersRouter };
