@@ -5,7 +5,7 @@ import {encrDecr} from '../controllers/auth/encrDecr.js';
 const router = express.Router();
 
 router.get('/:word', (req, res) => {
-  const word = encrDecr(req.params.word, req.query.op)
+  const word = (req.params.word) ? encrDecr(req.params.word, req.query.op) : null
   res.json({ word });
 });
 router.post('/signupSeller', AuthController.sellerSignup);
