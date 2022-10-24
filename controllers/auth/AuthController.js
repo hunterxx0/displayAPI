@@ -5,6 +5,7 @@ import {StreamChat} from 'stream-chat';
 
 import {User} from '../../models/user.js';
 import {Seller} from '../../models/seller.js';
+import {encrDecr} from './encrDecr.js';
 import jwt from 'jsonwebtoken';
 
 const { verify } = jwt;
@@ -24,7 +25,7 @@ class AuthController {
         website,
         seller_country
       } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = encrDecr(await bcrypt.hash(password, 10));
       const seller = {
         name,
         hashedPassword,
@@ -39,7 +40,7 @@ class AuthController {
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
       const token = serverClient.createToken(newSeller._id.toString(), timestamp);
-      newSeller.token = token;
+      newSeller.token = encrDecr(token);
       const savedSeller = await newSeller.save();
       const streamUser = await serverClient.upsertUser({name, id: savedSeller._id.toString(), role: 'seller', image: avatarURL});
       return res.status(201).json({username: name, userId: savedSeller._id.toString(), token} );
@@ -59,7 +60,7 @@ class AuthController {
         avatarURL,
         email
       } = req.body;
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const hashedPassword = encrDecr(await bcrypt.hash(password, 10));
       const user = {
         username,
         hashedPassword,
@@ -73,7 +74,7 @@ class AuthController {
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
       const token = serverClient.createToken(newUser._id.toString(), timestamp);
-      newUser.token = token;
+      newUser.token = encrDecr(token);
       const savedUser = await newUser.save();
       return res.status(201).json({...user, userId: savedUser._id.toString(), token} );
     } catch (error) {
@@ -90,14 +91,14 @@ class AuthController {
       const dbcustomer = userdb || (await Seller.findOne({name: username}));
       if (!users.length || !dbcustomer)
         return res.status(401).json({ message: 'User not found' });
-      let success = await bcrypt.compare(password, dbcustomer.hashedPassword);
+      let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
       // token expires in 3 hours
       const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
       const serverClient = connect(api_key, api_secret, app_id);
       const token = serverClient.createUserToken(users[0].id, timestamp);
       // console.log(users);
       if (success) {
-        dbcustomer.token = token;
+        dbcustomer.token = encrDecr(token);
         await dbcustomer.save();
         res.status(200).json({
           token,
@@ -119,7 +120,7 @@ class AuthController {
       delete info.id;
       Object.keys(info).forEach(key => info[key] === undefined && delete info[key]);
       if ('password' in info) {
-        info.hashedPassword = await bcrypt.hash(info['password'], 10);
+        info.hashedPassword = encrDecr(await bcrypt.hash(info['password'], 10));
         delete info['password'];
       }
       if (info.username) {

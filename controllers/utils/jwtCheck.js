@@ -1,6 +1,7 @@
 import {Seller} from '../../models/seller.js';
 import jwt from 'jsonwebtoken';
 import {StreamChat} from 'stream-chat';
+import {encrDecr} from '../auth/encrDecr.js';
 
 const { verify } = jwt;
 const api_key = process.env.STREAM_API_KEY;
@@ -22,7 +23,7 @@ export async function JWTAuth(req, res, next) {
 	    	return res.status(401).json({message: "Unauthorized"});
 		if (res.product && users[0].role == 'seller') {
     		let seller = await Seller.findOne({name: res.product.seller_name});
-	    	if (!seller || !seller.token || seller.token !== token)
+	    	if (!seller || !seller.token || encrDecr(seller.token, 'decode') !== token)
 	    		return res.status(401).json({message: "Unauthorized"});
 	  	}
 	  	next();
