@@ -38,7 +38,7 @@ export async function prodfill(req, res) {
                         await createProd(reqq, ress);
                     } catch (err) {
                         console.log('errr')
-                        console.log(Object.keys(err))
+                        console.log(err)
                     }
                 } else console.log('---------------skip');
 
