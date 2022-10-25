@@ -79,7 +79,7 @@ class AuthController {
             const token = serverClient.createToken(newUser._id.toString(), timestamp);
             newUser.token = encrDecr(token);
             const dbuser = await User.findOne({username});
-            const streamUser = await serverClient.upsertUser({ name: username, id: dbuser._id.toString(), role: 'seller' });
+            const streamUser = await serverClient.upsertUser({ name: username, id: dbuser._id.toString() });
             return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
             console.log('AuthController errr')
