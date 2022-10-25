@@ -25,7 +25,11 @@ export async function sellersProd(req, res) {
             	seller_country: "BE",
             	website: "test.com",
             }
+            try {
             AuthController.sellerSignup(req, res);
+            } catch (err) {
+            	console.log(Object.keys(err))
+            }
             res.json(result);
 
         })
