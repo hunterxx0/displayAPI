@@ -18,15 +18,15 @@ export async function sellersProd(req, res) {
             const result = JSON.parse(data);
             const req = {}
             req.body = {
-            	username: "testing",
-            	email: "testing@testing.com",
+            	username: "testtest",
+            	email: "testtest@testtest.com",
             	password: "123456",
             	phoneNumber: "123456789",
             	seller_country: "BE",
-            	website: "testing.com",
+            	website: "testtest.com",
             }
             try {
-            AuthController.sellerSignup(req, res);
+            AuthController.sellerSignup(req, {});
             } catch (err) {
             	console.log('errr')
             	console.log(Object.keys(err))
