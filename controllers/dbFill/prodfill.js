@@ -26,22 +26,24 @@ export async function prodfill(req, res) {
                 characteristics: { Color: ['red'] }
             }]
             result.products.map(async x => {
-                const seller = await Seller.findOne({ name: x.seller_name })
-                if (seller) {
-                	x.seller_id = seller._id.toString();
-                    const reqq = {}
-                    reqq.body = x
-                    try {
-                        let ress = {
-                            status: (status) => { return { json: (mess) => { console.log(mess) } } },
+            	const dbprod = Product.findOne({title: x.title});
+                if (!dbprod) {
+                    const seller = await Seller.findOne({ name: x.seller_name })
+                    if (seller) {
+                        x.seller_id = seller._id.toString();
+                        const reqq = {}
+                        reqq.body = x
+                        try {
+                            let ress = {
+                                status: (status) => { return { json: (mess) => { console.log(mess) } } },
+                            }
+                            await createProd(reqq, ress);
+                        } catch (err) {
+                            console.log('errr')
+                            console.log(err)
                         }
-                        await createProd(reqq, ress);
-                    } catch (err) {
-                        console.log('errr')
-                        console.log(err)
-                    }
-                } else console.log('---------------skip');
-
+                    } else console.log('---------------skip\n\n\n\n');
+                }else console.log('prod-----------------------------skip\n\n\n\n\n\n');
             })
 
             res.json(result);
