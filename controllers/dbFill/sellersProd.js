@@ -3,7 +3,7 @@ import https from 'https';
 import { Product } from '../../models/product.js';
 import { User } from '../../models/user.js';
 import { Seller } from '../../models/seller.js';
-import {AuthController} from '../auth/AuthController.js';
+import { AuthController } from '../auth/AuthController.js';
 
 export async function sellersProd(req, res) {
     let data = '';
@@ -18,18 +18,22 @@ export async function sellersProd(req, res) {
             const result = JSON.parse(data);
             const req = {}
             req.body = {
-            	username: "testtest",
-            	email: "testtest@testtest.com",
-            	password: "123456",
-            	phoneNumber: "123456789",
-            	seller_country: "BE",
-            	website: "testtest.com",
+                username: "test1",
+                email: "test1@test1.com",
+                password: "123456",
+                phoneNumber: "123456789",
+                seller_country: "BE",
+                website: "test1.com",
             }
             try {
-            AuthController.sellerSignup(req, {});
+                let ress = {
+                    status: (status) => { console.log(status) },
+                    json: (mess) => { console.log(mess) }
+                }
+                AuthController.sellerSignup(req, ress);
             } catch (err) {
-            	console.log('errr')
-            	console.log(Object.keys(err))
+                console.log('errr')
+                console.log(Object.keys(err))
             }
             res.json(result);
 
