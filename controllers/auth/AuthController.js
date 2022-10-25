@@ -78,12 +78,13 @@ class AuthController {
             const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
             const token = serverClient.createToken(newUser._id.toString(), timestamp);
             newUser.token = encrDecr(token);
-            const savedUser = await newUser.save();
+            const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller' });
             return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
             console.log('AuthController errr')
             console.log(Object.keys(error))
             console.log(error)
+            if (error === 'd')
             res.status(500).json({ message: error });
         }
     }
