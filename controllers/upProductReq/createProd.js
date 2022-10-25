@@ -12,7 +12,7 @@ export async function createProd(req, res) {
             requests: req.body.requests,
             characteristics: req.body.characteristics,
         })
-        (req.body.seller_id) ? product.seller_id = req.body.seller_id : null;
+        if (req.body.seller_id) product.seller_id = req.body.seller_id;
     try {
         const newProduct = await product.save();
         pushUserNotif(newProduct, undefined, newProduct.seller_name, 'add');
