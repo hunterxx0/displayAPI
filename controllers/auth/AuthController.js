@@ -50,8 +50,10 @@ class AuthController {
                 //rollback funct
             } catch {}
             console.log('AuthController errr')
+            console.log(Object.keys(error))
             console.log(error)
-            res.status(500).json({ message: error });
+            if (error === 'd')
+                res.status(500).json({ message: error });
         }
     }
     static async signup(req, res) {
@@ -142,7 +144,8 @@ class AuthController {
             dbcustomer = await updateUser(constmID, info);
             if (!dbcustomer) {
                 delete Object.assign(info, {
-                    ['name']: info['username'] })['username'];
+                    ['name']: info['username']
+                })['username'];
                 dbcustomer = await updateSeller(constmID, info);
             }
             if (!dbcustomer) {
