@@ -43,16 +43,6 @@ const productSchema = new mongoose.Schema({
 		required: false,
 		default: {},
 	},
-	created_at: {
-		type: Date,
-		required: true,
-		default: Date.now
-	},
-	updated_at: {
-		type: Date,
-		required: true,
-		default: Date.now
-	},
 	views: {
 		type: Number,
 		required: true,
@@ -63,7 +53,7 @@ const productSchema = new mongoose.Schema({
 		required: true,
 		default: 0
 	},
-})
+},  { timestamps: true })
 
 const Product = mongoose.model('product', productSchema);
 

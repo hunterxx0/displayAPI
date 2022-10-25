@@ -79,7 +79,7 @@ class AuthController {
             const token = serverClient.createToken(newUser._id.toString(), timestamp);
             newUser.token = encrDecr(token);
             const savedUser = await newUser.save();
-            return res.status(201).json({ ...user, userId: savedUser._id.toString(), token });
+            return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
             res.status(500).json({ message: error });
         }

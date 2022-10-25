@@ -75,12 +75,7 @@ const sellerSchema = new mongoose.Schema({
             required: false,
         },
     }],
-	created_at: {
-		type: Date,
-		required: true,
-		default: Date.now
-	},
-})
+}, { timestamps: true })
 
 
 const Seller = mongoose.model('seller', sellerSchema);

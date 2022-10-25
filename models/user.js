@@ -28,15 +28,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         default: null
     },
-    created_at: {
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        required: false,
-    },
     avatarURL: {
         type: String,
         required: false,
@@ -106,7 +97,7 @@ const userSchema = new mongoose.Schema({
         required: false,
         default: []
     },
-})
+}, { timestamps: true })
 
 const User = mongoose.model('user', userSchema);
 export { User };
