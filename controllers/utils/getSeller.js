@@ -10,6 +10,7 @@ export async function getSeller(req, res, next) {
             return res.status(404).json({ message: 'Cannot find seller' });
         }
     } catch (err) {
+    	if (err.name === "CastError") return res.status(404).json({message: 'Seller ID format error'});
         return res.status(500).json({ message: err.message });
     }
     res.seller = seller;
