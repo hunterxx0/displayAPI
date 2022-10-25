@@ -8,6 +8,7 @@ export async function getUser(req, res, next) {
 		else user = await User.findById(req.params.id);
 		if (!user) return res.status(404).json({message: 'Cannot find user'});
 	} catch (err) {
+		if (err.name === "CastError") return res.status(404).json({message: 'User ID format error'});
 		return res.status(500).json({message: err.message});
 	}
 	res.user = user;
