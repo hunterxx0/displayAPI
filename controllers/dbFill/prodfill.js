@@ -47,6 +47,7 @@ export async function prodfill(req, res) {
                     } else console.log('---------------skip\n\n\n\n');
                 }else console.log('prod-----------------------------skip\n\n\n\n\n\n');
                 console.log(counter);
+                console.log(dbprod);
             	counter += 1;
             })
             console.log(result.products.length)
