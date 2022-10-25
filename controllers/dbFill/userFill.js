@@ -23,7 +23,7 @@ export async function userFill(req, res) {
                     let ress = {
                         status: (status) => { return { json: (mess) => { console.log(mess) } } },
                     }
-                    await signup(reqq, ress);
+                    await AuthController.signup(reqq, ress);
                 } catch (err) {
                     console.log('errr')
                     console.log(err)
