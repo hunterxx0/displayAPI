@@ -24,7 +24,7 @@ export async function getPage (req, res) {
 		res.json(result);
 	} catch (err) {
 		console.log(err);
-		if (err == 'Bad Request') return res.status(400).json({message: err.message});
+		if (err == 'Bad Request') return res.status(400).json({message: err});
 		res.status(500).json({message: err.message});
 	}
 }
