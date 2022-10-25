@@ -49,6 +49,7 @@ class AuthController {
                 await savedSeller.remove()
                 //rollback funct
             } catch {}
+            console.log('AuthController errr')
             console.log(error)
             res.status(500).json({ message: error });
         }

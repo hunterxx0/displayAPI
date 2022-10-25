@@ -28,6 +28,7 @@ export async function sellersProd(req, res) {
             try {
             AuthController.sellerSignup(req, res);
             } catch (err) {
+            	console.log('errr')
             	console.log(Object.keys(err))
             }
             res.json(result);
