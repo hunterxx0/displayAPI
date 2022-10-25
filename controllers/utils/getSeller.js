@@ -35,7 +35,7 @@ async function sellerPatch(params) {
         seller = await Seller.findById(params.id)
             .select('-__v');
     } else if (params.name) {
-        seller = await Seller.findOne({ name: req.params.name })
+        seller = await Seller.findOne({ name: params.name })
             .select('-__v');
     }
     return seller;
