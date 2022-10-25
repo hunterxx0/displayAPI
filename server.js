@@ -29,9 +29,13 @@ app.get('/', (req, res) => {
   res.send('Hello');
 });
 
-//        filling db
+//        filling db with sellers
 import {sellersProd} from './controllers/dbFill/sellersProd.js';
-app.get('/fill', sellersProd);
+app.get('/fillSellers', sellersProd);
+
+//        filling db with products
+import {prodfill} from './controllers/dbFill/prodfill.js';
+app.get('/fillprods', prodfill);
 
 //        User route
 import {usersRouter} from './routes/users.js';
