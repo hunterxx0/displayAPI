@@ -25,8 +25,8 @@ export async function prodfill(req, res) {
                 tags: ['aaa', 'sss'],
                 characteristics: { Color: ['red'] }
             }]
-
-            result.products.splice(0, 20).map(async x => {
+            let counter = 1;
+            result.products.map(async x => {
             	const dbprod = Product.findOne({title: x.title});
                 if (!dbprod) {
                     const seller = await Seller.findOne({ name: x.seller_name })
@@ -46,6 +46,8 @@ export async function prodfill(req, res) {
                         }
                     } else console.log('---------------skip\n\n\n\n');
                 }else console.log('prod-----------------------------skip\n\n\n\n\n\n');
+                console.log(counter);
+            	counter += 1;
             })
             console.log(result.products.length)
             res.json(result);
