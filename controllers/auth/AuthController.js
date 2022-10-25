@@ -49,11 +49,8 @@ class AuthController {
                 await savedSeller.remove()
                 //rollback funct
             } catch {}
-            console.log('AuthController errr')
-            console.log(Object.keys(error))
             console.log(error)
-            if (error === 'd')
-                res.status(500).json({ message: error });
+            res.status(500).json({ message: error });
         }
     }
     static async signup(req, res) {
@@ -84,7 +81,11 @@ class AuthController {
             const savedUser = await newUser.save();
             return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
-            res.status(500).json({ message: error });
+            console.log('AuthController errr')
+            console.log(Object.keys(error))
+            console.log(error)
+            if (error !== 'd')
+                res.status(500).json({ message: error });
         }
     }
     static async login(req, res) {
