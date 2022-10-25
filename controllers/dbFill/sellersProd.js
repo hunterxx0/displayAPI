@@ -18,12 +18,12 @@ export async function sellersProd(req, res) {
             const result = JSON.parse(data);
             const req = {}
             req.body = {
-            	username: "test",
-            	email: "test@test.com",
+            	username: "testing",
+            	email: "testing@testing.com",
             	password: "123456",
             	phoneNumber: "123456789",
             	seller_country: "BE",
-            	website: "test.com",
+            	website: "testing.com",
             }
             try {
             AuthController.sellerSignup(req, res);
