@@ -49,7 +49,7 @@ app.use("/auth", auth);
 const PORT = process.env.PORT || 3000;
 
 
-/*
+
 //        filling db with sellers
 import {sellersProd} from './controllers/dbFill/sellersProd.js';
 app.get('/fillSellers', sellersProd);
@@ -65,4 +65,4 @@ app.get('/updateSellers', updateSeller);
 //        updating db sellers
 import {userFill} from './controllers/dbFill/userFill.js';
 app.get('/userFill', userFill);
-*/
+
