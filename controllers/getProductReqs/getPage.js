@@ -23,6 +23,7 @@ export async function getPage (req, res) {
 		result.data = products;
 		res.json(result);
 	} catch (err) {
+		console.log(err);
 		if (err.message == 'Bad Request') return res.status(400).json({message: err.message});
 		res.status(500).json({message: err.message});
 	}
