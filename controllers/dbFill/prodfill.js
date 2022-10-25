@@ -25,6 +25,7 @@ export async function prodfill(req, res) {
                 tags: ['aaa', 'sss'],
                 characteristics: { Color: ['red'] }
             }]
+
             result.products.map(async x => {
             	const dbprod = Product.findOne({title: x.title});
                 if (!dbprod) {
@@ -45,7 +46,7 @@ export async function prodfill(req, res) {
                     } else console.log('---------------skip\n\n\n\n');
                 }else console.log('prod-----------------------------skip\n\n\n\n\n\n');
             })
-
+            console.log(result.products.length)
             res.json(result);
 
         })
