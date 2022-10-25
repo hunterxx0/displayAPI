@@ -15,11 +15,12 @@ export async function getPage (req, res) {
 		.skip((page - 1) * limit)
 		.limit(limit);
 		const productsCount = await Product.find().count();
+		if (!productsCount) return res.json({});
 		result.totalpages = Math.floor(productsCount/limit);
 		if (productsCount%limit) result.totalpages += 1;
 		if (page > result.totalpages || page < 0) throw 'Bad Request';
-		result.nextPage = (page == result.totalpages) ? null : page + 1;
-		result.prevPage = (page == 1) ? null : page - 1;
+		result.nextPage = (page === result.totalpages) ? null : page + 1;
+		result.prevPage = (page === 1) ? null : page - 1;
 		result.data = products;
 		res.json(result);
 	} catch (err) {
