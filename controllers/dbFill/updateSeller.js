@@ -32,8 +32,8 @@ export async function updateSeller(req, res) {
                         console.log('errr');
                         console.log(err);
                     }
-                }
-            })
+                } else console.log('upd-----------------------------skip\n\n\n\n\n\n');
+            });
 
             res.json(result);
 

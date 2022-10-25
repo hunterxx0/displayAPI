@@ -37,6 +37,10 @@ app.get('/fillSellers', sellersProd);
 import {prodfill} from './controllers/dbFill/prodfill.js';
 app.get('/fillprods', prodfill);
 
+//        updating db sellers
+import {updateSeller} from './controllers/dbFill/updateSeller.js';
+app.get('/upSellers', updateSeller);
+
 //        User route
 import {usersRouter} from './routes/users.js';
 app.use('/users', usersRouter);
