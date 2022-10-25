@@ -23,7 +23,7 @@ async function sellerGet(params) {
         seller = await Seller.findById(params.id)
             .select('-__v -hashedPassword -token');
     } else if (params.name) {
-        seller = await Seller.findOne({ name: req.params.name })
+        seller = await Seller.findOne({ name: params.name })
             .select('-__v -hashedPassword -token');
     }
     return seller;

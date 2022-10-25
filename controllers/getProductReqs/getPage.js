@@ -15,7 +15,7 @@ export async function getPage (req, res) {
 		.skip((page - 1) * limit)
 		.limit(limit);
 		const productsCount = await Product.find().count();
-		if (!productsCount) return res.json({});
+		if (!productsCount) return res.json(result);
 		result.totalpages = Math.floor(productsCount/limit);
 		if (productsCount%limit) result.totalpages += 1;
 		if (page > result.totalpages || page < 0) throw 'Bad Request';
