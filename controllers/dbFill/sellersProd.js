@@ -18,12 +18,12 @@ export async function sellersProd(req, res) {
             const result = JSON.parse(data);
             const req = {}
             req.body = {
-                username: "test1",
-                email: "test1@test1.com",
+                username: "test2",
+                email: "test2@test2.com",
                 password: "123456",
                 phoneNumber: "123456789",
                 seller_country: "BE",
-                website: "test1.com",
+                website: "test2.com",
             }
             try {
                 let ress = {
