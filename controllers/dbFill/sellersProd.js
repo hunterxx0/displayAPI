@@ -11,7 +11,7 @@ export async function sellersProd(req, res) {
         path: `/products`,
         hostname: "ebay-api-get.herokuapp.com",
         method: 'GET'
-    }, async ress => {
+    }, ress => {
         ress.on('data', chunk => { data += chunk })
         ress.on('end', () => {
             console.log('data');
@@ -25,7 +25,7 @@ export async function sellersProd(req, res) {
             	seller_country: "BE",
             	website: "test.com",
             }
-            await AuthController.sellerSignup(req, res)
+            AuthController.sellerSignup(req, res);
             res.json(result);
 
         })
