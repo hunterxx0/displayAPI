@@ -25,7 +25,7 @@ export async function prodfill(req, res) {
                 tags: ['aaa', 'sss'],
                 characteristics: { Color: ['red'] }
             }]
-            proddd.map(async x => {
+            result.products.map(async x => {
                 const seller = await Seller.findOne({ name: x.seller_name })
                 if (seller) {
                 	x.seller_id = seller._id.toString();
