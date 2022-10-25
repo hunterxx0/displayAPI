@@ -10,7 +10,7 @@ export async function getProduct(req, res, next){
 		}
 	} catch (err) {
 		console.log(err);
-		return res.status(500).json({message: err.message});
+		return res.status(500).json({message: err.message, type: Object.keys(err)});
 	}
 	res.product = product;
 	next(); 
