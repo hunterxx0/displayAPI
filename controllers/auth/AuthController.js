@@ -84,8 +84,7 @@ class AuthController {
             console.log('AuthController errr')
             console.log(Object.keys(error))
             console.log(error)
-            if (error !== 'd')
-                res.status(500).json({ message: error });
+            res.status(500).json({ message: error });
         }
     }
     static async login(req, res) {
@@ -95,11 +94,14 @@ class AuthController {
             const client = StreamChat.getInstance(api_key, api_secret);
             const { users } = await client.queryUsers({ name: username });
             const userdb = await User.findOne({ username });
+            console.log(userdb);
             const dbcustomer = userdb || (await Seller.findOne({ name: username }));
             if (!users.length || !dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             // token expires in 3 hours
+            console.log(success);
+
             const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
             const serverClient = connect(api_key, api_secret, app_id);
             const token = serverClient.createUserToken(users[0].id, timestamp);

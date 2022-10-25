@@ -29,22 +29,6 @@ app.get('/', (req, res) => {
   res.send('Hello');
 });
 
-//        filling db with sellers
-import {sellersProd} from './controllers/dbFill/sellersProd.js';
-app.get('/fillSellers', sellersProd);
-
-//        filling db with products
-import {prodfill} from './controllers/dbFill/prodfill.js';
-app.get('/fillprods', prodfill);
-
-//        updating db sellers
-import {updateSeller} from './controllers/dbFill/updateSeller.js';
-app.get('/updateSellers', updateSeller);
-
-//        updating db sellers
-import {userFill} from './controllers/dbFill/userFill.js';
-app.get('/userFill', userFill);
-
 //        User route
 import {usersRouter} from './routes/users.js';
 app.use('/users', usersRouter);
@@ -63,3 +47,22 @@ app.use("/auth", auth);
 
 // port
 const PORT = process.env.PORT || 3000;
+
+
+/*
+//        filling db with sellers
+import {sellersProd} from './controllers/dbFill/sellersProd.js';
+app.get('/fillSellers', sellersProd);
+
+//        filling db with products
+import {prodfill} from './controllers/dbFill/prodfill.js';
+app.get('/fillprods', prodfill);
+
+//        updating db sellers
+import {updateSeller} from './controllers/dbFill/updateSeller.js';
+app.get('/updateSellers', updateSeller);
+
+//        updating db sellers
+import {userFill} from './controllers/dbFill/userFill.js';
+app.get('/userFill', userFill);
+*/
