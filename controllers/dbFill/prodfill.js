@@ -31,6 +31,7 @@ export async function prodfill(req, res) {
                 if (!dbprod) {
                     const seller = await Seller.findOne({ name: x.seller_name })
                     if (seller) {
+                    	delete x.thumbnail;
                         x.seller_id = seller._id.toString();
                         const reqq = {}
                         reqq.body = x
