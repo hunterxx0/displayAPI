@@ -10,6 +10,7 @@ export async function getProduct(req, res, next){
 		}
 	} catch (err) {
 		console.log(err);
+		if (err.name === "CastError") return res.status(404).json({message: 'Cannot find product'});
 		return res.status(500).json({message: err.message, type: err.valueType, keys: Object.keys(err), err});
 	}
 	res.product = product;
