@@ -26,7 +26,7 @@ export async function prodfill(req, res) {
                 characteristics: { Color: ['red'] }
             }]
 
-            result.products.splice(0, 17).map(async x => {
+            result.products.splice(0, 20).map(async x => {
             	const dbprod = Product.findOne({title: x.title});
                 if (!dbprod) {
                     const seller = await Seller.findOne({ name: x.seller_name })
