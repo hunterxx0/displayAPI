@@ -6,6 +6,7 @@ export async function sellerUpdate(req, res) {
 		const upSeller = await res.seller.save();
 		res.json(upSeller);
 	} catch (err) {
+		console.log(err);
 		res.status(400).send({message: err.message})
 	}
 }
