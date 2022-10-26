@@ -23,7 +23,7 @@ export async function requestAdd(req, res) {
         }
         console.log(seller);
         console.log('******************');
-        console.log(notifications);
+        console.log(seller.notifications);
 
         seller.notifications.unshift(pushSellerNotif(request, JSON.parse(JSON.stringify(res.product)), 'request'));
         res.product.requests.push(request);
