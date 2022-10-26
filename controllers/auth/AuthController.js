@@ -42,13 +42,10 @@ class AuthController {
             const token = serverClient.createToken(newSeller._id.toString(), timestamp);
             newSeller.token = encrDecr(token);
             const savedSeller = await newSeller.save();
-            const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller' });
+            const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller', avatarURL });
             return res.status(201).json({ username: name, userId: savedSeller._id.toString(), token });
         } catch (error) {
-            try {
-                await savedSeller.remove()
-                //rollback funct
-            } catch {}
+
             console.log(error)
             res.status(500).json({ message: error });
         }
@@ -78,14 +75,12 @@ class AuthController {
             const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
             const token = serverClient.createToken(newUser._id.toString(), timestamp);
             newUser.token = encrDecr(token);
-            const dbuser = await User.findOne({username});
-            const streamUser = await serverClient.upsertUser({ name: username, id: dbuser._id.toString() });
+            const dbuser = await User.findOne({ username });
+            const savedUser = await newUser.save();
+            const streamUser = await serverClient.upsertUser({ name: username, id: savedUser._id.toString(), avatarURL });
             return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
-            console.log('AuthController errr')
-            console.log(Object.keys(error))
             console.log(error)
-            if (error === 'd')
             res.status(500).json({ message: error });
         }
     }
@@ -102,12 +97,9 @@ class AuthController {
                 return res.status(401).json({ message: 'User not found' });
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             // token expires in 3 hours
-            console.log(success);
-
             const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
             const serverClient = connect(api_key, api_secret, app_id);
             const token = serverClient.createUserToken(users[0].id, timestamp);
-            // console.log(users);
             if (success) {
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
@@ -115,6 +107,7 @@ class AuthController {
                     token,
                     username,
                     userId: users[0].id,
+                    avatarURL: dbcustomer.avatarURL
                 });
             } else {
                 res.status(401).json({ message: 'Unauthorized' });
@@ -139,8 +132,12 @@ class AuthController {
                 const { users } = await client.queryUsers({ id: constmID });
                 if (!users.length)
                     return res.status(401).json({ message: 'User not found' });
-                const obj = { id: constmID, name: info.username, role: users[0].role };
-                console.log(obj);
+                const obj = (info.avatarURL) ? {
+                    id: constmID,
+                    name: info.username,
+                    role: users[0].role,
+                    avatarURL: info.avatarURL
+                } : { id: constmID, name: info.username, role: users[0].role };
                 const sUsers = await client.upsertUser(obj);
                 if (!sUsers)
                     return res.status(401).json({ message: 'User not found' });

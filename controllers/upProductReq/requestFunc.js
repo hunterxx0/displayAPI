@@ -17,7 +17,7 @@ export async function requestAdd(req, res) {
 		if (!user) {
 			throw 'Cannot find user';
 		}
-		const seller = await Seller.find(res.product.seller_name);
+		const seller = await Seller.find({name: res.product.seller_name});
 		if (!seller) {
 			throw 'Cannot find seller';
 		}
