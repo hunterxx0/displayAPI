@@ -42,6 +42,7 @@ const sellerSchema = new mongoose.Schema({
 	},
 	notifications: [{
         _id: false,
+		default: [],
         id: {
             type: String,
             required: false,
