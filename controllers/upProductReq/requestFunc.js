@@ -31,6 +31,7 @@ export async function requestAdd(req, res) {
         res.json(upProduct);
     } catch (err) {
         await session.abortTransaction();
+        console.log(err)
         res.status(400).send({ message: err.message || err })
     } finally {
         session.endSession();
