@@ -27,7 +27,7 @@ export async function requestAdd(req, res) {
         console.log(seller.notifications);
         seller.notifications.unshift(pushSellerNotif(request, JSON.parse(JSON.stringify(res.product)), 'request'));
         res.product.requests.push(request);
-        user.requests.push(myuuid);
+        user.requests.push(request.id);
         await user.save();
         await seller.save();
         const upProduct = await res.product.save();
