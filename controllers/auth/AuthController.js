@@ -121,6 +121,13 @@ class AuthController {
             const info = req.body;
             const constmID = info.id;
             delete info.id;
+            delete newUpdate.product_creation_count;
+            delete newUpdate.product_limit;
+            delete newUpdate.edit_limit;
+            delete newUpdate.edited_products;
+            delete newUpdate.response_time;
+            delete newUpdate.token;
+            delete newUpdate.notifications;
             Object.keys(info).forEach(key => info[key] === undefined && delete info[key]);
             if ('password' in info) {
                 info.hashedPassword = encrDecr(await bcrypt.hash(info['password'], 10));

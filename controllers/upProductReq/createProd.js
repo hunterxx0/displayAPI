@@ -4,11 +4,11 @@ import { pushUserNotif } from '../utils/pushUserNotif.js';
 
 export async function createProd(req, res) {
     try {
-        const seller = Seller.findOne({ name: req.body.seller_name });
+        const seller = res.seller;
         if (seller &&
             seller.product_limit && (
                 seller.product_limit === 100 ||
-                Product.find({ seller_name: req.body.seller_name }).count() < seller.product_limit)) {
+                seller.product_creation_count < seller.product_limit)) {
             const product = new Product({
                 title: req.body.title,
                 pics_url: req.body.pics_url,
@@ -20,6 +20,8 @@ export async function createProd(req, res) {
                 requests: req.body.requests,
                 characteristics: req.body.characteristics,
             })
+            seller.seller.product_creation_count += 1;
+            await seller.save();
             const newProduct = await product.save();
             pushUserNotif(newProduct, undefined, newProduct.seller_name, 'add');
             res.status(201).json(newProduct);

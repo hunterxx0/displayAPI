@@ -1,7 +1,7 @@
-import {Seller} from '../../models/seller.js';
+import { Seller } from '../../models/seller.js';
 import jwt from 'jsonwebtoken';
-import {StreamChat} from 'stream-chat';
-import {encrDecr} from '../auth/encrDecr.js';
+import { StreamChat } from 'stream-chat';
+import { encrDecr } from '../auth/encrDecr.js';
 
 const { verify } = jwt;
 const api_key = process.env.STREAM_API_KEY;
@@ -9,23 +9,31 @@ const api_secret = process.env.STREAM_API_SECRET;
 const app_id = process.env.STREAM_APP_ID;
 
 export async function JWTAuth(req, res, next) {
-	let token = req.headers['authorization'];
-	if (!token) return res.status(401).json({message: "Unauthorized"});
-	token = token.slice(7);
-	verify(token, api_secret, async (err, decoded) => {
-		if (err) {
-	      console.log(err);
-	      return res.status(401).json({message: "Unauthorized"});
-	    }
-	    const client = StreamChat.getInstance(api_key, api_secret);
-     	const { users } = await client.queryUsers({ id: decoded.user_id });
-	    if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
-	    	return res.status(401).json({message: "Unauthorized"});
-		if (res.product && users[0].role == 'seller') {
-    		let seller = await Seller.findOne({name: res.product.seller_name});
-	    	if (!seller || !seller.token || encrDecr(seller.token, 'decode') !== token)
-	    		return res.status(401).json({message: "Unauthorized"});
-	  	}
-	  	next();
-	});
+    let token = req.headers['authorization'];
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
+    token = token.slice(7);
+    verify(token, api_secret, async (err, decoded) => {
+        if (err) {
+            console.log(`JWT verify Error:\n\n\n${err}\n\n\n`);
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        const client = StreamChat.getInstance(api_key, api_secret);
+        const { users } = await client.queryUsers({ id: decoded.user_id });
+        if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
+            return res.status(401).json({ message: "Unauthorized" });
+        if (users[0].role === 'seller') {
+            let seller = null;
+            if (!res.seller && res.product) {
+            	seller = await Seller.findOne({ name: res.product.seller_name });
+            	res.seller = seller;
+            }
+            else if (res.seller) seller = res.seller;
+            if (!seller || !seller.token || encrDecr(seller.token, 'decode') !== token)
+                return res.status(401).json({ message: "Unauthorized" });
+        }
+        if (users[0].role === 'admin') {
+        	console.log('admin');
+        }
+        next();
+    });
 }
