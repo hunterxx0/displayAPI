@@ -31,6 +31,11 @@ const sellerSchema = new mongoose.Schema({
                 required: true,
                 default: 0
             },
+            plan: {
+                type: String,
+                required: false,
+                default: 'free'
+            },
             product_limit: {
                 type: Number,
                 required: false,
