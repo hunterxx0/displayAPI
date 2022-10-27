@@ -13,7 +13,7 @@ export async function getSellersByPage(req, res) {
         if (!sellersCount) return res.json(result);
         result.totalpages = Math.floor(sellersCount / limit);
         if (sellersCount % limit) result.totalpages += 1;
-        const users = await Seller.find()
+        const sellers = await Seller.find()
             .select('-__v -hashedPassword -token')
             .sort({
                 [sortVal]: sortRev
@@ -24,7 +24,7 @@ export async function getSellersByPage(req, res) {
         result.nextPage = (page === result.totalpages) ? null : page + 1;
         result.prevPage = (page === 1) ? null : page - 1;
         result.data = products;
-        res.json(users);
+        res.json(sellers);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
