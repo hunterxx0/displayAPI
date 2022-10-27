@@ -32,7 +32,7 @@ const router = express.Router();
 router.get('/', getUsers);
 
 // get all By Page
-router.get('/page/:page', getUsersByPage);
+router.get('/page/:number', getUsersByPage);
 
 //get one
 router.get('/:id', getUser, (req, res) => {

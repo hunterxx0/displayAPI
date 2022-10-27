@@ -29,7 +29,7 @@ router.get('/name/:name', getSeller, (req, res) => {
 });
 
 // get all By Page
-router.get('/page/:page', getSellersByPage);
+router.get('/page/:number', getSellersByPage);
 
 // get all
 router.get('/', sellerAll);
