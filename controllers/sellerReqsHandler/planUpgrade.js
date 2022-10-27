@@ -14,6 +14,7 @@ export async function planUpgrade(req, res) {
         edits = plans[req.params.plan].edits;
     }
     if (plan) {
+        res.seller.plan = req.params.plan;
         res.seller.product_limit = plan;
         res.seller.edit_limit = edits;
     } else return res.status(400).send({ message: 'Plan error' });
