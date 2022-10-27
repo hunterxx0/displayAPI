@@ -6,6 +6,7 @@ import { StreamChat } from 'stream-chat';
 import { User } from '../../models/user.js';
 import { Seller } from '../../models/seller.js';
 import { encrDecr } from './encrDecr.js';
+import { removeUndefined } from '../utils/removeUndefined.js'
 import jwt from 'jsonwebtoken';
 
 const { verify } = jwt;
@@ -45,7 +46,6 @@ class AuthController {
             const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller', image: avatarURL });
             return res.status(201).json({ username: name, userId: savedSeller._id.toString(), token });
         } catch (error) {
-
             console.log(error)
             res.status(500).json({ message: error });
         }
@@ -126,18 +126,18 @@ class AuthController {
                 info.hashedPassword = encrDecr(await bcrypt.hash(info['password'], 10));
                 delete info['password'];
             }
-            if (info.username) {
+            if (info.username || info.avatarURL) {
                 const client = StreamChat.getInstance(api_key, api_secret);
                 const { users } = await client.queryUsers({ id: constmID });
                 if (!users.length)
                     return res.status(401).json({ message: 'User not found' });
-                const obj = (info.avatarURL) ? {
+                const obj = {
                     id: constmID,
                     name: info.username,
                     role: users[0].role,
                     image: info.avatarURL
-                } : { id: constmID, name: info.username, role: users[0].role };
-                const sUsers = await client.upsertUser(obj);
+                };
+                const sUsers = await client.upsertUser(removeUndefined(obj));
                 if (!sUsers)
                     return res.status(401).json({ message: 'User not found' });
             }

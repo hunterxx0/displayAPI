@@ -26,6 +26,8 @@ export async function getSellersByPage(req, res) {
         result.data = sellers;
         res.json(result);
     } catch (err) {
+        console.log(err);
+        if (err === 'Bad Request') return res.status(400).json({ message: err });
         res.status(500).json({ message: err.message });
     }
 }

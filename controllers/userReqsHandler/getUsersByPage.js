@@ -25,9 +25,7 @@ export async function getUsersByPage(req, res) {
         result.data = users;
         res.json(result);
     } catch (err) {
-        console.log('***************')
-        console.log(err)
-        console.log('***************')
+        console.log(err);
         if (err === 'Bad Request') return res.status(400).json({ message: err });
         res.status(500).json({ message: err.message });
     }
