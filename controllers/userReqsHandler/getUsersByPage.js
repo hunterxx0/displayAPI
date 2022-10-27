@@ -10,14 +10,15 @@ export async function getUsersByPage(req, res) {
     try {
         const usersCount = await User.find().count();
         if (!usersCount) return res.json(result);
-        result.totalpages = Math.floor(usersCount / limit);
-        if (usersCount % limit) result.totalpages += 1;
         const users = await User.find()
             .select('-__v -hashedPassword -token')
             .sort({
-                [sortVal]: sortRev })
+                [sortVal]: sortRev
+            })
             .skip((page - 1) * limit)
             .limit(limit);
+        result.totalpages = Math.floor(usersCount / limit);
+        if (usersCount % limit) result.totalpages += 1;
         if (page > result.totalpages || page < 0) throw 'Bad Request';
         result.nextPage = (page === result.totalpages) ? null : page + 1;
         result.prevPage = (page === 1) ? null : page - 1;
