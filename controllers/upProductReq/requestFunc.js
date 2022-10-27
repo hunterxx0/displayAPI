@@ -21,10 +21,7 @@ export async function requestAdd(req, res) {
         if (!seller) {
             throw 'Cannot find seller';
         }
-        console.log(seller);
-        console.log('******************');
         if (!seller.notifications) seller.notifications = [];
-        console.log(seller.notifications);
         seller.notifications.unshift(pushSellerNotif(request, JSON.parse(JSON.stringify(res.product)), 'request'));
         res.product.requests.push(request);
         user.requests.push(request.id);

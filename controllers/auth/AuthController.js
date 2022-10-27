@@ -42,7 +42,7 @@ class AuthController {
             const token = serverClient.createToken(newSeller._id.toString(), timestamp);
             newSeller.token = encrDecr(token);
             const savedSeller = await newSeller.save();
-            const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller', avatarURL });
+            const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller', image: avatarURL });
             return res.status(201).json({ username: name, userId: savedSeller._id.toString(), token });
         } catch (error) {
 
@@ -77,7 +77,7 @@ class AuthController {
             newUser.token = encrDecr(token);
             const dbuser = await User.findOne({ username });
             const savedUser = await newUser.save();
-            const streamUser = await serverClient.upsertUser({ name: username, id: savedUser._id.toString(), avatarURL });
+            const streamUser = await serverClient.upsertUser({ name: username, id: savedUser._id.toString(), image: avatarURL });
             return res.status(201).json({ username, userId: savedUser._id.toString(), token });
         } catch (error) {
             console.log(error)
@@ -91,7 +91,6 @@ class AuthController {
             const client = StreamChat.getInstance(api_key, api_secret);
             const { users } = await client.queryUsers({ name: username });
             const userdb = await User.findOne({ username });
-            console.log(userdb);
             const dbcustomer = userdb || (await Seller.findOne({ name: username }));
             if (!users.length || !dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
@@ -107,7 +106,7 @@ class AuthController {
                     token,
                     username,
                     userId: users[0].id,
-                    avatarURL: dbcustomer.avatarURL
+                    image: dbcustomer.avatarURL
                 });
             } else {
                 res.status(401).json({ message: 'Unauthorized' });
@@ -136,7 +135,7 @@ class AuthController {
                     id: constmID,
                     name: info.username,
                     role: users[0].role,
-                    avatarURL: info.avatarURL
+                    image: info.avatarURL
                 } : { id: constmID, name: info.username, role: users[0].role };
                 const sUsers = await client.upsertUser(obj);
                 if (!sUsers)
