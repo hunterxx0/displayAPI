@@ -3,6 +3,7 @@ import express from "express";
 import { Seller } from '../models/seller.js';
 
 import { sellerAll } from '../controllers/sellerReqsHandler/sellerAll.js';
+import { getSellersByPage } from '../controllers/sellerReqsHandler/getSellersByPage.js';
 import { sellerCreate } from '../controllers/sellerReqsHandler/sellerCreate.js';
 import { sellerUpdate } from '../controllers/sellerReqsHandler/sellerUpdate.js';
 import { sellerDel } from '../controllers/sellerReqsHandler/sellerDel.js';
@@ -26,6 +27,9 @@ router.get('/:id', getSeller, (req, res) => {
 router.get('/name/:name', getSeller, (req, res) => {
     res.json(res.seller);
 });
+
+// get all By Page
+router.get('/page/:page', getSellersByPage);
 
 // get all
 router.get('/', sellerAll);

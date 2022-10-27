@@ -1,23 +1,21 @@
-// get all sellers
-import { Seller } from '../../models/seller.js';
+import { User } from '../../models/user.js';
 
-export async function getSellersByPage(req, res) {
+export async function getUsersByPage(req, res) {
     const page = parseInt(req.params.number, 10) || 1;
     if (page <= 0) return res.status(400).json({ message: 'Bad Request' });
     const limit = parseInt(req.query.limit, 10) || 20;
     const sortRev = parseInt(req.query.reverse, 10) || -1;
-    const sortVal = req.query.sort || 'name';
+    const sortVal = req.query.sort || 'created_at';
     const result = {}
     try {
-        const sellersCount = await Seller.find().count();
-        if (!sellersCount) return res.json(result);
-        result.totalpages = Math.floor(sellersCount / limit);
-        if (sellersCount % limit) result.totalpages += 1;
-        const users = await Seller.find()
+        const usersCount = await User.find().count();
+        if (!usersCount) return res.json(result);
+        result.totalpages = Math.floor(usersCount / limit);
+        if (usersCount % limit) result.totalpages += 1;
+        const users = await User.find()
             .select('-__v -hashedPassword -token')
             .sort({
-                [sortVal]: sortRev
-            })
+                [sortVal]: sortRev })
             .skip((page - 1) * limit)
             .limit(limit);
         if (page > result.totalpages || page < 0) throw 'Bad Request';

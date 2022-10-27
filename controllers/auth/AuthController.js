@@ -95,11 +95,11 @@ class AuthController {
             if (!users.length || !dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
-            // token expires in 3 hours
-            const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
-            const serverClient = connect(api_key, api_secret, app_id);
-            const token = serverClient.createUserToken(users[0].id, timestamp);
             if (success) {
+                // token expires in 3 hours
+                const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
+                const serverClient = connect(api_key, api_secret, app_id);
+                const token = serverClient.createUserToken(users[0].id, timestamp);
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
                 res.status(200).json({

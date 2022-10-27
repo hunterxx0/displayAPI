@@ -3,6 +3,7 @@ import express from "express";
 import { User } from '../models/user.js';
 
 import { getUsers } from '../controllers/userReqsHandler/getUsers.js';
+import { getUsersByPage } from '../controllers/userReqsHandler/getUsersByPage.js';
 import { addRecSear } from '../controllers/userReqsHandler/addRecSear.js';
 import { delRecSear } from '../controllers/userReqsHandler/delRecSear.js';
 import { clrRecView } from '../controllers/userReqsHandler/clrRecView.js';
@@ -29,6 +30,9 @@ const router = express.Router();
 
 // get all
 router.get('/', getUsers);
+
+// get all By Page
+router.get('/page/:page', getUsersByPage);
 
 //get one
 router.get('/:id', getUser, (req, res) => {
