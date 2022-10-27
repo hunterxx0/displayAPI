@@ -8,8 +8,6 @@ export async function getUsersByPage(req, res) {
     const sortVal = req.query.sort || 'created_at';
     const result = {}
     try {
-        const usersCount = await User.find().count();
-        if (!usersCount) return res.json(result);
         const users = await User.find()
             .select('-__v -hashedPassword -token')
             .sort({
@@ -17,6 +15,8 @@ export async function getUsersByPage(req, res) {
             })
             .skip((page - 1) * limit)
             .limit(limit);
+        const usersCount = await User.find().count();
+        if (!usersCount) return res.json(result);
         result.totalpages = Math.floor(usersCount / limit);
         if (usersCount % limit) result.totalpages += 1;
         if (page > result.totalpages || page < 0) throw 'Bad Request';

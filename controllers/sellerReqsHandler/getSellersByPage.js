@@ -9,9 +9,6 @@ export async function getSellersByPage(req, res) {
     const sortVal = req.query.sort || 'name';
     const result = {}
     try {
-        const sellersCount = await Seller.find().count();
-        if (!sellersCount) return res.json(result);
-
         const sellers = await Seller.find()
             .select('-__v -hashedPassword -token')
             .sort({
@@ -19,6 +16,8 @@ export async function getSellersByPage(req, res) {
             })
             .skip((page - 1) * limit)
             .limit(limit);
+        const sellersCount = await Seller.find().count();
+        if (!sellersCount) return res.json(result);
         result.totalpages = Math.floor(sellersCount / limit);
         if (sellersCount % limit) result.totalpages += 1;
         if (page > result.totalpages || page < 0) throw 'Bad Request';

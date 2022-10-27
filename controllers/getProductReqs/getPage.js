@@ -1,5 +1,5 @@
+// get products by page
 import { Product } from '../../models/product.js';
-
 
 export async function getPage(req, res) {
     const page = parseInt(req.params.number, 10) || 1;
