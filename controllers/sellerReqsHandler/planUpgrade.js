@@ -3,17 +3,15 @@
 export async function planUpgrade(req, res) {
     let plan = null;
     let edits = null;
-    if (req.params.plan === 'basic') {
-        plan = 5;
-        edits = 1;
+    const plans = {
+        free: { limit: 0, edits: 0 },
+        basic: { limit: 5, edits: 1 },
+        standard: { limit: 15, edits: 10 },
+        premium: { limit: 100, edits: 100 },
     }
-    if (req.params.plan === 'standard') {
-        plan = 15;
-        edits = 10;
-    }
-    if (req.params.plan === 'premium') {
-        plan = 100;
-        edits = 100;
+    if (Object.keys(plans).includes(req.params.plan)) {
+        plan = plans[req.params.plan].limit;
+        edits = plans[req.params.plan].edits;
     }
     if (plan) {
         res.seller.product_limit = plan;
