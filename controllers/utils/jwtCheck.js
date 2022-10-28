@@ -23,12 +23,15 @@ export async function JWTAuth(req, res, next) {
             return res.status(401).json({ message: "Unauthorized stream" });
         if (users[0].role === 'seller') {
             let seller = null;
-            const seller_name =  (' ' + req.body.seller_name).slice(1);
+            let seller_name = (' ' + req.body.seller_name).slice(1);
+            if (!seller_name) {
+                console.log('not');
+                seller_name = res.product.seller_name;
+            }
             console.log(seller_name);
-            const obj = (res.product.seller_name) ? res.product.seller_name : seller_name;
             console.log('body');
             if (!res.seller) {
-                seller = await Seller.findOne({ name: obj });
+                seller = await Seller.findOne({ name: seller_name });
                 res.seller = seller;
                 console.log('seller');
                 console.log(seller);
