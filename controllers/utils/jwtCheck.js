@@ -23,12 +23,12 @@ export async function JWTAuth(req, res, next) {
             return res.status(401).json({ message: "Unauthorized stream" });
         if (users[0].role === 'seller') {
             let seller = null;
-            const obj = { name: (res.product.seller_name || req.body.seller_name) };
+            const obj = (res.product.seller_name) ? res.product.seller_name : req.body.seller_name;
             console.log('body');
-                console.log(obj);
+            console.log(req.body.seller_name);
             if (!res.seller) {
-            	seller = await Seller.findOne(obj);
-            	res.seller = seller;
+                seller = await Seller.findOne({ name: obj });
+                res.seller = seller;
                 console.log('seller');
                 console.log(seller);
             } else seller = res.seller;
@@ -39,7 +39,7 @@ export async function JWTAuth(req, res, next) {
                 return res.status(401).json({ message: "Unauthorized seller" });
         }
         if (users[0].role === 'admin') {
-        	console.log('admin');
+            console.log('admin');
         }
         next();
     });
