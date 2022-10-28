@@ -24,7 +24,7 @@ export async function JWTAuth(req, res, next) {
         if (users[0].role === 'seller') {
             let seller = null;
             console.log('body');
-                console.log(req.body);
+                console.log(req.body.seller_name);
             if (!res.seller) {
             	seller = await Seller.findOne({ name: (res.product.seller_name || req.body.seller_name) });
             	res.seller = seller;
