@@ -25,9 +25,11 @@ export async function createProd(req, res) {
             const newProduct = await product.save();
             pushUserNotif(newProduct, undefined, newProduct.seller_name, 'add');
             res.status(201).json(newProduct);
-        } else throw 'Product count limit reached';
+        } else throw 'With your current plan you have exceeded the allowed number of product creation';
     } catch (err) {
         console.log(err)
+        if (err === 'with your current plan you have exceeded the allowed number of product creation')
+            res.status(412).send({ message: err })
         res.status(400).send({ message: err.message || err })
     }
 

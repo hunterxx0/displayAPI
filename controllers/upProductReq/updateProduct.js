@@ -16,5 +16,5 @@ export async function updateProduct(req, res) {
         } catch (err) {
             res.status(400).send({ message: err.message })
         }
-    }
+    } else return res.status(412).send({ message: 'Product edit count limit reached' })
 }

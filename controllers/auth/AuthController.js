@@ -106,7 +106,7 @@ class AuthController {
                     token,
                     username,
                     userId: users[0].id,
-                    image: dbcustomer.avatarURL
+                    avatarURL: dbcustomer.avatarURL
                 });
             } else {
                 res.status(401).json({ message: 'Unauthorized' });
