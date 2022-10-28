@@ -20,7 +20,7 @@ export async function createProd(req, res) {
                 requests: req.body.requests,
                 characteristics: req.body.characteristics,
             })
-            seller.seller.product_creation_count += 1;
+            seller.product_creation_count += 1;
             await seller.save();
             const newProduct = await product.save();
             pushUserNotif(newProduct, undefined, newProduct.seller_name, 'add');
