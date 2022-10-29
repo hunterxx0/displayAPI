@@ -211,6 +211,10 @@ async function updateUser(userId, info) {
 
 async function findUserSeller(userId) {
     let user = null;
+    console.log('**************************')
+    console.log('findUserSeller')
+    console.log(userId)
+    console.log('**************************')
     try {
         user = await User.findById(userId);
     } catch (err) {
