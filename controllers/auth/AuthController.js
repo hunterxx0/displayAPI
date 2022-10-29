@@ -174,7 +174,7 @@ class AuthController {
             const { users } = await client.queryUsers({ id: constmID });
             if (!users.length)
                 return res.status(401).json({ message: 'User not found' });
-            let dbcustomer = findUserSeller(constmID);
+            let dbcustomer = await findUserSeller(constmID);
             if (!dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
             if (dbcustomer == 'user') delDbObj = await User.deleteOne({ _id: constmID });
