@@ -168,6 +168,7 @@ class AuthController {
     }
     static async deleteUser(req, res) {
         try {
+            let delDbObj = null
             const constmID = req.params.id;
             const client = StreamChat.getInstance(api_key, api_secret);
             const { users } = await client.queryUsers({ id: constmID });
@@ -176,8 +177,12 @@ class AuthController {
             let dbcustomer = findUserSeller(constmID);
             if (!dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
-            if (dbcustomer == 'user') await User.deleteOne({ _id: constmID });
-            else await Seller.deleteOne({ _id: constmID });
+            if (dbcustomer == 'user') delDbObj = await User.deleteOne({ _id: constmID });
+            else delDbObj = await Seller.deleteOne({ _id: constmID });
+            console.log('*************************')
+            console.log(`${dbcustomer}   delDbObj  \n`)
+            console.log(delDbObj)
+            console.log('*************************')
             await client.deleteUser(constmID, { hard_delete: true });
             res.status(200).json('User deleted');
         } catch (error) {
@@ -217,11 +222,11 @@ async function findUserSeller(userId) {
     console.log('**************************')
     try {
         user = await User.findById(userId);
+        if (user) return 'user';
     } catch (err) {
         console.log('findUser');
         console.log(err);
     }
-    if (user) return 'user';
     try {
         user = await Seller.findById(userId);
         if (user) return 'seller';
