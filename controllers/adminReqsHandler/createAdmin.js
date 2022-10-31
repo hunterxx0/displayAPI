@@ -5,7 +5,11 @@ import { StreamChat } from 'stream-chat';
 import { Admin } from '../../models/admin.js';
 
 import { encrDecr } from '../auth/encrDecr.js';
-import { removeUndefined } from '../utils/removeUndefined.js'
+import { removeUndefined } from '../utils/removeUndefined.js';
+
+const api_key = process.env.STREAM_API_KEY;
+const api_secret = process.env.STREAM_API_SECRET;
+const app_id = process.env.STREAM_APP_ID;
 
 export async function createAdmin(req, res) {
     const {
