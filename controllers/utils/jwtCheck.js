@@ -24,14 +24,16 @@ export async function JWTAuth(req, res, next) {
             return res.status(401).json({ message: "Unauthorized" });
         }
         const client = StreamChat.getInstance(api_key, api_secret);
-        let user_id = decoded.user_id;
-        let users = await client.queryUsers({ id: user_id });
-        if (!users.length) {
+        let user_id;
+        try {
             user_id = encrDecr(decoded.user_id, 'decode');
-            users = await client.queryUsers({ id: user_id });
+        } catch (err){
+            console.log('decode err');
+            console.log(err);
+            user_id = decoded.user_id;
         }
+        let users = await client.queryUsers({ id: user_id });
         console.log(users.length);
-
         if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
             return res.status(401).json({ message: "Unauthorized stream" });
         if (users[0].role === 'admin') {
