@@ -2,17 +2,23 @@ import { connect } from 'getstream';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
 import { StreamChat } from 'stream-chat';
+import { Buffer } from 'node:buffer';
 
 import { User } from '../../models/user.js';
 import { Seller } from '../../models/seller.js';
+import { Admin } from '../../models/admin.js';
 import { encrDecr } from './encrDecr.js';
 import { removeUndefined } from '../utils/removeUndefined.js'
 import jwt from 'jsonwebtoken';
 
-const { verify } = jwt;
+const { verify, sign } = jwt;
 const api_key = process.env.STREAM_API_KEY;
 const api_secret = process.env.STREAM_API_SECRET;
 const app_id = process.env.STREAM_APP_ID;
+
+// token expires in 3 hours
+const timestamp = () => Math.floor(Date.now() / 1000) + (60 * 60 * 3);
+
 
 class AuthController {
     static async sellerSignup(req, res) {
@@ -37,10 +43,8 @@ class AuthController {
                 seller_country
             }
             const newSeller = new Seller(seller);
-            // token expires in 3 hours
-            const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
             const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
-            const token = serverClient.createToken(newSeller._id.toString(), timestamp);
+            const token = serverClient.createToken(newSeller._id.toString(), timestamp());
             newSeller.token = encrDecr(token);
             const savedSeller = await newSeller.save();
             const streamUser = await serverClient.upsertUser({ name, id: savedSeller._id.toString(), role: 'seller', image: avatarURL });
@@ -70,10 +74,8 @@ class AuthController {
                 email
             }
             const newUser = new User(user);
-            // token expires in 3 hours
-            const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
             const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
-            const token = serverClient.createToken(newUser._id.toString(), timestamp);
+            const token = serverClient.createToken(newUser._id.toString(), timestamp());
             newUser.token = encrDecr(token);
             const dbuser = await User.findOne({ username });
             const savedUser = await newUser.save();
@@ -87,19 +89,29 @@ class AuthController {
     static async login(req, res) {
         try {
             const { username, password } = req.body;
-
             const client = StreamChat.getInstance(api_key, api_secret);
             const { users } = await client.queryUsers({ name: username });
             const userdb = await User.findOne({ username });
-            const dbcustomer = userdb || (await Seller.findOne({ name: username }));
             if (!users.length || !dbcustomer)
                 return res.status(401).json({ message: 'User not found' });
+            let dbcustomer = userdb || (await Seller.findOne({ name: username }));
+            if (!dbcustomer && users[0].role !== 'admin')
+                return res.status(401).json({ message: 'User not found' });
+            let token = null;
+            if (users[0].role === 'admin') {
+                dbcustomer = await Admin.findOne({ username });
+                if (!dbcustomer)
+                    return res.status(401).json({ message: 'User not found' });
+                token = sign({
+                    user_id: encrDecr(dbcustomer._id.toString()),
+                    role: encrDecr(Buffer('admin').toString('base64'))
+                }, api_secret, { expiresIn: '3h' });
+            }
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
-                // token expires in 3 hours
-                const timestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 3);
                 const serverClient = connect(api_key, api_secret, app_id);
-                const token = serverClient.createUserToken(users[0].id, timestamp);
+                if (token)
+                    token = serverClient.createUserToken(users[0].id, timestamp());
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
                 res.status(200).json({
@@ -179,10 +191,6 @@ class AuthController {
                 return res.status(401).json({ message: 'User not found' });
             if (dbcustomer == 'user') delDbObj = await User.deleteOne({ _id: constmID });
             else delDbObj = await Seller.deleteOne({ _id: constmID });
-            console.log('*************************')
-            console.log(`${dbcustomer}   delDbObj  \n`)
-            console.log(delDbObj)
-            console.log('*************************')
             await client.deleteUser(constmID, { hard_delete: true });
             res.status(200).json('User deleted');
         } catch (error) {
@@ -216,22 +224,18 @@ async function updateUser(userId, info) {
 
 async function findUserSeller(userId) {
     let user = null;
-    console.log('**************************')
-    console.log('findUserSeller')
-    console.log(userId)
-    console.log('**************************')
     try {
         user = await User.findById(userId);
         if (user) return 'user';
     } catch (err) {
-        console.log('findUser');
+        console.log('findUser error');
         console.log(err);
     }
     try {
         user = await Seller.findById(userId);
         if (user) return 'seller';
     } catch (err) {
-        console.log('findSeller');
+        console.log('findSeller error');
         console.log(err);
     }
     return user
