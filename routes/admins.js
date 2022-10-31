@@ -1,8 +1,8 @@
 import express from "express";
 
-import { createAdmin } from '../controllers/sellerReqsHandler/createAdmin.js';
-import { getAdminLogs } from '../controllers/sellerReqsHandler/getAdminLogs.js';
-import { clrAdminLogs } from '../controllers/sellerReqsHandler/clrAdminLogs.js';
+import { createAdmin } from '../controllers/adminReqsHandler/createAdmin.js';
+import { getAdminLogs } from '../controllers/adminReqsHandler/getAdminLogs.js';
+import { clrAdminLogs } from '../controllers/adminReqsHandler/clrAdminLogs.js';
 
 import { JWTAuth } from '../controllers/utils/jwtCheck.js';
 
