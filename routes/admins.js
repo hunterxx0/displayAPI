@@ -9,7 +9,7 @@ import { JWTAuth } from '../controllers/utils/jwtCheck.js';
 const router = express.Router();
 
 //get all notifications
-router.post('/', JWTAuth, createAdmin);
+router.post('/', createAdmin);
 
 //get all notifications
 router.get('/:id/logs/', JWTAuth, getLogs);

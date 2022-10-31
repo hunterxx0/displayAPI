@@ -4,9 +4,9 @@ import { urlencoded } from "express";
 import cors from "cors";
 
 const app = express();
-app.use( cors() );
-app.use( express.json() );
-app.use( urlencoded({ extended: true }) );
+app.use(cors());
+app.use(express.json());
+app.use(urlencoded({ extended: true }));
 /**
 // Twilio
 const twilPost = require('./controllers/twilPost')
@@ -20,30 +20,34 @@ mongoose.connect(url)
 const db = mongoose.connection;
 db.on('error', (err) => console.log(err));
 db.on('open', () => {
-  app.listen(PORT, () => console.log('running ' + PORT));
+    app.listen(PORT, () => console.log('running ' + PORT));
 });
 
 // routes:
 //        welcome
 app.get('/', (req, res) => {
-  res.send('Hello');
+    res.send('Hello');
 });
 
 //        User route
-import {usersRouter} from './routes/users.js';
+import { usersRouter } from './routes/users.js';
 app.use('/users', usersRouter);
 
 //        Seller routes
-import {sellersRouter} from './routes/sellers.js';
+import { sellersRouter } from './routes/sellers.js';
 app.use('/sellers', sellersRouter);
 
 //        Product routes
-import {productsRouter} from './routes/products.js';
+import { productsRouter } from './routes/products.js';
 app.use('/products', productsRouter);
-  
+
 //        Auth routes
-import {auth} from './routes/auth.js';
+import { auth } from './routes/auth.js';
 app.use("/auth", auth);
+
+//        Auth routes
+import { adminRouter } from './routes/admins.js';
+app.use("/admin", adminRouter);
 
 // port
 const PORT = process.env.PORT || 3000;
