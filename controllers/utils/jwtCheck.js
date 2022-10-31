@@ -28,6 +28,7 @@ export async function JWTAuth(req, res, next) {
         let { users } = await client.queryUsers({ id: user_id });
         if (!users.length) {
             user_id = encrDecr(decoded.user_id, 'decode');
+            console.log(user_id);
             let { users } = await client.queryUsers({ id: user_id });
         }
         if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
