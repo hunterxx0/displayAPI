@@ -33,7 +33,8 @@ export async function JWTAuth(req, res, next) {
         if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
             return res.status(401).json({ message: "Unauthorized stream" });
         if (users[0].role === 'admin') {
-            console.log(decoded)
+            if (!decoded.role)
+                return res.status(401).json({ message: "Unauthorized role admin" });
             const adminRole = encrDecr(decoded.role, 'decode');
             if (Buffer.from(adminRole, 'base64').toString('ascii') != 'admin')
                 return res.status(401).json({ message: "Unauthorized admin" });
