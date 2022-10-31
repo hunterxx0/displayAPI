@@ -92,7 +92,7 @@ class AuthController {
             const client = StreamChat.getInstance(api_key, api_secret);
             const { users } = await client.queryUsers({ name: username });
             const userdb = await User.findOne({ username });
-            if (!users.length || !dbcustomer)
+            if (!users.length)
                 return res.status(401).json({ message: 'User not found' });
             let dbcustomer = userdb || (await Seller.findOne({ name: username }));
             if (!dbcustomer && users[0].role !== 'admin')
