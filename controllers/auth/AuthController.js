@@ -104,13 +104,13 @@ class AuthController {
                     return res.status(401).json({ message: 'User not found' });
                 token = sign({
                     user_id: encrDecr(dbcustomer._id.toString()),
-                    role: encrDecr(Buffer('admin').toString('base64'))
+                    role: encrDecr(Buffer.from('admin').toString('base64'))
                 }, api_secret, { expiresIn: '3h' });
             }
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
                 const serverClient = connect(api_key, api_secret, app_id);
-                if (token)
+                if (!token)
                     token = serverClient.createUserToken(users[0].id, timestamp());
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
