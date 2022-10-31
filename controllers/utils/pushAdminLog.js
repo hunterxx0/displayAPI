@@ -3,7 +3,7 @@ import { Admin } from '../../models/admin.js';
 import { removeUndefined } from './removeUndefined.js'
 import { v4 } from 'uuid';
 
-export function pushAdminLog(notif) {
+export async function pushAdminLog(notif) {
     try {
         const admins = await Admin.find();
         if (admins.length && notif) admins.map(async function(admin) {
