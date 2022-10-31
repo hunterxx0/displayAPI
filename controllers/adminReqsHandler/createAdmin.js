@@ -15,7 +15,7 @@ export async function createAdmin(req, res) {
     const hashedPassword = encrDecr(await bcrypt.hash(password, 10));
     const admin = new Admin({
         username,
-        password: hashedPassword,
+        hashedPassword,
     })
     try {
         const newAdmin = await admin.save();
