@@ -12,10 +12,10 @@ const router = express.Router();
 router.post('/', createAdmin);
 
 //get all notifications
-router.get('/:id/logs/', JWTAuth, getLogs);
+router.get('/:id/logs/', JWTAuth, getAdminLogs);
 
 //clear notifications
-router.delete('/:id/clr/logs', JWTAuth, clrLogs);
+router.delete('/:id/clr/logs', JWTAuth, clrAdminLogs);
 
 
 export { router as adminRouter };
