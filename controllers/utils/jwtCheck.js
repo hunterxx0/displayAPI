@@ -25,7 +25,7 @@ export async function JWTAuth(req, res, next) {
         }
         const client = StreamChat.getInstance(api_key, api_secret);
         let user_id = decoded.user_id;
-        let { users } = await client.queryUsers({ id: user_id });
+        let users = await client.queryUsers({ id: user_id });
         if (!users.length) {
             user_id = encrDecr(decoded.user_id, 'decode');
             users = await client.queryUsers({ id: user_id });
