@@ -4,7 +4,7 @@ import { StreamChat } from 'stream-chat';
 
 import { Admin } from '../../models/admin.js';
 
-import { encrDecr } from '../utils/encrDecr.js';
+import { encrDecr } from '../auth/encrDecr.js';
 import { removeUndefined } from '../utils/removeUndefined.js'
 
 export async function createAdmin(req, res) {
