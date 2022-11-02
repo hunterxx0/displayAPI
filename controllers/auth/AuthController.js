@@ -97,21 +97,15 @@ class AuthController {
             let dbcustomer = userdb || (await Seller.findOne({ name: username }));
             if (!dbcustomer && users[0].role !== 'admin')
                 return res.status(401).json({ message: 'User not found' });
-            let token = null;
             if (users[0].role === 'admin') {
                 dbcustomer = await Admin.findOne({ username });
                 if (!dbcustomer)
                     return res.status(401).json({ message: 'User not found' });
-                token = sign({
-                    user_id: encrDecr(dbcustomer._id.toString()),
-                    role: encrDecr(Buffer.from('admin').toString('base64'))
-                }, api_secret, { expiresIn: '3h' });
             }
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
                 const serverClient = connect(api_key, api_secret, app_id);
-                if (!token)
-                    token = serverClient.createUserToken(users[0].id, timestamp());
+                token = serverClient.createUserToken(users[0].id, timestamp());
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
                 res.status(200).json({
@@ -120,9 +114,8 @@ class AuthController {
                     userId: users[0].id,
                     avatarURL: dbcustomer.avatarURL
                 });
-            } else {
-                res.status(401).json({ message: 'Unauthorized' });
-            }
+            } else res.status(401).json({ message: 'Unauthorized' });
+
         } catch (error) {
             console.log(error);
             res.status(500).json({ message: error });
