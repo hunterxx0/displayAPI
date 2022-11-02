@@ -105,7 +105,7 @@ class AuthController {
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
                 const serverClient = connect(api_key, api_secret, app_id);
-                token = serverClient.createUserToken(users[0].id, timestamp());
+                const token = serverClient.createUserToken(users[0].id, timestamp());
                 dbcustomer.token = encrDecr(token);
                 await dbcustomer.save();
                 res.status(200).json({
