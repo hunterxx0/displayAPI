@@ -103,7 +103,7 @@ class AuthController {
                     return res.status(401).json({ message: 'User not found' });
             }
             console.log('***************usre********');
-            console.log(users[0]);
+            console.log(users[0].banned);
             console.log('**********************');
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
