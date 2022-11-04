@@ -102,6 +102,9 @@ class AuthController {
                 if (!dbcustomer)
                     return res.status(401).json({ message: 'User not found' });
             }
+            console.log('***************usre********');
+            console.log(users[0]);
+            console.log('**********************');
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
             if (success) {
                 const serverClient = connect(api_key, api_secret, app_id);
