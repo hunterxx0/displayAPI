@@ -33,7 +33,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 ##### Admin:
 
 | HTTP method  | Route  | Description |
-| :------------ |:---------------:| -----:|
+| :------------ |:--------------- | :---------------- |
 | POST      | /admin | create an admin (JWT Protected) |
 | GET      | /admin/:id/logs | admin notifications |
 | DELETE      | /admin/:id/clr/logs | delete admin notifications |
@@ -109,15 +109,3 @@ We are building an extensive backend API using Node.js & Express and protecting 
 | DELETE      | /users/:id/clr/notification | delete a user's notification list |
 | DELETE      | /users/:id/follow/:sellerName | delete a user's follow |
 | DELETE      | /users/:id/clr/follow | delete a user's follow list |
-
-### How to do it
-
-- reset CSS styling
-- use variables
-- simple/“as generic as you can” CSS selectors
-- avoid as more as you can super-specific CSS selector
-- simple HTML structure - div containers are your friend!
-
-### When it's done
-
-![](images/done.jpg)
