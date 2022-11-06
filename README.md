@@ -41,7 +41,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 ##### Authentication:
 
 | HTTP method  | Route  | Description |
-| :------------ |:---------------:| -----:|
+| :------------ |:--------------- | :---------------- |
 | POST      | /auth/signupSeller | seller signup |
 | POST      | /auth/signup | user signup |
 | POST      | /auth/login | login |
@@ -51,7 +51,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 ##### Product:
 
 | HTTP method  | Route  | Description |
-| :------------ |:---------------:| -----:|
+| :------------ |:--------------- | :---------------- |
 | GET      | /products | products list |
 | GET      | /products/page/:number | products list by page |
 | GET      | /products/:id | product by ID |
@@ -71,7 +71,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 ##### Seller:
 
 | HTTP method  | Route  | Description |
-| :------------ |:---------------:| -----:|
+| :------------ |:--------------- | :---------------- |
 | GET      | /sellers | sellers list |
 | GET      | /sellers/page/:number | sellers list by page |
 | GET      | /sellers/:id | seller by ID |
@@ -87,7 +87,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 ##### User:
 
 | HTTP method  | Route  | Description |
-| :------------ |:---------------:| -----:|
+| :------------ |:--------------- | :---------------- |
 | GET      | /users | users list |
 | GET      | /users/page/:number | users list by page |
 | GET      | /users/:id/ | user by ID |
