@@ -45,7 +45,7 @@ app.use('/products', productsRouter);
 import { auth } from './routes/auth.js';
 app.use("/auth", auth);
 
-//        Auth routes
+//        Admin routes
 import { adminRouter } from './routes/admins.js';
 app.use("/admin", adminRouter);
 
