@@ -103,8 +103,7 @@ class AuthController {
                     return res.status(401).json({ message: 'User not found' });
             }
             let success = await bcrypt.compare(password, encrDecr(dbcustomer.hashedPassword, 'decode'));
-            console.log(users[0]);
-            if (users[0].banned) return res.status(403).json({ message: 'User is banned' });
+            if (users[0].banned) return res.status(403).json({ message: 'User is banned', ban_expires });
             if (success) {
                 const serverClient = connect(api_key, api_secret, app_id);
                 const token = serverClient.createUserToken(users[0].id, timestamp());

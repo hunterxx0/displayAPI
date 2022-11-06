@@ -14,7 +14,7 @@ const app_id = process.env.STREAM_APP_ID;
 
 export async function JWTAuth(req, res, next) {
     let token = req.headers['authorization'];
-    if (!token) return res.status(401).json({ message: "Unauthorized token" });
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
     token = token.slice(7);
     verify(token, api_secret, async (err, decoded) => {
         if (err) {
@@ -26,7 +26,7 @@ export async function JWTAuth(req, res, next) {
         const client = StreamChat.getInstance(api_key, api_secret);
         let { users } = await client.queryUsers({ id: decoded.user_id });
         if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
-            return res.status(401).json({ message: "Unauthorized stream" });
+            return res.status(401).json({ message: "Unauthorized" });
         if (users[0].role === 'seller') {
             let seller = null;
             let seller_name = req.body.seller_name;
@@ -38,7 +38,7 @@ export async function JWTAuth(req, res, next) {
                 console.log(seller);
             } else seller = res.seller;
             if (!seller || !seller.token || encrDecr(seller.token, 'decode') !== token)
-                return res.status(401).json({ message: "Unauthorized seller" });
+                return res.status(401).json({ message: "Unauthorized" });
         }
         next();
     });
