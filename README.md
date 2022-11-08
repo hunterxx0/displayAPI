@@ -2,17 +2,37 @@
 ## Where buyers and sellers come together
 ### Introduction
 
-In this project, we will implement a website from scratch. We will use the knowledge we have acquired so far.
-
-We're free to implement it the way we want.
+The displayAPI is a RESTful API for an expo company, It comes populated from the uptake with many products, users, sellers.
 
 ### Objective
 
-The objective is to implement a fully functional website. It is primarily used to exhibit products on a 24-hour basis.
+primarily used to exhibit products on a 24-hour basis,
+the displayAPI provides the abiltiy for users to create an account with one of three roles: (user/sellers/admin)
+- a user has a profile page which contains information like: 
+  - his personnel information
+  - a favorite list of products
+  - a history of all his browsed products
+  - a list of the sellers he's following
+  - a history of his requested products
+  
+- a seller also owns a profile page that contains:
+  - his personnel information
+  - a list of the products he created
+  - a list of the requests users made for his products
+- a seller can also opt for a paid plan that will give him more features like:
+  - bonus amount of products he can add
+  - bonus amount of edits he can operate on his products
+- a seller is able to contact users that requested his products using the messaging app
+
+- an admin mainly uses a dashboard to moderate the website:
+  - list of all users/sellers
+  - moderate flagged messages on the messaging app
+  - capable of banning or even deleting accounts based on the wesbite rules
 
 ### Backend
 
-We are building an extensive backend API using Node.js & Express and protecting sensitive routes/endpoints with JWT (JSON Web Tokens).
+- Built with Nodejs and Express
+- all sensitive/private endpoints were protected with JWT (JSON Web Tokens).
 
 #### Sections
 
@@ -27,6 +47,7 @@ We are building an extensive backend API using Node.js & Express and protecting 
 - NodeJS v16.14.2
 - Express v4.18.1
 - Mongoose v6.5.1
+- stream-chat v7.1.0
 
 #### Routes
 
