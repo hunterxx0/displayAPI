@@ -11,7 +11,7 @@ import { pushAdminLog } from './pushAdminLog.js'
 export async function pushUserNotif(prod, UpObj, seller_name, Operation) {
     try {
         const users = await User.find({ $or: [{ following: seller_name }, { favorites: prod._id }] });
-        const notif = {
+        let notif = {
             id: v4(),
             date: Date.now(),
             prodID: prod._id,
