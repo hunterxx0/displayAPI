@@ -1,5 +1,5 @@
-# Portfolio Project - Display
-## Where buyers and sellers come together
+# displayAPI
+### where buyers and sellers come together
 ### Introduction
 
 The displayAPI is a RESTful API for an expo company, It comes populated from the uptake with many products, users, sellers.
