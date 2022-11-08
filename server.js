@@ -7,11 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(urlencoded({ extended: true }));
-/**
-// Twilio
-const twilPost = require('./controllers/twilPost')
-app.post("/", twilPost);
-*/
+
 //db connection
 const username = encodeURIComponent(process.env.USERNAME);
 const password = encodeURIComponent(process.env.PASSWORD);
