@@ -11,9 +11,6 @@ export async function pushAdminLog(notif) {
             await admin.save()
         });
         else return null;
-        console.log('notif******************');
-        console.log(notif);
-        console.log('******************');
         return true;
     } catch (err) {
         console.log('admin pushlog err:')

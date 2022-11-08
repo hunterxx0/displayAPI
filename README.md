@@ -35,8 +35,8 @@ We are building an extensive backend API using Node.js & Express and protecting 
 | HTTP method  | Route  | Description |
 | :------------ |:--------------- | :---------------- |
 | POST      | /admin | create an admin (JWT Protected) |
-| GET      | /admin/:id/logs | admin notifications |
-| DELETE      | /admin/:id/clr/logs | delete admin notifications |
+| GET      | /admin/:id/logs | admin notifications (JWT Protected) |
+| DELETE      | /admin/:id/clr/logs | delete admin notifications (JWT Protected) |
 
 ##### Authentication:
 
