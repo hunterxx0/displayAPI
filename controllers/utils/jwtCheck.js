@@ -44,7 +44,7 @@ export async function JWTAuth(req, res, next) {
         }
         if (users[0].role === 'admin') {
             if (decoded.user_id === req.params.id) res.admin = await Admin.findById(req.params.id);
-            if (!res.admin) return res.status(401).json({ message: "Unauthorized" });
+            if (!res.admin) return res.status(401).json({ message: "Unauthorized admin" });
         }
         next();
     });
