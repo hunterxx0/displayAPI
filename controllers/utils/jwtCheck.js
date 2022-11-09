@@ -30,6 +30,7 @@ export async function JWTAuth(req, res, next) {
             let seller = null;
             let seller_name = null;
             if (req.body.seller_name) seller_name = req.body.seller_name;
+            else if (!seller_name && res.seller) seller_name = res.seller.name;
             else if (!seller_name && res.product.seller_name) seller_name = res.product.seller_name;
             else seller_name = users[0].name;
             if (!res.seller) {
