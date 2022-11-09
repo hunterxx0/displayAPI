@@ -27,7 +27,8 @@ export async function JWTAuth(req, res, next) {
         if (!users.length || (users[0].role !== 'seller' && users[0].role !== 'admin'))
             return res.status(401).json({ message: "Unauthorized" });
         if (users[0].role === 'seller') {
-            let seller = seller_name = null;
+            let seller = null;
+            let seller_name = null;
             if (req.body.seller_name) seller_name = req.body.seller_name;
             else if (!seller_name && res.product.seller_name) seller_name = res.product.seller_name;
             else seller_name = users[0].name;
