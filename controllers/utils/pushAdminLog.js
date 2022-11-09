@@ -1,7 +1,6 @@
 // admin logs
 import { Admin } from '../../models/admin.js';
 import { removeUndefined } from './removeUndefined.js'
-import { v4 } from 'uuid';
 
 export async function pushAdminLog(notif) {
     try {
