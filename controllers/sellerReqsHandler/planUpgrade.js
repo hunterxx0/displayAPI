@@ -1,7 +1,8 @@
 // upgrade plan
 
 export async function planUpgrade(req, res) {
-    let plan = edits = null;
+    let plan = null;
+    let edits = null
     const plans = {
         free: { limit: 0, edits: 0 },
         basic: { limit: 5, edits: 1 },
