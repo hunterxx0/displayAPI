@@ -130,3 +130,11 @@ the displayAPI provides the abiltiy for users to create an account with one of t
 | DELETE      | /users/:id/clr/notification | delete a user's notification list |
 | DELETE      | /users/:id/follow/:sellerName | delete a user's follow |
 | DELETE      | /users/:id/clr/follow | delete a user's follow list |
+
+##### Routes samples:
+
+###### Product:
+![](images/prods.png)
+
+###### User:
+![](images/users.png)
