@@ -138,3 +138,9 @@ the displayAPI provides the abiltiy for users to create an account with one of t
 
 ###### User:
 ![](images/users.png)
+
+
+### Authors:
+
+#### - Yacine Kedidi  - [Mail](mailto:kedidiyacine@gmail.com "Gmail") - [LinkedIN]( https://www.linkedin.com/in/yacinekedidi/ "Linkedin") -
+#### - Mhamed Azouzi - [Mail](mailto:azouzimhamed@gmail.com "Gmail") - [LinkedIN]( https://www.linkedin.com/in/mhamedazouzi/ "Linkedin") -
