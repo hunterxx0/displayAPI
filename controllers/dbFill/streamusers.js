@@ -12,7 +12,7 @@ const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
 
 export async function streamfill(req, res) {
     try {
-/*        const users = await User.find()
+        const users = await User.find()
         users.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
@@ -21,27 +21,27 @@ export async function streamfill(req, res) {
                 res.status(500).json({message: err.message});
             }
             return x
-        })*/
-        const sellers = await Seller.find()
+        })
+/*        const sellers = await Seller.find()
         sellers.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: x.name, id: x._id.toString(), role: 'seller', image: x.avatarURL });
             } catch (err) {
-                res.status(500).json({message: err.message});
+                res.status(500).json({messageseller: err.message});
             }
             return x
-        })
+        })*/
         const admins = await Admin.find()
         admins.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
             } catch (err) {
-                res.status(500).json({message: err.message});
+                res.status(500).json({messageadmin: err.message});
             }
             return x
         })
     } catch (err) {
-        res.status(500).json({message: err.message});
+        res.status(500).json({messageaa: err.message});
     }
     
     
