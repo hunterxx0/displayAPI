@@ -11,10 +11,9 @@ const app_id = process.env.STREAM_APP_ID;
 const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
 
 export async function streamfill(req, res) {
-    let sellers = users = null
     try {
-        users = await User.find()
-            users.map(async (x) => {
+        const users = await User.find()
+        users.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
                 resss        
@@ -23,7 +22,7 @@ export async function streamfill(req, res) {
             }
             return x
         })
-        sellers = await Seller.find()
+        const sellers = await Seller.find()
         sellers.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
@@ -32,7 +31,7 @@ export async function streamfill(req, res) {
             }
             return x
         })
-        admins = await Admin.find()
+        const admins = await Admin.find()
         admins.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
