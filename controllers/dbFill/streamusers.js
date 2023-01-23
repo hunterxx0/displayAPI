@@ -17,13 +17,13 @@ export async function streamfill(req, res) {
         res.status(500).json({message: err.message});
     }
 
-    users.map((x) => {
+    users.map(async (x) => {
         const streamUser = await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
     })
-    sellers.map((x) => {
+    sellers.map(async (x) => {
         const streamUser = await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
     })
-    admins.map((x) => {
+    admins.map(async (x) => {
         const streamUser = await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
     })
     
