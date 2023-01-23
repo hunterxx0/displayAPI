@@ -14,38 +14,38 @@ export async function streamfill(req, res) {
     let sellers = users = null
     try {
         users = await User.find()
+            users.map(async (x) => {
+            try {
+                await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
+                resss        
+            } catch (err) {
+                res.status(500).json({message: err.message});
+            }
+            return x
+        })
         sellers = await Seller.find()
+        sellers.map(async (x) => {
+            try {
+                await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
+            } catch (err) {
+                res.status(500).json({message: err.message});
+            }
+            return x
+        })
         admins = await Admin.find()
+        admins.map(async (x) => {
+            try {
+                await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
+            } catch (err) {
+                res.status(500).json({message: err.message});
+            }
+            return x
+        })
     } catch (err) {
         res.status(500).json({message: err.message});
     }
-    const resss = []
-
-    users.map(async (x) => {
-        try {
-            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
-            resss        
-        } catch (err) {
-            res.status(500).json({message: err.message});
-        }
-        return x
-    })
-    sellers.map(async (x) => {
-        try {
-            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
-        } catch (err) {
-            res.status(500).json({message: err.message});
-        }
-        return x
-    })
-    admins.map(async (x) => {
-        try {
-            await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
-        } catch (err) {
-            res.status(500).json({message: err.message});
-        }
-        return x
-    })
+    
+    
     
     res.json({"result": "done"});
 
