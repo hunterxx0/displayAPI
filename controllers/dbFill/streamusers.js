@@ -21,15 +21,27 @@ export async function streamfill(req, res) {
     }
 
     users.map(async (x) => {
-        const streamUser = await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
+        try {
+            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });        
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
     })
     sellers.map(async (x) => {
-        const streamUser = await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
+        try {
+            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), role: 'seller', image: x.avatarURL });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
     })
     admins.map(async (x) => {
-        const streamUser = await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
+        try {
+            await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
+        } catch (err) {
+            res.status(500).json({message: err.message});
+        }
     })
     
-
+    res.json({"result": "done"});
 
 }
