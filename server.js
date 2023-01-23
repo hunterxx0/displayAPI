@@ -45,6 +45,10 @@ app.use("/auth", auth);
 import { adminRouter } from './routes/admins.js';
 app.use("/admin", adminRouter);
 
+//stream fill user
+import {streamfill} from './controllers/dbFill/streamusers.js';
+app.get('/fillStream', streamfill);
+
 // port
 const PORT = process.env.PORT || 3000;
 
