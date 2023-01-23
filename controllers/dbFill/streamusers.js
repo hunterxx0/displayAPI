@@ -34,7 +34,7 @@ export async function streamfill(req, res) {
         const admins = await Admin.find()
         admins.map(async (x) => {
             try {
-                await serverClient.upsertUser({ name: username, id: newAdmin._id.toString(), role: 'admin' });
+                await serverClient.upsertUser({ name: x.username, id: newAdmin._id.toString(), role: 'admin' });
             } catch (err) {
                 res.status(500).json({messageadmin: err.message});
             }
