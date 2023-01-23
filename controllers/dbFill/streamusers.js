@@ -19,13 +19,16 @@ export async function streamfill(req, res) {
     } catch (err) {
         res.status(500).json({message: err.message});
     }
+    const resss = []
 
     users.map(async (x) => {
         try {
-            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });        
+            await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
+            resss        
         } catch (err) {
             res.status(500).json({message: err.message});
         }
+        return x
     })
     sellers.map(async (x) => {
         try {
@@ -33,6 +36,7 @@ export async function streamfill(req, res) {
         } catch (err) {
             res.status(500).json({message: err.message});
         }
+        return x
     })
     admins.map(async (x) => {
         try {
@@ -40,6 +44,7 @@ export async function streamfill(req, res) {
         } catch (err) {
             res.status(500).json({message: err.message});
         }
+        return x
     })
     
     res.json({"result": "done"});
