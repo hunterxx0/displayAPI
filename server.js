@@ -45,15 +45,14 @@ app.use("/auth", auth);
 import { adminRouter } from './routes/admins.js';
 app.use("/admin", adminRouter);
 
-//stream fill user
-import {streamfill} from './controllers/dbFill/streamusers.js';
-app.get('/fillStream', streamfill);
+
 
 // port
 const PORT = process.env.PORT || 3000;
 
 
 /*
+
 //        filling db with sellers
 import {sellersProd} from './controllers/dbFill/sellersProd.js';
 app.get('/fillSellers', sellersProd);
@@ -69,4 +68,9 @@ app.get('/updateSellers', updateSeller);
 //        updating db sellers
 import {userFill} from './controllers/dbFill/userFill.js';
 app.get('/userFill', userFill);
+
+//stream fill user
+import {streamfill} from './controllers/dbFill/streamusers.js';
+app.get('/fillStream', streamfill);
+
 */

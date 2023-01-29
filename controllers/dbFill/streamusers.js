@@ -12,7 +12,7 @@ const serverClient = StreamChat.getInstance(api_key, api_secret, app_id);
 
 export async function streamfill(req, res) {
     try {
-/*        const users = await User.find()
+        const users = await User.find()
         users.map(async (x) => {
             try {
                 await serverClient.upsertUser({ name: x.username, id: x._id.toString(), image: x.avatarURL });
@@ -30,7 +30,7 @@ export async function streamfill(req, res) {
                 res.status(500).json({messageseller: err.message});
             }
             return x
-        })*/
+        })
         const admins = await Admin.find()
         admins.map(async (x) => {
             try {
@@ -43,9 +43,7 @@ export async function streamfill(req, res) {
     } catch (err) {
         res.status(500).json({messageaa: err.message});
     }
-    
-    
-    
+
     res.json({"result": "done"});
 
 }
