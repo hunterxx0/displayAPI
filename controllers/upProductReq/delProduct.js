@@ -1,7 +1,7 @@
 //        delete one product
 import { User } from '../../models/user.js';
 import { v4 } from 'uuid';
-import { pushAdminLog } from './pushAdminLog.js'
+import { pushAdminLog } from '../utils/pushAdminLog.js'
 
 export async function delProduct(req, res) {
     try {
