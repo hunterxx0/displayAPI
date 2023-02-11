@@ -36,8 +36,6 @@ export async function JWTAuth(req, res, next) {
             if (!res.seller) {
                 seller = await Seller.findOne({ name: seller_name });
                 res.seller = seller;
-                console.log('seller');
-                console.log(seller);
             } else seller = res.seller;
             if (!seller || !seller.token || encrDecr(seller.token, 'decode') !== token)
                 return res.status(401).json({ message: "Unauthorized" });
